@@ -35,7 +35,32 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=2.2">
+  <link rel="stylesheet" href="styles.css?v=3.2">
+
+  <!-- Real-Time Netlify HUD/Badge Killer (Instant DOM Removal) -->
+  <script>
+    (function() {
+      function killNetlifyBadge() {
+        var targets = [
+          document.getElementById('nl-badge-frame'),
+          document.getElementById('nl-hud-frame'),
+          document.querySelector('iframe[title*="Netlify"]'),
+          document.querySelector('iframe[id*="nl-"]'),
+          document.querySelector('script[src*="/hud"]')
+        ];
+        targets.forEach(function(el) {
+          if (el && el.parentNode) {
+            el.parentNode.removeChild(el);
+          }
+        });
+      }
+      killNetlifyBadge();
+      if (window.MutationObserver) {
+        new MutationObserver(killNetlifyBadge).observe(document.documentElement, { childList: true, subtree: true });
+      }
+      window.addEventListener('load', killNetlifyBadge);
+    })();
+  </script>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-100 text-slate-800 antialiased">
 
