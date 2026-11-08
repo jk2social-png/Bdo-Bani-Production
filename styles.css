@@ -1,0 +1,1466 @@
+/* BDO Bani Portal - Custom Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:wght@700&display=swap');
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+.font-gov {
+  font-family: 'Merriweather', serif;
+}
+
+/* Custom Scrollbar for horizontal tables */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hide scrollbar on sub-nav bar */
+#sub-nav-bar .custom-scrollbar::-webkit-scrollbar,
+#sub-nav-bar::-webkit-scrollbar {
+  display: none;
+  height: 0px;
+}
+#sub-nav-bar .custom-scrollbar,
+#sub-nav-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Table styles */
+.gov-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.gov-table th {
+  background-color: #1e3a8a;
+  color: #ffffff;
+  font-size: 0.69rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  padding: 6px 6px;
+  border: 1px solid #3b82f6;
+  white-space: normal !important;
+  word-break: normal !important;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.25;
+}
+
+.gov-table th.sub-th {
+  background-color: #1e3a8a;
+  font-size: 0.68rem;
+  line-height: 1.25;
+  padding: 6px 6px;
+  white-space: normal !important;
+}
+
+.gov-table td {
+  font-size: 0.74rem;
+  padding: 5px 8px;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  text-align: center;
+  vertical-align: middle;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Ensure all data figures, numbers, and headers are centered across all tables */
+.gov-table th,
+.gov-table td,
+.gov-table th.text-right,
+.gov-table td.text-right,
+.gov-table th.text-left,
+.gov-table td.text-left,
+.gov-table td[class*="text-"],
+.gov-table th[class*="text-"],
+.gov-table tr.total-row td {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+/* Work Description Text Wrapping & Readable Width */
+.gov-table td.work-desc,
+.gov-table td.cell-wrap,
+.work-desc-cell {
+  max-width: 340px !important;
+  min-width: 180px !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  line-height: 1.4 !important;
+  font-size: 0.74rem !important;
+  text-align: left !important;
+  padding-left: 8px !important;
+}
+
+.gov-table tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.gov-table tr:hover {
+  background-color: #eff6ff;
+}
+
+.gov-table tr.total-row {
+  background-color: #dbeafe !important;
+  font-weight: 700;
+  border-top: 2px solid #1e40af;
+  border-bottom: 2px solid #1e40af;
+}
+
+.gov-table tr.total-row td {
+  color: #1e3a8a;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Badge styles */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-completed {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.status-progress {
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.status-pending {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
+.status-dispute {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+  border: 1px solid #d8b4fe;
+}
+
+/* Sticky Headers */
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Fixed Multi-Tier Scroll for MPR Annexure "B" & District Capex Scheme Tables */
+#mpr-table-scroll-container,
+.scheme-table-scroll-container {
+  max-height: calc(100vh - 220px);
+  min-height: 480px;
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
+}
+
+#mpr-table-scroll-container thead,
+.scheme-table-scroll-container thead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: #1e3a8a;
+}
+
+#mpr-table-scroll-container thead tr,
+.scheme-table-scroll-container thead tr {
+  background-color: #1e3a8a;
+}
+
+#mpr-table-scroll-container thead tr:nth-child(1) th,
+.scheme-table-scroll-container thead tr:nth-child(1) th {
+  top: 0;
+  z-index: 22;
+  background-color: #1e3a8a;
+}
+
+#mpr-table-scroll-container thead tr:nth-child(2) th,
+.scheme-table-scroll-container thead tr:nth-child(2) th {
+  top: 27px;
+  z-index: 21;
+  background-color: #1e3a8a;
+}
+
+#mpr-table-scroll-container thead tr:nth-child(3) th,
+.scheme-table-scroll-container thead tr:nth-child(3) th {
+  top: 54px;
+  z-index: 20;
+  background-color: #1e3a8a;
+}
+
+#mpr-table-scroll-container thead tr:nth-child(1) th[rowspan],
+.scheme-table-scroll-container thead tr:nth-child(1) th[rowspan] {
+  z-index: 23;
+}
+
+#mpr-table-scroll-container thead tr:nth-child(2) th[rowspan],
+.scheme-table-scroll-container thead tr:nth-child(2) th[rowspan] {
+  z-index: 22;
+}
+
+#mpr-table-scroll-container th.sticky.right-0,
+.scheme-table-scroll-container th.sticky.right-0 {
+  right: 0;
+  z-index: 25;
+}
+
+/* Fixed Multi-Tier Scroll for Consolidated Capex Abstract Tables */
+.abstract-table-scroll-container {
+  max-height: calc(100vh - 240px);
+  min-height: 460px;
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
+}
+
+.abstract-table-scroll-container thead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.abstract-table-scroll-container thead tr:nth-child(1) th {
+  position: sticky;
+  top: 0;
+  z-index: 22;
+  height: 38px;
+}
+
+.abstract-table-scroll-container thead tr:nth-child(2) th {
+  position: sticky;
+  top: 38px;
+  z-index: 21;
+}
+
+.abstract-table-scroll-container thead tr:nth-child(1) th[rowspan] {
+  z-index: 23;
+}
+
+/* ==========================================================
+   EXECUTIVE DIGITAL CARDS & SCHEME TAB BUTTONS
+   ========================================================== */
+.tab-btn, .scheme-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.85rem;
+  font-size: 0.73rem;
+  font-weight: 800;
+  border-radius: 0.75rem;
+  white-space: nowrap;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+}
+
+/* Base Hover Motion */
+.tab-btn:hover, .scheme-tab-btn:hover {
+  transform: translateY(-1.5px);
+}
+.tab-btn:active, .scheme-tab-btn:active {
+  transform: translateY(0);
+}
+
+/* 1. MPR Tab (Rose-Red Soft Pill Card) */
+.scheme-tab-btn[data-scheme="mpr"] {
+  background: #fff1f2 !important;
+  color: #9f1239 !important;
+  border-color: #fecdd3 !important;
+  box-shadow: 0 1.5px 4px rgba(225, 29, 72, 0.08);
+}
+.scheme-tab-btn[data-scheme="mpr"] i { color: #e11d48; }
+.scheme-tab-btn[data-scheme="mpr"]:hover {
+  background: #ffe4e6 !important;
+  border-color: #fda4af !important;
+  color: #881337 !important;
+  box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2) !important;
+}
+.scheme-tab-btn[data-scheme="mpr"].active {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  color: #ffffff !important;
+  border-color: #881337 !important;
+  box-shadow: 0 4px 16px rgba(225, 29, 72, 0.45) !important;
+  outline: 2.5px solid #fde047 !important;
+  outline-offset: 1px !important;
+  font-weight: 900 !important;
+}
+.scheme-tab-btn[data-scheme="mpr"].active i { color: #fde047 !important; }
+
+/* 2. District Capex Tab (Deep Sapphire Blue Card) */
+.scheme-tab-btn[data-scheme="capex"] {
+  background: #eff6ff !important;
+  color: #1e3a8a !important;
+  border-color: #93c5fd !important;
+  box-shadow: 0 1.5px 4px rgba(37, 99, 235, 0.08);
+}
+.scheme-tab-btn[data-scheme="capex"] i { color: #2563eb; }
+.scheme-tab-btn[data-scheme="capex"]:hover {
+  background: #dbeafe !important;
+  border-color: #60a5fa !important;
+  color: #1d4ed8 !important;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2) !important;
+}
+.scheme-tab-btn[data-scheme="capex"].active {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+  color: #ffffff !important;
+  border-color: #1e3a8a !important;
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.4) !important;
+}
+.scheme-tab-btn[data-scheme="capex"].active i { color: #fde047 !important; }
+
+/* 3. MGNREGA Scheme Tab (Warm Sunset Amber Card) */
+.scheme-tab-btn[data-scheme="mgnrega"] {
+  background: #fffbeb !important;
+  color: #78350f !important;
+  border-color: #fde68a !important;
+  box-shadow: 0 1.5px 4px rgba(217, 119, 6, 0.08);
+}
+.scheme-tab-btn[data-scheme="mgnrega"] i { color: #d97706; }
+.scheme-tab-btn[data-scheme="mgnrega"]:hover {
+  background: #fef3c7 !important;
+  border-color: #fcd34d !important;
+  color: #92400e !important;
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2) !important;
+}
+.scheme-tab-btn[data-scheme="mgnrega"].active {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  color: #ffffff !important;
+  border-color: #78350f !important;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4) !important;
+}
+.scheme-tab-btn[data-scheme="mgnrega"].active i { color: #fde047 !important; }
+
+/* 4. BDO Staff Position Tab (Crimson Rose Card) */
+.scheme-tab-btn[data-scheme="staff"] {
+  background: #fff1f2 !important;
+  color: #881337 !important;
+  border-color: #fecdd3 !important;
+  box-shadow: 0 1.5px 4px rgba(225, 29, 72, 0.08);
+}
+.scheme-tab-btn[data-scheme="staff"] i { color: #e11d48; }
+.scheme-tab-btn[data-scheme="staff"]:hover {
+  background: #ffe4e6 !important;
+  border-color: #fda4af !important;
+  color: #9f1239 !important;
+  box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2) !important;
+}
+.scheme-tab-btn[data-scheme="staff"].active {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  color: #ffffff !important;
+  border-color: #881337 !important;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4) !important;
+}
+.scheme-tab-btn[data-scheme="staff"].active i { color: #fde047 !important; }
+
+/* 5. MLA CDF Tab (Aquamarine Cyan Card) */
+.scheme-tab-btn[data-scheme="mla"] {
+  background: #ecfeff !important;
+  color: #164e63 !important;
+  border-color: #a5f3fc !important;
+  box-shadow: 0 1.5px 4px rgba(8, 145, 178, 0.08);
+}
+.scheme-tab-btn[data-scheme="mla"] i { color: #0891b2; }
+.scheme-tab-btn[data-scheme="mla"]:hover {
+  background: #cffafe !important;
+  border-color: #67e8f9 !important;
+  color: #155e75 !important;
+  box-shadow: 0 4px 10px rgba(8, 145, 178, 0.2) !important;
+}
+.scheme-tab-btn[data-scheme="mla"].active {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%) !important;
+  color: #ffffff !important;
+  border-color: #155e75 !important;
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4) !important;
+}
+.scheme-tab-btn[data-scheme="mla"].active i { color: #fde047 !important; }
+
+/* 6. SBM-G Tab (Fresh Leaf Emerald Card) */
+.scheme-tab-btn[data-scheme="sbmg"] {
+  background: #f0fdf4 !important;
+  color: #14532d !important;
+  border-color: #bbf7d0 !important;
+  box-shadow: 0 1.5px 4px rgba(22, 163, 74, 0.08);
+}
+.scheme-tab-btn[data-scheme="sbmg"] i { color: #16a34a; }
+.scheme-tab-btn[data-scheme="sbmg"]:hover {
+  background: #dcfce7 !important;
+  border-color: #86efac !important;
+  color: #166534 !important;
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.2) !important;
+}
+.scheme-tab-btn[data-scheme="sbmg"].active {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+  color: #ffffff !important;
+  border-color: #14532d !important;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4) !important;
+}
+.scheme-tab-btn[data-scheme="sbmg"].active i { color: #fde047 !important; }
+
+/* 7. Master View (185) Tab (Royal Violet Card) */
+.scheme-tab-btn[data-scheme="master"] {
+  background: #f5f3ff !important;
+  color: #4c1d95 !important;
+  border-color: #ddd6fe !important;
+  box-shadow: 0 1.5px 4px rgba(124, 58, 237, 0.08);
+}
+.scheme-tab-btn[data-scheme="master"] i { color: #7c3aed; }
+.scheme-tab-btn[data-scheme="master"]:hover {
+  background: #ede9fe !important;
+  border-color: #c4b5fd !important;
+  color: #5b21b6 !important;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2) !important;
+}
+.scheme-tab-btn[data-scheme="master"].active {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  color: #ffffff !important;
+  border-color: #4c1d95 !important;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4) !important;
+}
+.scheme-tab-btn[data-scheme="master"].active i { color: #fde047 !important; }
+
+/* 8. Dynamic Report Builder Tab (Indigo / Sparkle Executive Card) */
+.scheme-tab-btn[data-scheme="custom_report"] {
+  background: #eef2ff !important;
+  color: #312e81 !important;
+  border-color: #c7d2fe !important;
+  box-shadow: 0 1.5px 4px rgba(79, 70, 229, 0.1);
+}
+.scheme-tab-btn[data-scheme="custom_report"] i { color: #4f46e5; }
+.scheme-tab-btn[data-scheme="custom_report"]:hover {
+  background: #e0e7ff !important;
+  border-color: #a5b4fc !important;
+  color: #3730a3 !important;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
+}
+.scheme-tab-btn[data-scheme="custom_report"].active {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+  color: #ffffff !important;
+  border-color: #312e81 !important;
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.45) !important;
+}
+.scheme-tab-btn[data-scheme="custom_report"].active i { color: #fde047 !important; }
+
+/* 9. Kathua Sync Tab (Forest Green Live Sync Card) */
+.scheme-tab-btn[data-scheme="kathua_sync"] {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%) !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+  box-shadow: 0 2px 6px rgba(6, 78, 59, 0.3);
+}
+.scheme-tab-btn[data-scheme="kathua_sync"]:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%) !important;
+  box-shadow: 0 4px 12px rgba(6, 95, 70, 0.4) !important;
+}
+.scheme-tab-btn[data-scheme="kathua_sync"].active {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  border-color: #fde047 !important;
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.5) !important;
+}
+
+/* SUB-NAV BUTTONS (Modern Executive Digital Colored Cards) */
+.tab-btn {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.05);
+  font-weight: 800;
+  padding: 0.45rem 0.95rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+}
+.tab-btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.tab-btn:active {
+  transform: translateY(0);
+}
+.tab-btn span[class*="rounded"] {
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.45rem;
+  font-size: 0.65rem;
+  border: 1px solid transparent;
+}
+
+/* 1. PRI Capex (Blue Theme) */
+.tab-btn[data-tab="mpr_pri"],
+.tab-btn[data-tab="pri"] {
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-color: #bfdbfe;
+}
+.tab-btn[data-tab="mpr_pri"] span[class*="rounded"],
+.tab-btn[data-tab="pri"] span[class*="rounded"] {
+  background: #dbeafe;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+.tab-btn[data-tab="mpr_pri"]:hover,
+.tab-btn[data-tab="pri"]:hover {
+  background: #dbeafe;
+  border-color: #60a5fa;
+  color: #1d4ed8;
+}
+.tab-btn[data-tab="mpr_pri"].active,
+.tab-btn[data-tab="pri"].active {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+  color: #ffffff !important;
+  border-color: #172554 !important;
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.4) !important;
+}
+.tab-btn[data-tab="mpr_pri"].active span[class*="rounded"],
+.tab-btn[data-tab="pri"].active span[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 2. DDC Capex (Purple / Indigo Theme) */
+.tab-btn[data-tab="mpr_ddc"],
+.tab-btn[data-tab="ddc"] {
+  background: #f5f3ff;
+  color: #4c1d95;
+  border-color: #ddd6fe;
+}
+.tab-btn[data-tab="mpr_ddc"] span[class*="rounded"],
+.tab-btn[data-tab="ddc"] span[class*="rounded"] {
+  background: #ede9fe;
+  color: #5b21b6;
+  border-color: #c4b5fd;
+}
+.tab-btn[data-tab="mpr_ddc"]:hover,
+.tab-btn[data-tab="ddc"]:hover {
+  background: #ede9fe;
+  border-color: #a78bfa;
+  color: #5b21b6;
+}
+.tab-btn[data-tab="mpr_ddc"].active,
+.tab-btn[data-tab="ddc"].active {
+  background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+  color: #ffffff !important;
+  border-color: #3b0764 !important;
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.4) !important;
+}
+.tab-btn[data-tab="mpr_ddc"].active span[class*="rounded"],
+.tab-btn[data-tab="ddc"].active span[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 3. BDC Capex (Amber Theme) */
+.tab-btn[data-tab="mpr_bdc"],
+.tab-btn[data-tab="bdc"] {
+  background: #fffbeb;
+  color: #78350f;
+  border-color: #fde68a;
+}
+.tab-btn[data-tab="mpr_bdc"] span[class*="rounded"],
+.tab-btn[data-tab="bdc"] span[class*="rounded"] {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fcd34d;
+}
+.tab-btn[data-tab="mpr_bdc"]:hover,
+.tab-btn[data-tab="bdc"]:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+.tab-btn[data-tab="mpr_bdc"].active,
+.tab-btn[data-tab="bdc"].active {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  color: #ffffff !important;
+  border-color: #78350f !important;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4) !important;
+}
+.tab-btn[data-tab="mpr_bdc"].active span[class*="rounded"],
+.tab-btn[data-tab="bdc"].active span[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 4. APDP Capex (Cyan Theme) */
+.tab-btn[data-tab="mpr_apdp"],
+.tab-btn[data-tab="apdp"] {
+  background: #ecfeff;
+  color: #164e63;
+  border-color: #a5f3fc;
+}
+.tab-btn[data-tab="mpr_apdp"] span[class*="rounded"],
+.tab-btn[data-tab="apdp"] span[class*="rounded"] {
+  background: #cffafe;
+  color: #0e7490;
+  border-color: #67e8f9;
+}
+.tab-btn[data-tab="mpr_apdp"]:hover,
+.tab-btn[data-tab="apdp"]:hover {
+  background: #cffafe;
+  border-color: #06b6d4;
+  color: #0e7490;
+}
+.tab-btn[data-tab="mpr_apdp"].active,
+.tab-btn[data-tab="apdp"].active {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%) !important;
+  color: #ffffff !important;
+  border-color: #164e63 !important;
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4) !important;
+}
+.tab-btn[data-tab="mpr_apdp"].active span[class*="rounded"],
+.tab-btn[data-tab="apdp"].active span[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 5. ST / Tribal (Orange Theme) */
+.tab-btn[data-tab="mpr_st"],
+.tab-btn[data-tab="st"] {
+  background: #fff7ed;
+  color: #7c2d12;
+  border-color: #fed7aa;
+}
+.tab-btn[data-tab="mpr_st"] span[class*="rounded"],
+.tab-btn[data-tab="st"] span[class*="rounded"] {
+  background: #ffedd5;
+  color: #9a3412;
+  border-color: #fdba74;
+}
+.tab-btn[data-tab="mpr_st"]:hover,
+.tab-btn[data-tab="st"]:hover {
+  background: #ffedd5;
+  border-color: #f97316;
+  color: #9a3412;
+}
+.tab-btn[data-tab="mpr_st"].active,
+.tab-btn[data-tab="st"].active {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  color: #ffffff !important;
+  border-color: #7c2d12 !important;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
+}
+.tab-btn[data-tab="mpr_st"].active span[class*="rounded"],
+.tab-btn[data-tab="st"].active span[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 6. Consolidated Capex Abstract & Meeting Abstract Soft Pills */
+.tab-btn[data-tab="mpr_abstract"],
+.tab-btn[data-tab="capex_abstract"],
+.tab-btn[data-tab="meeting_abstract"],
+.tab-btn[data-tab="mpr_meeting_abstract"] {
+  background: #eff6ff !important;
+  color: #1e3a8a !important;
+  border: 1.5px solid #bfdbfe !important;
+  box-shadow: 0 1.5px 3px rgba(37, 99, 235, 0.08) !important;
+}
+.tab-btn[data-tab="mpr_abstract"] span[class*="rounded"],
+.tab-btn[data-tab="capex_abstract"] span[class*="rounded"],
+.tab-btn[data-tab="meeting_abstract"] span[class*="rounded"],
+.tab-btn[data-tab="mpr_meeting_abstract"] span[class*="rounded"] {
+  background: #dbeafe !important;
+  color: #1e40af !important;
+  border-color: #bfdbfe !important;
+}
+.tab-btn[data-tab="mpr_abstract"]:hover,
+.tab-btn[data-tab="capex_abstract"]:hover,
+.tab-btn[data-tab="meeting_abstract"]:hover,
+.tab-btn[data-tab="mpr_meeting_abstract"]:hover {
+  background: #dbeafe !important;
+  border-color: #60a5fa !important;
+  color: #1d4ed8 !important;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15) !important;
+}
+.tab-btn[data-tab="mpr_abstract"].active,
+.tab-btn[data-tab="capex_abstract"].active,
+.tab-btn[data-tab="meeting_abstract"].active,
+.tab-btn[data-tab="mpr_meeting_abstract"].active {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+  color: #ffffff !important;
+  border-color: #172554 !important;
+  box-shadow: 0 6px 18px rgba(29, 78, 216, 0.45) !important;
+  outline: 2.5px solid #60a5fa !important;
+  outline-offset: 1px !important;
+  font-weight: 900 !important;
+  transform: translateY(-2px) scale(1.02) !important;
+}
+.tab-btn[data-tab="mpr_abstract"].active span[class*="rounded"],
+.tab-btn[data-tab="capex_abstract"].active span[class*="rounded"],
+.tab-btn[data-tab="meeting_abstract"].active span[class*="rounded"],
+.tab-btn[data-tab="mpr_meeting_abstract"].active span[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 7. Action Upload Buttons */
+.tab-action-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important;
+  border-color: #064e3b !important;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35) !important;
+}
+.tab-action-btn:hover {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45) !important;
+}
+.tab-action-btn span[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 8. Dynamic Report, Master & Other Views */
+.tab-btn[data-tab="dynamic_report"] {
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-color: #bfdbfe;
+}
+.tab-btn[data-tab="dynamic_report"].active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+  border-color: #172554 !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
+}
+
+.tab-btn[data-tab="master"] {
+  background: #faf5ff;
+  color: #581c87;
+  border-color: #e9d5ff;
+}
+.tab-btn[data-tab="master"].active {
+  background: linear-gradient(135deg, #7e22ce 0%, #6b21a8 100%) !important;
+  color: #ffffff !important;
+  border-color: #3b0764 !important;
+  box-shadow: 0 4px 14px rgba(126, 34, 206, 0.4) !important;
+}
+
+.tab-btn[data-tab="dashboard"] {
+  background: #f0fdfa;
+  color: #134e4a;
+  border-color: #99f6e4;
+}
+.tab-btn[data-tab="dashboard"].active {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+  color: #ffffff !important;
+  border-color: #134e4a !important;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.4) !important;
+}
+
+.tab-btn[data-tab="mgnrega_works"],
+.tab-btn[data-tab="mgnrega_summary"] {
+  background: #fffbeb;
+  color: #78350f;
+  border-color: #fde68a;
+}
+.tab-btn[data-tab="mgnrega_works"].active,
+.tab-btn[data-tab="mgnrega_summary"].active {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  color: #ffffff !important;
+  border-color: #78350f !important;
+}
+
+.tab-btn[data-tab="staff_panchayats"],
+.tab-btn[data-tab="staff_office"] {
+  background: #fff1f2;
+  color: #881337;
+  border-color: #fecdd3;
+}
+.tab-btn[data-tab="staff_panchayats"].active,
+.tab-btn[data-tab="staff_office"].active {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  color: #ffffff !important;
+  border-color: #881337 !important;
+}
+
+.tab-btn[data-tab="mla"],
+.tab-btn[data-tab="mla_abstract"] {
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-color: #bfdbfe;
+}
+.tab-btn[data-tab="mla"].active,
+.tab-btn[data-tab="mla_abstract"].active {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  color: #ffffff !important;
+  border-color: #0c4a6e !important;
+}
+
+.tab-btn[data-tab="sbmg"] {
+  background: #f0fdf4;
+  color: #064e3b;
+  border-color: #bbf7d0;
+}
+.tab-btn[data-tab="sbmg"].active {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important;
+  border-color: #064e3b !important;
+}
+
+.tab-btn[data-tab="kathua_sync"] {
+  background: #f0fdf4;
+  color: #064e3b;
+  border-color: #bbf7d0;
+}
+.tab-btn[data-tab="kathua_sync"].active {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important;
+  border-color: #064e3b !important;
+}
+
+/* Print Specific Rules (Full Table without clipping) */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 5mm 4mm;
+  }
+
+  *, *:before, *:after {
+    box-sizing: border-box !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 6pt !important;
+  }
+
+  .no-print,
+  #navbar,
+  #tab-buttons,
+  #panchayat-bar,
+  #filter-toolbar,
+  #action-buttons,
+  .action-col,
+  .modal,
+  footer.web-footer {
+    display: none !important;
+  }
+
+  .print-only,
+  .print-header {
+    display: block !important;
+  }
+
+  main,
+  #main-content,
+  .table-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .gov-table {
+    width: 100% !important;
+    min-width: 100% !important;
+    table-layout: auto !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+
+  .gov-table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .gov-table th {
+    background-color: #f1f5f9 !important;
+    color: #000000 !important;
+    border: 0.5pt solid #000000 !important;
+    font-size: 5.5pt !important;
+    padding: 2.5px 3.5px !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .gov-table td {
+    color: #000000 !important;
+    border: 0.5pt solid #000000 !important;
+    font-size: 5.5pt !important;
+    padding: 2px 3px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+
+  .gov-table td.work-desc {
+    max-width: 150px !important;
+    font-size: 5pt !important;
+  }
+
+  .gov-table tr.total-row {
+    background-color: #e2e8f0 !important;
+    font-weight: bold !important;
+    border: 1pt solid #1e3a8a !important;
+  }
+
+  .print-header {
+    width: 100% !important;
+    text-align: center;
+    margin-bottom: 12px;
+    border-bottom: 3px double #1e3a8a;
+    padding-bottom: 6px;
+  }
+
+  .print-header h1 {
+    font-size: 21pt;
+    font-weight: 900;
+    margin: 0 0 3px 0;
+    color: #1e3a8a;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.15;
+  }
+
+  .print-header h2 {
+    font-size: 12pt;
+    font-weight: 800;
+    margin: 0 0 2px 0;
+    color: #0f172a;
+    letter-spacing: 0.3px;
+  }
+
+  .print-header p {
+    font-size: 8pt;
+    margin: 0;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .print-signatures {
+    display: flex !important;
+    justify-content: space-between;
+    margin-top: 24px;
+    page-break-inside: avoid;
+    padding-top: 8px;
+  }
+
+  .sig-block {
+    text-align: left;
+    width: 250px;
+    font-size: 7.5pt;
+  }
+
+  .sig-block.sig-right {
+    text-align: right;
+  }
+
+  .sig-line {
+    margin-top: 6px;
+    height: 45px;
+    display: block;
+  }
+}
+
+/* Compact Dashboard Matrix Table */
+.compact-dashboard-table {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ============================================================= */
+/* EXECUTIVE DIGITAL KPI CARDS (Centered Clean Soft Pastel Style) */
+/* Exact 1-to-1 match to reference cards from BMO Staff Portal   */
+/* ============================================================= */
+.metric-card {
+  border-radius: 1.15rem; /* ~18px */
+  padding: 1.15rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  border-width: 1.5px;
+  border-style: solid;
+  position: relative;
+}
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+.metric-card .metric-title {
+  font-size: 0.72rem; /* ~11.5px */
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  line-height: 1.25;
+}
+.metric-card .metric-val {
+  font-size: 2.1rem; /* ~33px */
+  font-weight: 900;
+  text-align: center;
+  margin-top: 0.35rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+.metric-card .metric-sub {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.35rem;
+  line-height: 1.25;
+}
+
+/* 1. Cyan / Pale Ice-Blue Card (SANCTIONED / TOTAL WORKS) */
+.metric-card-cyan {
+  background: #f0fdfa; /* soft cyan-50 */
+  border-color: #99f6e4; /* teal-200 */
+}
+.metric-card-cyan .metric-title {
+  color: #334155;
+}
+.metric-card-cyan .metric-val {
+  color: #0f172a;
+}
+.metric-card-cyan .metric-sub {
+  color: #64748b;
+}
+
+/* 2. Soft Mint Green Card (IN POSITION / PHYSICALLY COMPLETED) */
+.metric-card-green {
+  background: #f0fdf4; /* soft emerald-50 */
+  border-color: #a7f3d0; /* emerald-200 */
+}
+.metric-card-green .metric-title {
+  color: #065f46;
+}
+.metric-card-green .metric-val {
+  color: #0f172a;
+}
+.metric-card-green .metric-sub {
+  color: #047857;
+}
+
+/* 3. Soft Peach / Rose Card (VACANCIES / PENDING / DELAY) */
+.metric-card-rose {
+  background: #fff1f2; /* soft rose-50 */
+  border-color: #fecdd3; /* rose-200 */
+}
+.metric-card-rose .metric-title {
+  color: #9f1239;
+}
+.metric-card-rose .metric-val {
+  color: #0f172a;
+}
+.metric-card-rose .metric-sub {
+  color: #be123c;
+}
+
+/* 4. Soft Warm Amber / Yellow Card (ATTACHED / IN PROGRESS / ONGOING) */
+.metric-card-amber {
+  background: #fffbeb; /* soft amber-50 */
+  border-color: #fde68a; /* amber-200 */
+}
+.metric-card-amber .metric-title {
+  color: #92400e;
+}
+.metric-card-amber .metric-val {
+  color: #0f172a;
+}
+.metric-card-amber .metric-sub {
+  color: #b45309;
+}
+
+/* 5. Soft Sky Blue Card (TRANSFERS / FINANCIAL ALLOCATIONS) */
+.metric-card-blue {
+  background: #eff6ff; /* soft blue-50 */
+  border-color: #bfdbfe; /* blue-200 */
+}
+.metric-card-blue .metric-title {
+  color: #1e40af;
+}
+.metric-card-blue .metric-val {
+  color: #0f172a;
+}
+.metric-card-blue .metric-sub {
+  color: #2563eb;
+}
+
+/* ==========================================================
+   PROMINENT ACTIVE TAB HIGHLIGHT (Universal Instant Recognition)
+   ========================================================== */
+.tab-btn.active {
+  outline: 2.5px solid #3b82f6 !important;
+  outline-offset: 1.5px !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-2px) scale(1.03) !important;
+  font-weight: 900 !important;
+}
+.scheme-tab-btn.active {
+  outline: 2.5px solid #fde047 !important;
+  outline-offset: 1.5px !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(-2px) scale(1.03) !important;
+  font-weight: 900 !important;
+}
+
+/* Fixed Header Support for Dynamic Reports & Master Scheme Tables */
+.master-scheme-table thead,
+.master-scheme-table thead tr,
+.master-scheme-table thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 25 !important;
+  background-color: #1e3a8a !important;
+  color: #ffffff !important;
+}
+
+.scheme-table-scroll-container table thead,
+.scheme-table-scroll-container table thead tr,
+.scheme-table-scroll-container table thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 25 !important;
+  background-color: #1e3a8a !important;
+  color: #ffffff !important;
+}
+
+/* ==========================================================
+   STRICT MOBILE-ONLY RESPONSIVE VIEW (@media max-width: 768px)
+   (Desktop layout is 100% Untouched and Preserved)
+   ========================================================== */
+@media (max-width: 768px) {
+  /* Prevent horizontal scroll bleed on mobile */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* 1. Header & Action Buttons */
+  #navbar .max-w-\[1850px\] {
+    padding-left: 0.65rem !important;
+    padding-right: 0.65rem !important;
+  }
+  #action-buttons {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.4rem !important;
+    margin-top: 0.35rem !important;
+  }
+  #action-buttons button {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0.45rem 0.25rem !important;
+    font-size: 11px !important;
+    border-radius: 0.65rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* 2. Compact Panchayat Bar (Pyt Dropdown) */
+  #panchayat-bar {
+    padding: 0.45rem 0.35rem !important;
+  }
+  #panchayat-bar > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.45rem !important;
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+  }
+  #panchayat-select-wrapper {
+    width: 100% !important;
+    border-right: none !important;
+    padding-right: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+  }
+  #panchayat-select {
+    flex: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 11px !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* 3. Master Scheme Buttons (9 Buttons -> 3 Rows of 3) */
+  #master-scheme-tabs {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.35rem !important;
+    width: 100% !important;
+    overflow-x: visible !important;
+    padding-bottom: 0 !important;
+  }
+  #master-scheme-tabs .scheme-tab-btn {
+    width: 100% !important;
+    padding: 0.45rem 0.2rem !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 0.25rem !important;
+    white-space: normal !important;
+    line-height: 1.15 !important;
+    border-radius: 0.65rem !important;
+    box-sizing: border-box !important;
+    min-height: 42px !important;
+  }
+  #master-scheme-tabs .scheme-tab-btn span {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    word-break: break-word !important;
+  }
+  #master-scheme-tabs .scheme-tab-btn i {
+    font-size: 11px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 4. Sub-Navigation Views Bar (4 Buttons -> 2 Rows of 2) */
+  #sub-nav-bar {
+    padding: 0.45rem 0.35rem !important;
+  }
+  #sub-nav-bar > div {
+    overflow-x: visible !important;
+    width: 100% !important;
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+  }
+  #sub-nav-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.45rem !important;
+    width: 100% !important;
+  }
+  #sub-nav-buttons > span {
+    grid-column: 1 / -1 !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    padding-left: 0.25rem !important;
+    margin-bottom: 0.45rem !important;
+    color: #475569 !important;
+  }
+  #sub-nav-buttons .tab-btn {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0.5rem 0.4rem !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 0.25rem !important;
+    white-space: normal !important;
+    line-height: 1.22 !important;
+    border-radius: 0.75rem !important;
+    box-sizing: border-box !important;
+    min-height: 48px !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  #sub-nav-buttons .tab-action-btn.staff-action-full {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    min-height: 44px !important;
+  }
+  #sub-nav-buttons .tab-btn span {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    word-break: break-word !important;
+  }
+  #sub-nav-buttons .tab-btn .badge {
+    margin-left: 0.25rem !important;
+    font-size: 9.5px !important;
+    padding: 0.1rem 0.35rem !important;
+  }
+
+  /* Hide Search bar on mobile across filter toolbar */
+  #filter-toolbar #global-search,
+  #filter-toolbar .min-w-\[280px\] {
+    display: none !important;
+  }
+
+  /* 8. Table Specific Mobile Column Widths & Wrap Text Fixes */
+  /* Work Code: Single line, full code */
+  .col-work-code {
+    white-space: nowrap !important;
+    min-width: 130px !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Physical Status: Compact width with wrapped badge text */
+  .col-status {
+    min-width: 105px !important;
+    max-width: 125px !important;
+    white-space: normal !important;
+    padding: 0.35rem 0.25rem !important;
+  }
+  .col-status .badge-status {
+    white-space: normal !important;
+    display: inline-block !important;
+    text-align: center !important;
+    padding: 0.2rem 0.45rem !important;
+    line-height: 1.18 !important;
+    font-size: 0.65rem !important;
+  }
+
+  /* Date of Start & Date of Completion: Exact single-line width, no breaking or stretching */
+  .col-date {
+    white-space: nowrap !important;
+    min-width: 92px !important;
+    max-width: 105px !important;
+    font-size: 0.72rem !important;
+    text-align: center !important;
+  }
+
+  /* JE / TA: 2 Lines Wrap Text (e.g. 'RDD' on line 1, 'Staff' on line 2) */
+  .col-jeta {
+    min-width: 72px !important;
+    max-width: 92px !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    text-align: center !important;
+    line-height: 1.25 !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* 5. Mobile Dynamic Report Full-Width Touch Buttons */
+  #dynamic-mode-col-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.5rem !important;
+  }
+  #dynamic-mode-col-buttons button,
+  #dynamic-mode-col-buttons > div {
+    width: 100% !important;
+  }
+  #dynamic-mode-col-buttons button {
+    min-height: 42px !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    border-radius: 0.75rem !important;
+  }
+
+  /* 6. Mobile Scheme Selector Full Width */
+  #mpr-scheme-selector,
+  #meeting-scheme-selector {
+    width: 100% !important;
+    font-size: 11.5px !important;
+    min-height: 42px !important;
+    border-radius: 0.75rem !important;
+  }
+
+  /* 7. Summary Meeting KPI Cards on Mobile (Prevent 'L' wrapping & huge Works font) */
+  .metric-card {
+    padding: 0.85rem 0.55rem !important;
+  }
+  .metric-card .metric-title {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.02em !important;
+  }
+  .metric-card .metric-val {
+    font-size: 1.32rem !important;
+    white-space: nowrap !important;
+    line-height: 1.15 !important;
+    margin-top: 0.25rem !important;
+  }
+  .metric-card .metric-sub {
+    font-size: 0.65rem !important;
+    margin-top: 0.2rem !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* ==========================================================
+   WORK NAME CELL WIDTH & READABILITY (All Tables)
+   Allows long work descriptions to span up to 3 readable lines
+   without narrow syllable clipping
+   ========================================================== */
+/* Work Name Column Only (Only actual work descriptions, NOT abstract tables) */
+th.col-work-name,
+td.col-work-name,
+th.scrutiny-work-name,
+td.scrutiny-work-name,
+.work-name-cell,
+[data-col="name"] {
+  min-width: 280px !important;
+  max-width: 480px !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  line-height: 1.38 !important;
+}
+
+/* ==========================================================
+   HIDE NETLIFY BADGE & DRAWER (Keep Government Portal 100% Clean)
+   ========================================================== */
+#nl-hud-frame,
+#nl-badge-frame,
+iframe#nl-hud-frame,
+iframe#nl-badge-frame,
+#netlify-badge,
+.netlify-badge,
+[data-netlify-badge],
+netlify-drawer,
+iframe#netlify-drawer,
+div[class*="netlify"],
+div[data-testid*="netlify"],
+button[class*="netlify"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+
