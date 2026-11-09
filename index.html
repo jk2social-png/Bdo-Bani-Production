@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BDO Bani - District Capex, MGNREGA, MLA CDF & Administrative Management Portal</title>
 
+  <!-- PWA Web App Manifest & Mobile App Capabilities -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#091428">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BDO Bani">
+  <link rel="apple-touch-icon" href="app_logo.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -246,6 +255,11 @@
             <i class="fa-solid fa-file-pdf"></i>
             <span class="hidden sm:inline">Print / PDF</span>
             <span class="inline sm:hidden font-bold">Print / PDF</span>
+          </button>
+          <button id="pwa-install-header-btn" onclick="triggerPwaInstall()" class="hidden px-3.5 py-1.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-amber-500/25 transition-all items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer" title="Install BDO Bani on Desktop PC or Mobile Home Screen">
+            <i class="fa-solid fa-download"></i>
+            <span class="hidden md:inline">Install Web App</span>
+            <span class="inline md:hidden font-bold">Install</span>
           </button>
           <button onclick="handlePortalLogout()" class="px-3 py-1.5 bg-rose-600/80 hover:bg-rose-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer ml-1" title="Sign Out of BDO Bani Portal">
             <i class="fa-solid fa-right-from-bracket"></i>
