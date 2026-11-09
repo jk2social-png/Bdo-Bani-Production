@@ -132,6 +132,37 @@
           <span>Official Sign In</span>
         </button>
       </form>
+
+      <!-- Legal Disclaimer & Internal Workflow Notice (Attachment 3) -->
+      <div class="mt-5 pt-3.5 border-t border-slate-100 text-center select-none">
+        <div class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+          <i class="fa-solid fa-shield-halved text-blue-600"></i>
+          <span>Internal Workflow Disclaimer</span>
+        </div>
+        <p class="text-[9.5px] leading-relaxed text-slate-400 font-medium text-center">
+          <strong>Notice:</strong> This application is a private utility tool created solely for personal workflow digitization and internal record tracking. It is <strong>not</strong> an official government portal, nor is it associated with, owned, or endorsed by the Government of Jammu &amp; Kashmir or any public authority. Not intended for public access or public services.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CUSTOM SIGN-OUT CONFIRMATION MODAL ==================== -->
+  <!-- Eliminates browser confirm() and prevents any Netlify or domain notice -->
+  <div id="bdo-signout-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 text-center text-slate-800 m-auto">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center text-2xl mb-4 shadow-sm">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </div>
+      <h3 class="text-base font-black text-slate-950 mb-1.5 font-gov">Sign Out Confirmation</h3>
+      <p class="text-xs font-semibold text-slate-600 mb-6">Are you sure you want to sign out of BDO Bani Portal?</p>
+      <div class="flex items-center justify-center gap-3">
+        <button type="button" onclick="closeSignOutModal()" class="flex-1 py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer">
+          Cancel
+        </button>
+        <button type="button" onclick="confirmSignOut()" class="flex-1 py-2.5 px-4 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-extrabold text-xs rounded-xl shadow-md shadow-rose-600/25 transition-all cursor-pointer">
+          Sign Out
+        </button>
+      </div>
     </div>
   </div>
 
