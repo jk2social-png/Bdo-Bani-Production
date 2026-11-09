@@ -1474,6 +1474,21 @@ button[class*="netlify"] {
 /* ==========================================================
    ELECTRON WINDOWS DESKTOP APP INTEGRATION
    ========================================================== */
+html, body {
+  background-color: #020617;
+}
+
+#bdo-login-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  background: radial-gradient(circle at 50% 20%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
+  overflow-y: auto !important;
+}
+
 .bdo-desktop-app #navbar {
   -webkit-app-region: drag;
   user-select: none;
