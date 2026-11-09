@@ -1471,4 +1471,25 @@ button[class*="netlify"] {
   pointer-events: none !important;
 }
 
+/* ==========================================================
+   ELECTRON WINDOWS DESKTOP APP INTEGRATION
+   ========================================================== */
+.bdo-desktop-app #navbar {
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+.bdo-desktop-app #navbar button,
+.bdo-desktop-app #navbar input,
+.bdo-desktop-app #navbar select,
+.bdo-desktop-app #navbar a,
+.bdo-desktop-app #navbar #live-clock {
+  -webkit-app-region: no-drag;
+}
+
+.bdo-desktop-app #navbar > div {
+  padding-right: 145px !important; /* Elegant right padding so action buttons & Sign Out never touch or overlap window controls */
+}
+
+
 
