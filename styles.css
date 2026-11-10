@@ -1506,5 +1506,68 @@ html, body {
   padding-right: 145px !important; /* Elegant right padding so action buttons & Sign Out never touch or overlap window controls */
 }
 
+/* ==========================================================
+   OFFICIAL PRESTIGIOUS ANIMATED SPLASH SCREEN (Matches Android SplashActivity)
+   ========================================================== */
+#bdo-splash-screen {
+  background: radial-gradient(circle at 50% 25%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
+}
+
+#splash-spinning-logo {
+  animation: spinInBdoLogo 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes spinInBdoLogo {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+#splash-title {
+  animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+#splash-tagline {
+  animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+}
+
+#splash-subtag {
+  animation: splashFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+}
+
+#splash-loader-wrap {
+  animation: splashFadeIn 0.5s ease-out 1.1s both;
+}
+
+#splash-bottom-text {
+  animation: splashFadeIn 0.5s ease-out 1.2s both;
+}
+
+@keyframes splashFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes splashFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 
 

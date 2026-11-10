@@ -6,6 +6,126 @@
   <title>BDO Bani — District Kathua</title>
 
   <!-- PWA Web App Manifest & Mobile App Capabilities -->
+    <!-- ⚡ CRITICAL ZERO-DELAY ANTI-FLASH & SPLASH ENGINE (0ms Dark Canvas - Immune to White Screen) -->
+  <style id="bdo-critical-anti-flash">
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      min-height: 100vh !important;
+      background-color: #020617 !important;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+    #bdo-splash-screen {
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 999999 !important;
+      background: radial-gradient(circle at 50% 30%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 24px !important;
+      box-sizing: border-box !important;
+      user-select: none !important;
+      pointer-events: auto !important;
+      transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    #splash-spinning-logo {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      animation: spinInBdoLogo 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
+    }
+    @keyframes spinInBdoLogo {
+      0% {
+        opacity: 0;
+        transform: scale(0.2) rotate(-180deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(360deg);
+      }
+    }
+    #splash-title {
+      font-family: "Merriweather", Georgia, serif;
+      font-size: 2.25rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: #ffffff;
+      margin-top: 16px;
+      margin-bottom: 0;
+      line-height: 1.2;
+      animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+    }
+    #splash-tagline {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fbbf24;
+      margin-top: 8px;
+      letter-spacing: 0.05em;
+      animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+    }
+    #splash-subtag {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-top: 4px;
+      animation: splashFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
+    }
+    #splash-loader-wrap {
+      margin-top: 28px;
+      animation: splashFadeIn 0.5s ease-out 0.95s both;
+    }
+    .splash-spinner-ring {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid rgba(245, 158, 11, 0.2);
+      border-top-color: #f59e0b;
+      animation: splashRingSpin 0.9s linear infinite;
+    }
+    @keyframes splashRingSpin {
+      to { transform: rotate(360deg); }
+    }
+    #splash-bottom-text {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      text-align: center;
+      padding-bottom: 8px;
+      animation: splashFadeIn 0.5s ease-out 1.1s both;
+    }
+    @keyframes splashFadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes splashFadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    #bdo-login-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 50 !important;
+      background: radial-gradient(circle at 50% 30%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 16px !important;
+      box-sizing: border-box !important;
+      overflow-y: auto !important;
+    }
+  </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#020617">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -71,7 +191,57 @@
     })();
   </script>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-100 text-slate-800 antialiased">
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-800 antialiased" style="margin: 0; padding: 0; background-color: #020617;">
+  <!-- ========================================================================= -->
+  <!-- OFFICIAL PRESTIGIOUS ANIMATED SPLASH SCREEN (Matches Android SplashActivity) -->
+  <!-- ========================================================================= -->
+  <div id="bdo-splash-screen" class="fixed inset-0 z-[99999] bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 flex flex-col items-center justify-between p-6 select-none overflow-hidden transition-opacity duration-700">
+    <div></div>
+    
+    <div class="flex flex-col items-center text-center">
+      <!-- 360 Degree Spinning Capital B Logo -->
+      <img src="app_logo.png" id="splash-spinning-logo" class="w-36 h-36 object-contain drop-shadow-2xl mb-4" alt="BDO Bani Emblem">
+      
+      <h1 id="splash-title" class="text-3xl sm:text-4xl font-black text-white tracking-widest font-gov">
+        BDO BANI
+      </h1>
+      
+      <div id="splash-tagline" class="text-sm sm:text-base font-bold text-amber-400 mt-2 tracking-wide">
+        Department of Rural Dev. &amp; Panchayati Raj
+      </div>
+      
+      <div id="splash-subtag" class="text-xs sm:text-sm font-semibold text-slate-400 mt-1">
+        Government of Jammu &amp; Kashmir
+      </div>
+
+      <!-- Golden Indeterminate Spinner -->
+      <div id="splash-loader-wrap" class="mt-8 flex items-center justify-center">
+        <div class="splash-spinner-ring"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Footer -->
+    <div id="splash-bottom-text" class="text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wide text-center pb-2">
+      Block Development Office Bani &bull; District Kathua
+    </div>
+  </div>
+
+  <script>
+    // Smooth 3.0s Splash Screen (Capital B Logo spins into view, stays visible for 3.0s, then fades)
+    setTimeout(function() {
+      var splash = document.getElementById('bdo-splash-screen');
+      if (splash) {
+        splash.style.opacity = '0';
+        splash.style.pointerEvents = 'none';
+        setTimeout(function() {
+          if (splash.parentNode) splash.parentNode.removeChild(splash);
+        }, 650);
+      }
+    }, 3000);
+      }
+    }, 2600);
+  </script>
+
 
   <!-- ========================================================================= -->
   <!-- OFFICIAL EXECUTIVE LOGIN OVERLAY (Both Desktop View & Android Mobile App) -->
