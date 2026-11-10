@@ -869,7 +869,11 @@ body {
     padding: 0 !important;
     background-color: #ffffff !important;
     color: #000000 !important;
-    font-size: 6pt !important;
+    font-size: 5pt !important;
+    font-family: Arial, Helvetica, "Liberation Sans", sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
   }
 
   .no-print,
@@ -903,10 +907,12 @@ body {
 
   .gov-table {
     width: 100% !important;
-    min-width: 100% !important;
-    table-layout: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
     border-collapse: collapse !important;
     page-break-inside: auto;
+    font-size: 4.5pt !important;
   }
 
   .gov-table tr {
@@ -934,8 +940,10 @@ body {
   }
 
   .gov-table td.work-desc {
-    max-width: 150px !important;
-    font-size: 5pt !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    font-size: 4.5pt !important;
+    word-break: break-word !important;
   }
 
   .gov-table tr.total-row {
