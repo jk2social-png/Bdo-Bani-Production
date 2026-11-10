@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="portal-locked" lang="en" style="background-color: #020617; margin: 0; padding: 0; width: 100%; height: 100%;">
+<html class="portal-locked" lang="en" style="background-color: #020617; margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +11,24 @@
     html, body {
       margin: 0 !important;
       padding: 0 !important;
-      width: 100% !important;
-      min-height: 100vh !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
       background-color: #020617 !important;
       color: #f8fafc;
-      overflow-x: hidden;
+      overflow: hidden !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar,
+    #bdo-splash-screen::-webkit-scrollbar,
+    #bdo-login-overlay::-webkit-scrollbar,
+    .portal-locked::-webkit-scrollbar {
+      display: none !important;
+      width: 0px !important;
+      height: 0px !important;
     }
     #bdo-splash-screen {
       position: fixed !important;
@@ -24,6 +37,8 @@
       left: 0 !important;
       width: 100vw !important;
       height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
       z-index: 999999 !important;
       background: radial-gradient(circle at 50% 30%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
       display: flex !important;
@@ -34,6 +49,9 @@
       box-sizing: border-box !important;
       user-select: none !important;
       pointer-events: auto !important;
+      overflow: hidden !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
       transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     #splash-spinning-logo {
@@ -116,6 +134,8 @@
       inset: 0 !important;
       width: 100vw !important;
       height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
       z-index: 50 !important;
       background: radial-gradient(circle at 50% 30%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
       display: flex;
@@ -123,31 +143,13 @@
       justify-content: center !important;
       padding: 16px !important;
       box-sizing: border-box !important;
-      overflow-y: auto !important;
+      overflow: hidden !important;
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
     }
     #bdo-login-overlay.hidden,
     #bdo-login-overlay[style*="display: none"] {
       display: none !important;
-    }
-    #bdo-login-overlay::-webkit-scrollbar,
-    #bdo-splash-screen::-webkit-scrollbar,
-    body.portal-locked::-webkit-scrollbar,
-    html.portal-locked::-webkit-scrollbar {
-      display: none !important;
-      width: 0 !important;
-      height: 0 !important;
-    }
-    #bdo-splash-screen {
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
-    }
-    body.portal-locked,
-    html.portal-locked {
-      overflow: hidden !important;
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
     }
   </style>
   <link rel="manifest" href="manifest.json">
@@ -215,7 +217,7 @@
     })();
   </script>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-950 text-slate-800 antialiased portal-locked" style="margin: 0; padding: 0; background-color: #020617;">
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-800 antialiased portal-locked" style="margin: 0; padding: 0; background-color: #020617; width: 100vw; height: 100vh; overflow: hidden;">
   <!-- ========================================================================= -->
   <!-- OFFICIAL PRESTIGIOUS ANIMATED SPLASH SCREEN (Matches Android SplashActivity) -->
   <!-- ========================================================================= -->

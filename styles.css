@@ -845,6 +845,13 @@ body {
 
 /* Print Specific Rules (Full Table without clipping) */
 @media print {
+  html, body, div, main, #main-content, .table-container, #mpr-table-scroll-container {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    box-shadow: none !important;
+  }
+
   @page {
     size: A4 landscape;
     margin: 5mm 4mm;
