@@ -197,14 +197,12 @@ body {
   z-index: 30 !important;
 }
 
-/* MPR Tier 1 Row (Top 0) */
+/* MPR Tier 1 Row (Top 0) - Preserves original bg-slate-900 and blue headers */
 #mpr-table-scroll-container thead tr:nth-child(1) th,
 .scheme-table-scroll-container thead tr:nth-child(1) th {
   position: sticky !important;
   top: 0 !important;
   z-index: 32 !important;
-  background-color: #0f172a !important; /* solid Slate-900 */
-  color: #f8fafc !important;
 }
 
 /* MPR Tier 1 Rowspan 3 Headers (SNO, Work Name, Work Code, Block, AC, Pyt, Scheme, AAA, Tendered, Deptt, etc.) */
@@ -213,8 +211,6 @@ body {
   position: sticky !important;
   top: 0 !important;
   z-index: 35 !important;
-  background-color: #0f172a !important;
-  color: #ffffff !important;
 }
 
 /* MPR Tier 2 Row (Original Cost, Approved Budget, AAA Cost, Allotment, Released, Actual Expdt) */
@@ -223,8 +219,6 @@ body {
   position: sticky !important;
   top: 31px !important;
   z-index: 33 !important;
-  background-color: #1e3a8a !important; /* solid Blue-900 */
-  color: #e0e7ff !important;
 }
 
 /* MPR Tier 2 Rowspan 2 Headers */
@@ -233,8 +227,6 @@ body {
   position: sticky !important;
   top: 31px !important;
   z-index: 34 !important;
-  background-color: #1e3a8a !important;
-  color: #ffffff !important;
 }
 
 /* MPR Tier 3 Row (Against allotment, Against Contingency, Total) */
@@ -243,8 +235,6 @@ body {
   position: sticky !important;
   top: 73px !important;
   z-index: 31 !important;
-  background-color: #1e1b4b !important; /* solid Indigo-950 */
-  color: #c7d2fe !important;
 }
 
 /* MPR Fixed Actions Column in Top-Right Corner */
@@ -254,11 +244,10 @@ body {
   top: 0 !important;
   right: 0 !important;
   z-index: 40 !important;
-  background-color: #0f172a !important;
 }
 
 
-/* 3. CONSOLIDATED CAPEX ABSTRACT 2-ROW FIXED HEADERS (Physical & Financial Tables) */
+/* 3. CONSOLIDATED CAPEX ABSTRACT 2-ROW FIXED HEADERS (Preserves 100% of Original Multi-Colors) */
 .capex-abstract-phy-table,
 .capex-abstract-fin-table {
   border-collapse: separate !important;
@@ -272,13 +261,18 @@ body {
   z-index: 30 !important;
 }
 
-/* Capex Abstract Tier 1 Row (Top 0) */
+/* Capex Abstract Tier 1 Row (Top 0) - Allows original bg-emerald, bg-amber, bg-rose, bg-purple, bg-teal to shine! */
 .capex-abstract-phy-table thead tr:nth-child(1) th,
 .capex-abstract-fin-table thead tr:nth-child(1) th {
   position: sticky !important;
   top: 0 !important;
   z-index: 32 !important;
-  background-color: #1e3a8a !important; /* solid Blue-900 */
+}
+
+/* Default navy background for cells in Row 1 that have no specific color class */
+.capex-abstract-phy-table thead tr:nth-child(1) th:not([class*="bg-"]),
+.capex-abstract-fin-table thead tr:nth-child(1) th:not([class*="bg-"]) {
+  background-color: #1e3a8a !important;
   color: #ffffff !important;
 }
 
@@ -288,18 +282,16 @@ body {
   position: sticky !important;
   top: 0 !important;
   z-index: 35 !important;
-  background-color: #0f172a !important; /* solid Slate-900 */
-  color: #ffffff !important;
 }
 
-/* Capex Abstract Tier 2 Row (Constt, Non-Constt, Total) */
+/* Capex Abstract Tier 2 Row (Constt, Non-Constt, Total) - Original Navy Sub-Header */
 .capex-abstract-phy-table thead tr:nth-child(2) th,
 .capex-abstract-fin-table thead tr:nth-child(2) th {
   position: sticky !important;
   top: 34px !important;
   z-index: 31 !important;
-  background-color: #1e293b !important; /* solid Slate-800 */
-  color: #f1f5f9 !important;
+  background-color: #1e3a8a !important;
+  color: #ffffff !important;
 }
 
 
