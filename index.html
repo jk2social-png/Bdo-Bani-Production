@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="portal-locked" lang="en" style="background-color: #020617; margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden;">
+<html class="portal-locked" lang="en" style="background-color: #020617; margin: 0; padding: 0;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,20 +9,24 @@
     <!-- ⚡ CRITICAL ZERO-DELAY ANTI-FLASH & SPLASH ENGINE (0ms Dark Canvas - Immune to White Screen) -->
   <style id="bdo-critical-anti-flash">
     html, body {
-      margin: 0 !important;
-      padding: 0 !important;
+      margin: 0;
+      padding: 0;
+      background-color: #020617;
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+    /* Lock scrolling ONLY when portal-locked is active (Splash & Login) */
+    html.portal-locked, body.portal-locked {
       width: 100vw !important;
       height: 100vh !important;
       max-width: 100vw !important;
       max-height: 100vh !important;
-      background-color: #020617 !important;
-      color: #f8fafc;
       overflow: hidden !important;
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
     }
-    html::-webkit-scrollbar,
-    body::-webkit-scrollbar,
+    html.portal-locked::-webkit-scrollbar,
+    body.portal-locked::-webkit-scrollbar,
     #bdo-splash-screen::-webkit-scrollbar,
     #bdo-login-overlay::-webkit-scrollbar,
     .portal-locked::-webkit-scrollbar {
@@ -53,103 +57,6 @@
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
       transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    #splash-spinning-logo {
-      width: 140px;
-      height: 140px;
-      object-fit: contain;
-      animation: spinInBdoLogo 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
-    }
-    @keyframes spinInBdoLogo {
-      0% {
-        opacity: 0;
-        transform: scale(0.2) rotate(-180deg);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(360deg);
-      }
-    }
-    #splash-title {
-      font-family: "Merriweather", Georgia, serif;
-      font-size: 2.25rem;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      color: #ffffff;
-      margin-top: 16px;
-      margin-bottom: 0;
-      line-height: 1.2;
-      animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
-    }
-    #splash-tagline {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #fbbf24;
-      margin-top: 8px;
-      letter-spacing: 0.05em;
-      animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
-    }
-    #splash-subtag {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #94a3b8;
-      margin-top: 4px;
-      animation: splashFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
-    }
-    #splash-loader-wrap {
-      margin-top: 28px;
-      animation: splashFadeIn 0.5s ease-out 0.95s both;
-    }
-    .splash-spinner-ring {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 3px solid rgba(245, 158, 11, 0.2);
-      border-top-color: #f59e0b;
-      animation: splashRingSpin 0.9s linear infinite;
-    }
-    @keyframes splashRingSpin {
-      to { transform: rotate(360deg); }
-    }
-    #splash-bottom-text {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #64748b;
-      letter-spacing: 0.05em;
-      text-align: center;
-      padding-bottom: 8px;
-      animation: splashFadeIn 0.5s ease-out 1.1s both;
-    }
-    @keyframes splashFadeUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes splashFadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-    #bdo-login-overlay {
-      position: fixed !important;
-      inset: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      max-width: 100vw !important;
-      max-height: 100vh !important;
-      z-index: 50 !important;
-      background: radial-gradient(circle at 50% 30%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
-      display: flex;
-      align-items: center !important;
-      justify-content: center !important;
-      padding: 16px !important;
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
-    }
-    #bdo-login-overlay.hidden,
-    #bdo-login-overlay[style*="display: none"] {
-      display: none !important;
     }
   </style>
   <link rel="manifest" href="manifest.json">
@@ -217,7 +124,7 @@
     })();
   </script>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-950 text-slate-800 antialiased portal-locked" style="margin: 0; padding: 0; background-color: #020617; width: 100vw; height: 100vh; overflow: hidden;">
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-800 antialiased portal-locked" style="margin: 0; padding: 0; background-color: #020617;">
   <!-- ========================================================================= -->
   <!-- OFFICIAL PRESTIGIOUS ANIMATED SPLASH SCREEN (Matches Android SplashActivity) -->
   <!-- ========================================================================= -->
@@ -456,6 +363,12 @@
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-2 w-full sm:w-auto" id="action-buttons">
+          <!-- Live Google Sheet Sync Button -->
+          <button id="google-sheet-sync-btn" onclick="syncLiveGoogleSheet(true)" class="px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-700/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer" title="Sync Live Database directly from Official Google Sheet">
+            <i class="fa-solid fa-arrows-rotate" id="google-sheet-spin-icon"></i>
+            <span class="hidden sm:inline">Sync Google Sheet</span>
+            <span class="inline sm:hidden font-bold">Sync Sheet</span>
+          </button>
           <button onclick="openAddModal()" class="px-3.5 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-amber-500/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer">
             <i class="fa-solid fa-circle-plus"></i>
             <span>Add Work</span>

@@ -174,9 +174,6 @@ body {
 /* Fixed Multi-Tier Scroll for MPR Annexure "B" & District Capex Scheme Tables */
 #mpr-table-scroll-container,
 .scheme-table-scroll-container {
-  max-height: calc(100vh - 220px);
-  min-height: 480px;
-  overflow-y: auto;
   overflow-x: auto;
   position: relative;
 }
@@ -233,9 +230,6 @@ body {
 
 /* Fixed Multi-Tier Scroll for Consolidated Capex Abstract Tables */
 .abstract-table-scroll-container {
-  max-height: calc(100vh - 240px);
-  min-height: 460px;
-  overflow-y: auto;
   overflow-x: auto;
   position: relative;
 }
