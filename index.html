@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="background-color: #020617; margin: 0; padding: 0; width: 100%; height: 100%;">
+<html class="portal-locked" lang="en" style="background-color: #020617; margin: 0; padding: 0; width: 100%; height: 100%;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,12 +118,36 @@
       height: 100vh !important;
       z-index: 50 !important;
       background: radial-gradient(circle at 50% 30%, #0d1b3e 0%, #060d1e 60%, #020617 100%) !important;
-      display: flex !important;
+      display: flex;
       align-items: center !important;
       justify-content: center !important;
       padding: 16px !important;
       box-sizing: border-box !important;
       overflow-y: auto !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    #bdo-login-overlay.hidden,
+    #bdo-login-overlay[style*="display: none"] {
+      display: none !important;
+    }
+    #bdo-login-overlay::-webkit-scrollbar,
+    #bdo-splash-screen::-webkit-scrollbar,
+    body.portal-locked::-webkit-scrollbar,
+    html.portal-locked::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    #bdo-splash-screen {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    body.portal-locked,
+    html.portal-locked {
+      overflow: hidden !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
     }
   </style>
   <link rel="manifest" href="manifest.json">
@@ -191,7 +215,7 @@
     })();
   </script>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-950 text-slate-800 antialiased" style="margin: 0; padding: 0; background-color: #020617;">
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-800 antialiased portal-locked" style="margin: 0; padding: 0; background-color: #020617;">
   <!-- ========================================================================= -->
   <!-- OFFICIAL PRESTIGIOUS ANIMATED SPLASH SCREEN (Matches Android SplashActivity) -->
   <!-- ========================================================================= -->
