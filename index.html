@@ -175,6 +175,20 @@
             if (splash && splash.parentNode) {
               splash.parentNode.removeChild(splash);
             }
+            // Unlock scrolling only when splash is gone AND user is signed in or guest
+            var isAuth = sessionStorage.getItem('bdo_authenticated') === 'true' || 
+                         localStorage.getItem('bdo_authenticated') === 'true' ||
+                         sessionStorage.getItem('bdo_authenticated') === 'guest';
+            var overlay = document.getElementById('bdo-login-overlay');
+            var isOverlayActive = overlay && !overlay.classList.contains('hidden') && overlay.style.display !== 'none';
+            if (isAuth && !isOverlayActive) {
+              document.body.classList.remove('portal-locked', 'overflow-hidden');
+              document.documentElement.classList.remove('portal-locked');
+              document.body.style.overflow = 'auto';
+              document.documentElement.style.overflow = 'auto';
+              document.body.style.setProperty('background-color', '#f1f5f9', 'important');
+              document.documentElement.style.setProperty('background-color', '#f1f5f9', 'important');
+            }
           }, 650);
         }
       }
@@ -205,6 +219,11 @@
   <div id="bdo-login-overlay" class="fixed inset-0 z-50 bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 flex items-center justify-center p-4 overflow-y-auto">
     <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-6 sm:p-8 text-center text-slate-800 m-auto">
       
+      <!-- Close button (visible when opened by guest from inside portal) -->
+      <button type="button" id="login-overlay-close-btn" onclick="closeOfficerLoginModal()" class="hidden absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer" title="Back to Portal">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+
       <!-- Top Official Crest -->
       <img src="app_logo.png" onerror="this.outerHTML='<div class=\'w-20 h-20 mx-auto rounded-3xl bg-blue-900 p-3 shadow-xl flex items-center justify-center text-white text-3xl\'><i class=\'fa-solid fa-landmark\'></i></div>'" class="w-24 h-24 mx-auto object-contain drop-shadow-xl mb-2" alt="BDO Bani Emblem">
 
@@ -268,6 +287,18 @@
           <i class="fa-solid fa-right-to-bracket"></i>
           <span>Official Sign In</span>
         </button>
+
+        <!-- Skip / Read-Only Guest Access Button -->
+        <div class="pt-1">
+          <div class="relative flex items-center justify-center my-2.5">
+            <div class="border-t border-slate-200 w-full"></div>
+            <span class="bg-white px-2 text-[10.5px] font-bold text-slate-400 uppercase tracking-wider">or browse without login</span>
+          </div>
+          <button type="button" onclick="handleGuestPortalAccess()" id="login-skip-btn" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 font-bold text-xs rounded-xl border border-slate-300 transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
+            <i class="fa-solid fa-eye text-blue-600"></i>
+            <span>Skip Sign In (Read-Only Mode)</span>
+          </button>
+        </div>
       </form>
 
       <!-- Custom In-App "Use your saved password" Dialog (Clean, without any Netlify URL) -->
@@ -317,6 +348,29 @@
         </button>
         <button type="button" onclick="confirmSignOut()" class="flex-1 py-2.5 px-4 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-extrabold text-xs rounded-xl shadow-md shadow-rose-600/25 transition-all cursor-pointer">
           Sign Out
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== GUEST PERMISSION DENIED MODAL ==================== -->
+  <div id="bdo-guest-permission-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 text-center text-slate-800 m-auto">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center text-2xl mb-4 shadow-sm">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h3 class="text-base font-black text-slate-950 mb-1.5 font-gov">Permission Denied (Read-Only Mode)</h3>
+      <p class="text-xs text-slate-600 mb-6 leading-relaxed">
+        Aap Guest Mode me hain. Aapko is portal me koi bhi change (<strong id="guest-denied-action-text" class="text-amber-800">Edit / Delete / Add</strong>) karne ki permission nahi hai.<br><br>
+        Changes karne ke liye kripya authorized <strong>Officer User ID aur Password</strong> se Sign In karein.
+      </p>
+      <div class="flex items-center justify-center gap-3">
+        <button type="button" onclick="closeGuestPermissionModal()" class="flex-1 py-2.5 px-4 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer">
+          Theek Hai (Cancel)
+        </button>
+        <button type="button" onclick="openLoginFromGuestModal()" class="flex-1 py-2.5 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-xs font-bold text-white shadow-md shadow-blue-900/20 transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Sign In Now</span>
         </button>
       </div>
     </div>
@@ -390,9 +444,9 @@
             <span class="hidden md:inline">Install Web App</span>
             <span class="inline md:hidden font-bold">Install</span>
           </button>
-          <button onclick="handlePortalLogout()" class="px-3 py-1.5 bg-rose-600/80 hover:bg-rose-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer ml-1" title="Sign Out of BDO Bani Portal">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="hidden md:inline">Sign Out</span>
+          <button id="header-auth-btn" onclick="handleHeaderAuthClick()" class="px-3 py-1.5 bg-rose-600/80 hover:bg-rose-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer ml-1" title="Sign Out of BDO Bani Portal">
+            <i id="header-auth-icon" class="fa-solid fa-right-from-bracket"></i>
+            <span id="header-auth-text" class="hidden md:inline">Sign Out</span>
           </button>
         </div>
 
@@ -883,7 +937,7 @@
   <script src="data/bdo_staff_data.js"></script>
   <script src="data/mgnrega_data.js"></script>
   <script src="data/sbmg_data.js"></script>
-  <script src="app.js?v=3.2"></script>
+  <script src="app.js?v=3.3"></script>
 
 </body>
 </html>
