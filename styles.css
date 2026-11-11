@@ -1285,6 +1285,20 @@ body {
     border-radius: 0.65rem !important;
     white-space: nowrap !important;
   }
+  #header-auth-btn {
+    grid-column: span 2 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  #header-auth-btn span {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    max-width: 100% !important;
+  }
 
   /* 2. Compact Panchayat Bar (Pyt Dropdown) */
   #panchayat-bar {
