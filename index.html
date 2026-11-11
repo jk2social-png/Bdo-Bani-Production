@@ -960,7 +960,7 @@
                   <span>Upload Work Photo</span>
                 </label>
                 <input type="file" id="form-photo-file-input" accept="image/*" class="hidden" onchange="handleWorkPhotoSelected(event)">
-                <button type="button" onclick="document.getElementById('form-photo-file-input').click()" class="w-full p-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer">
+                <button type="button" onclick="triggerWorkPhotoUpload(null, event)" class="w-full p-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer">
                   <i class="fa-solid fa-camera"></i>
                   <span>Upload Photo</span>
                 </button>
