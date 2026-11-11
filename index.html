@@ -959,11 +959,11 @@
                   <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i>
                   <span>Upload Work Photo</span>
                 </label>
-                <input type="file" id="form-photo-file-input" accept="image/*" class="hidden" onchange="handleWorkPhotoSelected(event)">
-                <button type="button" onclick="triggerWorkPhotoUpload(null, event)" class="w-full p-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer">
+                <input type="file" id="form-photo-file-input" accept="image/*" style="position:fixed;top:-9999px;left:-9999px;opacity:0.001;width:1px;height:1px;pointer-events:none;" onchange="handleWorkPhotoSelected(event)">
+                <label for="form-photo-file-input" onclick="window.targetWorkPhotoSlot = null" class="w-full p-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer select-none">
                   <i class="fa-solid fa-camera"></i>
                   <span>Upload Photo</span>
-                </button>
+                </label>
               </div>
 
               <!-- JE Phone No. -->
