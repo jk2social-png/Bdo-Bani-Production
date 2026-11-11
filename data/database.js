@@ -3275,10 +3275,13 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Physically Completed",
+      "physicalStatus": "Completed",
       "startDate": "15.08.2026",
-      "completionDate": "28.10.2026",
-      "reasonNotCompleted": ""
+      "completionDate": "01.11.2026",
+      "reasonNotCompleted": "",
+      "staff": "Mohd Anwar TA",
+      "jePhone": "+919622277797",
+      "status": "Completed"
     },
     {
       "sno": 2,
@@ -3307,10 +3310,13 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Physically Completed",
+      "physicalStatus": "Completed",
       "startDate": "20.08.2026",
       "completionDate": "30.10.2026",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "staff": "Mohd Anwar TA",
+      "jePhone": "+919622277797",
+      "status": "Completed"
     },
     {
       "sno": 3,
@@ -3339,10 +3345,13 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
-      "reasonNotCompleted": ""
+      "physicalStatus": "Completed",
+      "startDate": "20.08.2026",
+      "completionDate": "24.10.2026",
+      "reasonNotCompleted": "",
+      "staff": "Mohd Anwar TA",
+      "jePhone": "+919622277797",
+      "status": "Completed"
     },
     {
       "sno": 4,
@@ -3371,10 +3380,13 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
-      "reasonNotCompleted": ""
+      "physicalStatus": "Completed",
+      "startDate": "20.08.2026",
+      "completionDate": "24.10.2026",
+      "reasonNotCompleted": "",
+      "staff": "Mohd Anwar TA",
+      "jePhone": "+919622277797",
+      "status": "Completed"
     },
     {
       "sno": 5,
@@ -3403,10 +3415,13 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
-      "reasonNotCompleted": ""
+      "physicalStatus": "Completed",
+      "startDate": "20.08.2026",
+      "completionDate": "10.10.2026",
+      "reasonNotCompleted": "",
+      "staff": "Mohd Anwar TA",
+      "jePhone": "+919622277797",
+      "status": "Completed"
     },
     {
       "sno": 6,
@@ -3435,10 +3450,13 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
-      "reasonNotCompleted": ""
+      "physicalStatus": "Completed",
+      "startDate": "20.08.2026",
+      "completionDate": "24.10.2026",
+      "reasonNotCompleted": "",
+      "staff": "Mohd Anwar TA",
+      "jePhone": "+919622277797",
+      "status": "Completed"
     },
     {
       "sno": 7,
@@ -3470,7 +3488,9 @@ window.BDO_INITIAL_DATA = {
       "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "staff": "Hartik Sharma JE",
+      "jePhone": "+917889755830"
     },
     {
       "sno": 8,
@@ -3502,7 +3522,9 @@ window.BDO_INITIAL_DATA = {
       "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "staff": "Hartik Sharma JE",
+      "jePhone": "+917889755830"
     },
     {
       "sno": 9,
@@ -3534,7 +3556,9 @@ window.BDO_INITIAL_DATA = {
       "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "staff": "Hartik Sharma JE",
+      "jePhone": "+917889755830"
     },
     {
       "sno": 10,
@@ -3563,10 +3587,13 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
-      "reasonNotCompleted": ""
+      "physicalStatus": "Completed",
+      "startDate": "25.08.2026",
+      "completionDate": "24.10.2026",
+      "reasonNotCompleted": "",
+      "staff": "Vishal Kohli TA",
+      "jePhone": "+919149513614",
+      "status": "Completed"
     },
     {
       "sno": 11,
@@ -3598,7 +3625,9 @@ window.BDO_INITIAL_DATA = {
       "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "staff": "Vishal Kohli TA",
+      "jePhone": "+919149513614"
     }
   ],
   "mlaWorks": [

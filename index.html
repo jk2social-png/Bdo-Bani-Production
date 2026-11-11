@@ -96,6 +96,9 @@
   <!-- SheetJS (xlsx) for direct Excel export & import -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
+  <!-- PptxGenJS for Direct Executive PowerPoint (.pptx) Slide Deck Export -->
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="styles.css?v=4.3">
 
@@ -376,6 +379,25 @@
     </div>
   </div>
 
+  <!-- ==================== JE / TA PERMISSION DENIED MODAL ==================== -->
+  <div id="bdo-je-permission-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 text-center text-slate-800 m-auto">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center text-2xl mb-4 shadow-sm">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h3 class="text-base font-black text-slate-950 mb-1.5 font-gov">Action Not Permitted (JE Mode)</h3>
+      <p class="text-xs text-slate-600 mb-6 leading-relaxed">
+        Aap Junior Engineer / Technical Assistant mode me hain. Aapko is portal me <strong id="je-denied-action-text" class="text-rose-700">Delete / Add / Excel Upload</strong> karne ki permission nahi hai.<br><br>
+        Aap kewal apne works ke <strong>Photos upload</strong> kar sakte hain. BDO Office administrative changes ke liye Admin login karein.
+      </p>
+      <div class="flex items-center justify-center gap-3">
+        <button type="button" onclick="closeJEPermissionModal()" class="flex-1 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-xs font-bold text-white transition-colors cursor-pointer">
+          Theek Hai (OK)
+        </button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Government Header (Executive Modern Redesign) -->
   <header class="bg-gradient-to-r from-[#020617] via-[#0b1c3d] to-[#0e2454] text-white shadow-xl border-b border-blue-900/60 no-print" id="navbar">
@@ -618,6 +640,22 @@
       <form id="work-form" class="p-5 overflow-y-auto flex-1 text-xs space-y-4 custom-scrollbar bg-slate-50/50">
         <input type="hidden" id="form-category">
         <input type="hidden" id="form-work-id">
+
+        <!-- JE / TA Mode Banner (Visible only for JE logins) -->
+        <div id="je-mode-alert" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-3 flex items-start gap-3 shadow-xs">
+          <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 text-sm mt-0.5">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div class="flex-1">
+            <h5 class="font-extrabold text-amber-950 text-xs flex items-center gap-1.5">
+              <span>JE / Technical Assistant Photo Upload Mode</span>
+              <span class="text-[10px] bg-amber-200/80 text-amber-900 px-1.5 py-0.2 rounded font-bold">Field-Restricted</span>
+            </h5>
+            <p class="text-[11px] text-amber-900/90 leading-relaxed mt-0.5">
+              Financial, tender, and administrative sanction data are locked by BDO Office. You can upload or replace geo-tagged field photographs and view your assigned official contact number.
+            </p>
+          </div>
+        </div>
 
         <!-- Section 1: Work Identification & Location (Columns 1 to 7, 11 to 15) -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-3">
@@ -882,6 +920,76 @@
               <input type="text" id="form-remarks" placeholder="Any internal execution notes or references..." class="w-full p-2 border border-slate-300 rounded-lg text-xs bg-white">
             </div>
           </div>
+
+          <!-- Executive PPT & Geo-Tagged Work Photography (Pre / During / Post Execution) -->
+          <div class="mt-4 pt-3.5 border-t border-slate-200 bg-slate-50/90 -mx-4 -mb-4 p-4 rounded-b-xl border border-slate-200">
+            <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-200/90">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                  <i class="fa-solid fa-camera"></i>
+                </div>
+                <div>
+                  <h5 class="font-extrabold text-slate-900 text-xs flex items-center gap-2">
+                    <span>Work Photography & Presentation Dossier</span>
+                    <span class="text-[9.5px] bg-indigo-100 text-indigo-900 font-bold px-2 py-0.5 rounded-full border border-indigo-200">Official PPT Data</span>
+                  </h5>
+                  <p class="text-[10px] text-slate-500 font-medium">Categorized Geo-Tagged Work Photographs for Official DDC / Directorate Review PPTX</p>
+                </div>
+              </div>
+              <span class="text-[10.5px] font-extrabold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">2 Photos Per Stage</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+              <!-- Stage Category Dropdown -->
+              <div class="md:col-span-4">
+                <label class="block font-bold text-slate-800 mb-1 text-[11px] flex items-center gap-1.5">
+                  <i class="fa-solid fa-layer-group text-blue-600"></i>
+                  <span>Category (Execution Stage) <span class="text-rose-600">*</span></span>
+                </label>
+                <select id="form-photo-category" onchange="handlePhotoCategoryChange(this.value)" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs font-bold text-blue-950 bg-white focus:ring-2 focus:ring-blue-500 shadow-2xs">
+                  <option value="completed" selected>Post-Execution (Completed Work)</option>
+                  <option value="during">During Execution (In Progress)</option>
+                  <option value="pre">Pre-Execution (Before Work)</option>
+                </select>
+              </div>
+
+              <!-- Upload Button & File Input -->
+              <div class="md:col-span-4 flex flex-col justify-end">
+                <label class="block font-bold text-slate-800 mb-1 text-[11px] flex items-center gap-1.5">
+                  <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i>
+                  <span>Upload Work Photo</span>
+                </label>
+                <input type="file" id="form-photo-file-input" accept="image/*" class="hidden" onchange="handleWorkPhotoSelected(event)">
+                <button type="button" onclick="document.getElementById('form-photo-file-input').click()" class="w-full p-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer">
+                  <i class="fa-solid fa-camera"></i>
+                  <span>Upload Photo</span>
+                </button>
+              </div>
+
+              <!-- JE Phone No. -->
+              <div class="md:col-span-4">
+                <label class="block font-bold text-slate-800 mb-1 text-[11px] flex items-center gap-1.5">
+                  <i class="fa-solid fa-phone text-indigo-600"></i>
+                  <span>JE / TA Contact No. <span class="text-rose-600">*</span></span>
+                </label>
+                <input type="text" id="form-je-phone" placeholder="e.g. +919622277797" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs font-mono font-bold text-slate-900 bg-white focus:ring-2 focus:ring-blue-500 shadow-2xs">
+              </div>
+            </div>
+
+            <!-- Photo Thumbnails Strip (2 slots for the selected category) -->
+            <div class="mt-3 pt-2.5 border-t border-slate-200/70">
+              <div class="text-[10.5px] font-bold text-slate-700 mb-2 flex items-center justify-between">
+                <span id="photo-category-preview-label" class="flex items-center gap-1 text-slate-800">
+                  <i class="fa-solid fa-images text-indigo-600"></i>
+                  <span>Active Stage: <strong>Post-Execution (Completed Work)</strong> Photos</span>
+                </span>
+                <span id="photo-count-badge" class="text-[10px] font-bold text-slate-500 bg-slate-200/80 px-2 py-0.5 rounded-full">0 of 2 uploaded</span>
+              </div>
+              <div id="form-photo-previews" class="grid grid-cols-2 gap-3">
+                <!-- Dynamically populated: Photo 1 slot & Photo 2 slot -->
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Submit & Cancel Buttons -->
@@ -937,7 +1045,7 @@
   <script src="data/bdo_staff_data.js"></script>
   <script src="data/mgnrega_data.js"></script>
   <script src="data/sbmg_data.js"></script>
-  <script src="app.js?v=3.4"></script>
+  <script src="app.js?v=3.5"></script>
 
 </body>
 </html>
