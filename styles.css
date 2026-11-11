@@ -741,11 +741,12 @@ body {
   border-color: rgba(255, 255, 255, 0.4) !important;
 }
 
-/* 6. Consolidated Capex Abstract & Meeting Abstract Soft Pills */
+/* 6. Consolidated Capex Abstract, Meeting Abstract & Presentation PPT Soft Pills */
 .tab-btn[data-tab="mpr_abstract"],
 .tab-btn[data-tab="capex_abstract"],
 .tab-btn[data-tab="meeting_abstract"],
-.tab-btn[data-tab="mpr_meeting_abstract"] {
+.tab-btn[data-tab="mpr_meeting_abstract"],
+.tab-btn[data-tab="meeting_ppt"] {
   background: #eff6ff !important;
   color: #1e3a8a !important;
   border: 1.5px solid #bfdbfe !important;
@@ -754,7 +755,8 @@ body {
 .tab-btn[data-tab="mpr_abstract"] span[class*="rounded"],
 .tab-btn[data-tab="capex_abstract"] span[class*="rounded"],
 .tab-btn[data-tab="meeting_abstract"] span[class*="rounded"],
-.tab-btn[data-tab="mpr_meeting_abstract"] span[class*="rounded"] {
+.tab-btn[data-tab="mpr_meeting_abstract"] span[class*="rounded"],
+.tab-btn[data-tab="meeting_ppt"] span[class*="rounded"] {
   background: #dbeafe !important;
   color: #1e40af !important;
   border-color: #bfdbfe !important;
@@ -762,7 +764,8 @@ body {
 .tab-btn[data-tab="mpr_abstract"]:hover,
 .tab-btn[data-tab="capex_abstract"]:hover,
 .tab-btn[data-tab="meeting_abstract"]:hover,
-.tab-btn[data-tab="mpr_meeting_abstract"]:hover {
+.tab-btn[data-tab="mpr_meeting_abstract"]:hover,
+.tab-btn[data-tab="meeting_ppt"]:hover {
   background: #dbeafe !important;
   border-color: #60a5fa !important;
   color: #1d4ed8 !important;
@@ -771,7 +774,8 @@ body {
 .tab-btn[data-tab="mpr_abstract"].active,
 .tab-btn[data-tab="capex_abstract"].active,
 .tab-btn[data-tab="meeting_abstract"].active,
-.tab-btn[data-tab="mpr_meeting_abstract"].active {
+.tab-btn[data-tab="mpr_meeting_abstract"].active,
+.tab-btn[data-tab="meeting_ppt"].active {
   background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
   color: #ffffff !important;
   border-color: #172554 !important;
