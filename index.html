@@ -959,7 +959,7 @@
                   <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i>
                   <span>Upload Work Photo</span>
                 </label>
-                <div class="relative overflow-hidden w-full rounded-lg shadow-sm">
+                <div onclick="triggerWorkPhotoUpload(null, event)" class="relative overflow-hidden w-full rounded-lg shadow-sm cursor-pointer">
                   <input type="file" id="form-photo-file-input" accept="image/*" onchange="window.targetWorkPhotoSlot = null; handleWorkPhotoSelected(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
                   <div class="w-full p-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-2 transition-all active:scale-95 pointer-events-none select-none">
                     <i class="fa-solid fa-camera"></i>
