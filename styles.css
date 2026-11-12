@@ -7,11 +7,6 @@ body {
   color: #1e293b;
 }
 
-/* Universal bulletproof safety rules */
-.hidden {
-  display: none !important;
-}
-
 .font-gov {
   font-family: 'Merriweather', serif;
 }
