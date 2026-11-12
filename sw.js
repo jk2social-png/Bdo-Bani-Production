@@ -1,14 +1,15 @@
 // Service Worker for BDO Bani PWA Web App
-const CACHE_NAME = 'bdo-bani-v4';
+const CACHE_NAME = 'bdo-bani-v5';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/app_logo.png',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/manifest.json'
+  './',
+  './index.html',
+  './tailwind.min.css',
+  './styles.css',
+  './app.js',
+  './app_logo.png',
+  './icon-192.png',
+  './icon-512.png',
+  './manifest.json'
 ];
 
 // Install: Cache core shell

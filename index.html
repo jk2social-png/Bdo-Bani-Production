@@ -67,9 +67,12 @@
   <link rel="apple-touch-icon" href="app_logo.png">
   <link rel="icon" type="image/png" href="icon-192.png">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Local Production Tailwind CSS (Zero Network Latency & 100% Offline-Safe) -->
+  <link rel="stylesheet" href="tailwind.min.css">
+  <!-- Fallback Tailwind CDN in case of dynamic runtime utility classes -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
   <script>
+    window.tailwind = window.tailwind || {};
     tailwind.config = {
       theme: {
         extend: {
@@ -84,7 +87,7 @@
           }
         }
       }
-    }
+    };
   </script>
 
   <!-- Font Awesome 6 Icons -->
