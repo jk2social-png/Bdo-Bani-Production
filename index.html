@@ -411,7 +411,6 @@
         <div class="w-full text-center sm:text-left">
           <div class="text-[10.5px] sm:text-xs uppercase font-black tracking-wider text-amber-300 drop-shadow-xs text-center sm:text-left leading-relaxed">
             <span>Government of Jammu & Kashmir</span>
-            <span class="text-amber-400 mx-1">•</span>
             <span class="inline-block">Department of Rural Dev. & Panchayati Raj</span>
           </div>
           <h1 class="text-lg sm:text-2xl lg:text-[25px] font-black tracking-normal text-white font-gov leading-snug mt-1 drop-shadow-md text-center sm:text-left">
@@ -439,33 +438,40 @@
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-2 w-full sm:w-auto" id="action-buttons">
-          <!-- Live Google Sheet Sync Button -->
+          <!-- 1. Live Google Sheet Sync Button -->
           <button id="google-sheet-sync-btn" onclick="syncLiveGoogleSheet(true)" class="px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-700/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer" title="Sync Live Database directly from Official Google Sheet">
             <i class="fa-solid fa-arrows-rotate" id="google-sheet-spin-icon"></i>
             <span class="hidden sm:inline">Sync Google Sheet</span>
             <span class="inline sm:hidden font-bold">Sync Sheet</span>
           </button>
-          <button onclick="openAddModal()" class="px-3.5 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-amber-500/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer">
-            <i class="fa-solid fa-circle-plus"></i>
-            <span>Add Work</span>
-          </button>
-          
+
+          <!-- 2. Export All Sheets / Excel -->
           <button onclick="exportFullWorkbookToExcel()" class="px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-700/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer" title="Download Complete Multi-Sheet Excel Workbook">
             <i class="fa-solid fa-file-excel"></i>
             <span class="hidden sm:inline">Export All Sheets</span>
             <span class="inline sm:hidden font-bold">Excel</span>
           </button>
 
+          <!-- 3. Print / PDF -->
           <button onclick="printCurrentViewPDF()" class="px-3.5 py-1.5 bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-800/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer" title="Print or Save Official Government PDF Report">
             <i class="fa-solid fa-file-pdf"></i>
             <span class="hidden sm:inline">Print / PDF</span>
             <span class="inline sm:hidden font-bold">Print / PDF</span>
           </button>
+
+          <!-- 4. Add Work -->
+          <button onclick="openAddModal()" class="px-3.5 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-amber-500/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Add Work</span>
+          </button>
+
           <button id="pwa-install-header-btn" onclick="triggerPwaInstall()" class="hidden px-3.5 py-1.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-amber-500/25 transition-all items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer" title="Install BDO Bani on Desktop PC or Mobile Home Screen">
             <i class="fa-solid fa-download"></i>
             <span class="hidden md:inline">Install Web App</span>
             <span class="inline md:hidden font-bold">Install</span>
           </button>
+
+          <!-- 5. Header Auth / Sign Out -->
           <button id="header-auth-btn" onclick="handleHeaderAuthClick()" class="px-3.5 py-1.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-xs rounded-xl shadow-md shadow-rose-700/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer" title="Sign Out of BDO Bani Portal">
             <i id="header-auth-icon" class="fa-solid fa-right-from-bracket"></i>
             <span id="header-auth-text" class="font-bold text-xs">Sign Out</span>
