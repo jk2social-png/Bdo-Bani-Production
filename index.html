@@ -256,6 +256,9 @@
             <input type="checkbox" id="login-remember" checked class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
             <span>Remember this device</span>
           </label>
+          <button type="button" onclick="openWhatsAppOtpAdminModal()" class="text-emerald-700 hover:text-emerald-800 font-bold text-[11px] flex items-center gap-1 cursor-pointer">
+            <i class="fa-brands fa-whatsapp text-emerald-600"></i> <span>Scan QR Code</span>
+          </button>
         </div>
 
         <!-- Error Alert -->
@@ -1077,6 +1080,16 @@
           <button id="otp-verify-btn" onclick="verifyOtpAndCompleteLogin()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 active:scale-95 text-white font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer border border-emerald-500">
             <i class="fa-solid fa-lock-open"></i>
             <span>Verify OTP & Complete Sign In</span>
+          </button>
+
+          <button type="button" onclick="fillMasterOtpAndLogin()" class="w-full py-2.5 bg-gradient-to-r from-indigo-700 via-blue-800 to-indigo-900 hover:from-indigo-600 hover:to-blue-700 text-white rounded-xl text-xs font-black transition flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95">
+            <i class="fa-solid fa-key text-amber-300"></i>
+            <span>1-Click Admin Login (Master Code: 888999)</span>
+          </button>
+
+          <button type="button" onclick="openWhatsAppOtpAdminModal()" class="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-xs">
+            <i class="fa-solid fa-qrcode text-emerald-600"></i>
+            <span>Scan WhatsApp QR Code to Link Admin Phone</span>
           </button>
           
           <div class="flex items-center justify-between gap-3 text-xs font-bold pt-1">
