@@ -1029,44 +1029,26 @@
   <!-- 1. WHATSAPP 2FA OTP LOGIN VERIFICATION MODAL -->
   <!-- ===================================================================== -->
   <div id="bdo-otp-verify-modal" style="z-index: 999999 !important;" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden animate-fadeIn">
-    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden animate-scaleIn">
+    <div style="max-width: 400px; width: 100%; margin: auto;" class="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-scaleIn">
       <!-- Modal Header -->
-      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-6 text-center relative">
-        <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 flex items-center justify-center text-3xl mx-auto shadow-inner mb-3">
+      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-5 text-center relative">
+        <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 flex items-center justify-center text-2xl mx-auto shadow-inner mb-2">
           <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <h3 class="text-xl font-black tracking-tight text-white">WhatsApp Verification</h3>
-        <p class="text-xs text-emerald-100/90 mt-1">Official Two-Factor Authentication</p>
+        <h3 class="text-lg font-black tracking-tight text-white">WhatsApp Verification</h3>
+        <p class="text-xs text-emerald-100/80 mt-0.5">Enter 6-digit authentication code</p>
       </div>
 
-      <!-- Modal Body -->
-      <div class="p-6 space-y-5">
-        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-xs text-slate-700 space-y-1.5">
-          <div class="flex items-center gap-2 font-bold text-emerald-900">
-            <i class="fa-solid fa-shield-halved text-emerald-600 text-sm"></i>
-            <span>Admin OTP Security Gate</span>
-          </div>
-          <p class="text-[11px] text-slate-600 leading-relaxed">
-            Logging in as: <strong id="otp-target-user-label" class="text-slate-900 font-extrabold">bdo.bani</strong>. 
-            A secure 6-digit WhatsApp OTP has been dispatched to Admin phone:
-          </p>
-          <div class="font-mono font-black text-emerald-800 text-xs bg-white px-2 py-1 rounded border border-emerald-200 inline-block" id="otp-admin-phone-label">
-            +91 9697132353 / +91 7051224142
-          </div>
-          <p class="text-[10px] text-slate-500 italic">
-            * Please obtain the OTP from the Admin to complete your sign-in.
-          </p>
-        </div>
-
-        <!-- OTP Input -->
-        <div class="space-y-2">
-          <label class="block text-xs font-black text-slate-800 uppercase tracking-wider text-center">
+      <!-- Modal Body (CLEAN, NO RED BOX, NO OVERLAPPING BUTTONS) -->
+      <div class="p-6 space-y-4">
+        <div class="text-center space-y-2">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
             Enter 6-Digit WhatsApp OTP
           </label>
           <input type="text" id="login-otp-code" maxlength="6" placeholder="• • • • • •" autocomplete="one-time-code" class="w-full text-center text-3xl font-mono font-black tracking-widest py-3 border-2 border-slate-300 rounded-2xl focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100 outline-none text-slate-900 transition-all bg-slate-50" onkeydown="if(event.key==='Enter') verifyOtpAndCompleteLogin()" />
-          <div class="text-[10px] text-center text-slate-400">
-            (Admin Diagnostic Master Code: <span class="font-mono font-bold text-slate-600">888999</span> or check Admin WhatsApp)
-          </div>
+          <p class="text-[11px] text-slate-500">
+            Code sent to Admin WhatsApp (<span class="font-mono font-bold text-emerald-800">+91 9697132353</span>)
+          </p>
         </div>
 
         <!-- Error box -->
@@ -1075,42 +1057,33 @@
           <span id="otp-error-text" class="font-bold">Incorrect OTP code!</span>
         </div>
 
-        <!-- Actions -->
-        <div class="space-y-2.5 pt-2">
+        <!-- ONE Single Clean Action Button -->
+        <div class="pt-2">
           <button id="otp-verify-btn" onclick="verifyOtpAndCompleteLogin()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 active:scale-95 text-white font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer border border-emerald-500">
             <i class="fa-solid fa-lock-open"></i>
-            <span>Verify OTP & Complete Sign In</span>
+            <span>Verify OTP & Sign In</span>
           </button>
+        </div>
 
-          <button type="button" onclick="fillMasterOtpAndLogin()" class="w-full py-2.5 bg-gradient-to-r from-indigo-700 via-blue-800 to-indigo-900 hover:from-indigo-600 hover:to-blue-700 text-white rounded-xl text-xs font-black transition flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95">
-            <i class="fa-solid fa-key text-amber-300"></i>
-            <span>1-Click Admin Login (Master Code: 888999)</span>
+        <!-- Clean Links at Bottom -->
+        <div class="flex items-center justify-between text-xs font-bold pt-3 border-t border-slate-100">
+          <button type="button" onclick="resendWhatsAppOtp()" class="text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer">
+            <i class="fa-solid fa-rotate-right text-xs"></i>
+            <span>Resend OTP</span>
           </button>
-
-          <button type="button" onclick="openWhatsAppOtpAdminModal()" class="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-xs">
-            <i class="fa-solid fa-qrcode text-emerald-600"></i>
-            <span>Scan WhatsApp QR Code to Link Admin Phone</span>
+          <button type="button" onclick="cancelWhatsAppOtpLogin()" class="text-slate-400 hover:text-slate-600 cursor-pointer">
+            Cancel
           </button>
-          
-          <div class="flex items-center justify-between gap-3 text-xs font-bold pt-1">
-            <button onclick="resendWhatsAppOtp()" class="text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 cursor-pointer">
-              <i class="fa-solid fa-rotate-right"></i>
-              <span>Resend WhatsApp OTP</span>
-            </button>
-            <button onclick="cancelWhatsAppOtpLogin()" class="text-slate-500 hover:text-slate-700 cursor-pointer">
-              Cancel
-            </button>
-          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 2. USER ACTIVITY LOG & AUDIT REGISTER MODAL (HIND STYLE) -->
+  <!-- 2. USER ACTIVITY LOG & AUDIT REGISTER MODAL (HIND ARCHITECTURE) -->
   <!-- ===================================================================== -->
-  <div id="bdo-activity-log-modal" style="z-index: 999999 !important;" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 hidden animate-fadeIn">
-    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-6xl w-full max-h-[92vh] flex flex-col overflow-hidden animate-scaleIn">
+  <div id="bdo-activity-log-modal" style="z-index: 999999 !important;" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 hidden animate-fadeIn">
+    <div style="max-width: 1050px; width: 95%; max-height: 88vh; margin: auto;" class="bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-scaleIn">
       <!-- Modal Header -->
       <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-5 flex items-center justify-between border-b border-indigo-900/50">
         <div class="flex items-center gap-3">
@@ -1130,18 +1103,17 @@
         </button>
       </div>
 
-      <!-- Modal Body (Injected dynamically) -->
+      <!-- Modal Body (Injected dynamically by renderActivityLogModalContent) -->
       <div id="bdo-activity-log-modal-body" class="p-4 sm:p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-        <!-- Rendered by renderActivityLogModalContent() -->
       </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 3. WHATSAPP CONNECTION & QR GATEWAY MODAL (EXACT WASHEETSYNC UI) -->
+  <!-- 3. WHATSAPP CONNECTION & QR GATEWAY MODAL (WASHEETSYNC UI) -->
   <!-- ===================================================================== -->
-  <div id="bdo-whatsapp-admin-modal" style="z-index: 999999 !important;" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 hidden animate-fadeIn">
-    <div class="bg-[#0b101e] rounded-3xl shadow-2xl border border-gray-800 max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden text-gray-100 animate-scaleIn">
+  <div id="bdo-whatsapp-admin-modal" style="z-index: 999999 !important;" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden animate-fadeIn">
+    <div style="max-width: 600px; width: 100%; max-height: 88vh; margin: auto;" class="bg-[#0b101e] rounded-3xl shadow-2xl border border-gray-800 flex flex-col overflow-hidden text-gray-100 animate-scaleIn">
       <!-- Modal Header -->
       <div class="border-b border-gray-800 bg-[#070a13] px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -1151,9 +1123,8 @@
           <div>
             <h3 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
               <span>WhatsApp Connection Settings</span>
-              <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800/60">WASheetSync Engine</span>
             </h3>
-            <p class="text-[11px] text-gray-400 mt-0.5">Scan the QR code to link your personal/official WhatsApp to dispatch OTPs.</p>
+            <p class="text-[11px] text-gray-400 mt-0.5">Scan the QR code to link your official WhatsApp to dispatch OTPs.</p>
           </div>
         </div>
         <button onclick="closeWhatsAppOtpAdminModal()" class="w-8 h-8 rounded-xl bg-gray-800/60 hover:bg-gray-700 text-gray-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
@@ -1162,10 +1133,10 @@
       </div>
 
       <!-- Modal Body (Dynamic WASheetSync Gateway & Scanner) -->
-      <div id="wa-gateway-modal-body" class="p-6 overflow-y-auto custom-scrollbar space-y-6">
-        <!-- Injected dynamically by renderWhatsAppGatewayUI() -->
+      <div id="wa-gateway-modal-body" class="p-6 overflow-y-auto custom-scrollbar space-y-5">
       </div>
     </div>
   </div>
+
 </body>
 </html>
