@@ -1,8 +1,10 @@
 @echo off
 title BDO Bani Integrated Portal
+cd /d "%~dp0"
 echo =======================================================
-echo   Starting BDO Bani Integrated Works Portal...
+echo   Starting BDO Bani Integrated Works Portal & Backend...
 echo =======================================================
 start "" /B node server.js
-start "" index.html
+timeout /t 2 /nobreak >nul
+start "" http://localhost:3000
 exit
