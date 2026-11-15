@@ -1,0 +1,32 @@
+{
+  "name": "bdo-bani-portal",
+  "version": "1.0.0",
+  "description": "Integrated Physical & Financial Progress Monitoring Portal & Backend for BDO Bani, District Kathua, J&K",
+  "main": "electron-app.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "desktop": "electron electron-app.js",
+    "pack": "electron-packager . \"BDO Bani\" --platform=win32 --arch=x64 --icon=app_icon.ico --out=dist --overwrite --prune=true --ignore=\"android-app|dist|\\.zip$\""
+  },
+  "keywords": [
+    "bdo",
+    "bani",
+    "capex",
+    "mla-cdf",
+    "rdd",
+    "kathua"
+  ],
+  "author": "RDD Block Bani",
+  "license": "ISC",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc14",
+    "qrcode": "^1.5.4",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^45.2.3",
+    "electron-packager": "^17.1.2",
+    "tailwindcss": "^3.4.17"
+  }
+}
