@@ -232,6 +232,44 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // API ROUTE 7: POST /api/activity-logs (Permanent Server-Side Audit Log)
+  if (reqPath === '/api/activity-logs' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const payload = JSON.parse(body || '{}');
+        const db = readDatabase();
+        if (!Array.isArray(db.activityLogs)) db.activityLogs = [];
+        if (payload.log) {
+          db.activityLogs.unshift(payload.log);
+          if (db.activityLogs.length > 2500) db.activityLogs.pop(); // keep last 2500 logs on disk
+          writeDatabase(db);
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, count: db.activityLogs.length }));
+      } catch (e) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, error: e.message }));
+      }
+    });
+    return;
+  }
+
+  // API ROUTE 8: GET /api/activity-logs
+  if (reqPath === '/api/activity-logs' && req.method === 'GET') {
+    try {
+      const db = readDatabase();
+      const logs = Array.isArray(db.activityLogs) ? db.activityLogs : [];
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, logs: logs }));
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, error: e.message }));
+    }
+    return;
+  }
+
   // STATIC FILE HANDLER
   let filePath = path.join(__dirname, reqPath === '/' ? 'index.html' : reqPath);
   const ext = path.extname(filePath).toLowerCase();

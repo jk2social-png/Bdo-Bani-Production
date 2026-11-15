@@ -102,8 +102,11 @@ async function sendOtp(phone, otpCode, targetUser) {
     return { success: false, error: 'WhatsApp is not linked yet. Please scan the QR code to link.' };
   }
 
-  const cleanPhone = (phone || '').replace(/[^0-9]/g, '');
-  if (!cleanPhone) {
+  let cleanPhone = (phone || '').replace(/[^0-9]/g, '');
+  if (cleanPhone.length === 10) {
+    cleanPhone = '91' + cleanPhone;
+  }
+  if (!cleanPhone || cleanPhone.length < 10) {
     return { success: false, error: 'Invalid phone number provided.' };
   }
 

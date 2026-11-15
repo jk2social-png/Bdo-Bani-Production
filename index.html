@@ -1030,59 +1030,100 @@
   <!-- 1. OFFICIAL WHATSAPP 2FA OTP LOGIN VERIFICATION MODAL -->
   <!-- ===================================================================== -->
   <div id="bdo-otp-verify-modal" style="z-index: 999999 !important; background-color: rgba(2, 6, 23, 0.96) !important;" class="fixed inset-0 flex items-center justify-center p-4 hidden animate-fadeIn">
-    <div style="max-width: 400px; width: 100%; margin: auto; background-color: #ffffff !important; border: 1px solid #cbd5e1 !important; border-radius: 20px !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;" class="overflow-hidden animate-scaleIn">
+    <div style="max-width: 430px; width: 100%; margin: auto; background-color: #ffffff !important; border: 1px solid #cbd5e1 !important; border-radius: 22px !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;" class="overflow-hidden animate-scaleIn">
       <!-- Modal Header -->
-      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-5 text-center relative">
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white p-5 text-center relative">
         <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 flex items-center justify-center text-2xl mx-auto shadow-inner mb-2">
-          <i class="fa-brands fa-whatsapp"></i>
+          <i class="fa-brands fa-whatsapp text-3xl"></i>
         </div>
-        <h3 class="text-lg font-black tracking-tight text-white">WhatsApp Verification</h3>
-        <p class="text-xs text-emerald-100/80 mt-0.5">Enter 6-digit authentication code</p>
+        <h3 id="otp-modal-header-title" class="text-lg font-black tracking-tight text-white">Officer WhatsApp 2FA Verification</h3>
+        <p id="otp-modal-header-sub" class="text-xs text-emerald-100/90 mt-0.5">Government Block Monitoring Security Gate</p>
       </div>
 
       <!-- Modal Body -->
       <div class="p-6 space-y-4">
-        <div class="text-center space-y-2">
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-            Enter 6-Digit WhatsApp OTP
-          </label>
-          <input type="text" id="login-otp-code" maxlength="6" placeholder="• • • • • •" autocomplete="one-time-code" class="w-full text-center text-3xl font-mono font-black tracking-widest py-3 border-2 border-slate-300 rounded-2xl focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100 outline-none text-slate-900 transition-all bg-slate-50" onkeydown="if(event.key==='Enter') verifyOtpAndCompleteLogin()" />
-          <p class="text-[11px] text-slate-500">
-            Code dispatched to Admin WhatsApp (<span class="font-mono font-bold text-emerald-800">+91 9697132353</span>)
-          </p>
 
-          <div class="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-3.5 text-center mt-3 space-y-1">
-            <p class="text-xs text-emerald-950 font-bold flex items-center justify-center gap-1.5">
-              <i class="fa-solid fa-shield-halved text-emerald-600 text-sm"></i>
-              <span>Official 2-Factor Security Gate</span>
-            </p>
-            <p class="text-[11px] text-slate-600 leading-relaxed">
-              A secure 6-digit verification OTP has been dispatched to Admin phone (<b class="font-mono text-emerald-800">+91 9697132353</b>). Please obtain the code from Admin to complete sign-in.
+        <!-- STEP 1: MOBILE NUMBER CONFIRMATION -->
+        <div id="otp-step-phone" class="space-y-4">
+          <!-- Officer Identity Card -->
+          <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-4 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-lg shadow-sm">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p id="otp-officer-name-display" class="font-black text-slate-900 text-sm truncate">Er. Mohd Anwar (TA)</p>
+              <p id="otp-officer-role-display" class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Technical Assistant (MGNREGA)</p>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              Enter / Confirm WhatsApp Number
+            </label>
+            <div class="relative flex items-center">
+              <span class="absolute left-3.5 font-bold font-mono text-slate-500 text-sm border-r border-slate-300 pr-2">+91</span>
+              <input type="tel" id="officer-phone-input" maxlength="10" placeholder="98XXXXXXXX" class="w-full pl-16 pr-4 py-3 border-2 border-slate-300 rounded-xl focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100 outline-none text-slate-900 font-mono font-bold text-base transition-all bg-slate-50" onkeydown="if(event.key==='Enter') dispatchOfficerWhatsAppOtp()" />
+            </div>
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+              6-digit login OTP seedha aapke is WhatsApp mobile par dispatch hoga.
             </p>
           </div>
-        </div>
 
-        <!-- Error box -->
-        <div id="otp-error-msg" class="hidden bg-rose-50 border border-rose-300 rounded-xl p-3 text-xs text-rose-800 flex items-center gap-2">
-          <i class="fa-solid fa-circle-exclamation text-rose-600"></i>
-          <span id="otp-error-text" class="font-bold">Incorrect OTP code! Please get the exact code from Admin WhatsApp.</span>
-        </div>
-
-        <!-- ONE Single Clean Action Button -->
-        <div class="pt-2">
-          <button id="otp-verify-btn" onclick="verifyOtpAndCompleteLogin()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 active:scale-95 text-white font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer border border-emerald-500">
-            <i class="fa-solid fa-lock-open"></i>
-            <span>Verify OTP & Sign In</span>
+          <!-- Send OTP Button -->
+          <button id="send-otp-btn" type="button" onclick="dispatchOfficerWhatsAppOtp()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 active:scale-95 text-white font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer border border-emerald-500">
+            <i class="fa-brands fa-whatsapp text-lg"></i>
+            <span>Send OTP to my WhatsApp</span>
           </button>
+        </div>
+
+        <!-- STEP 2: OTP ENTRY & VERIFICATION -->
+        <div id="otp-step-code" class="space-y-4 hidden">
+          <div class="text-center space-y-2">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              Enter 6-Digit WhatsApp OTP
+            </label>
+            <input type="text" id="login-otp-code" maxlength="6" placeholder="• • • • • •" autocomplete="one-time-code" class="w-full text-center text-3xl font-mono font-black tracking-widest py-3 border-2 border-slate-300 rounded-2xl focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100 outline-none text-slate-900 transition-all bg-slate-50" onkeydown="if(event.key==='Enter') verifyOtpAndCompleteLogin()" />
+            
+            <p class="text-[11px] text-slate-600">
+              OTP sent to: <b id="otp-dispatched-phone-label" class="font-mono text-emerald-800">+91 XXXXXXXXXX</b>
+            </p>
+
+            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-950 text-left flex items-start gap-2.5">
+              <i class="fa-solid fa-shield-halved text-emerald-600 text-sm mt-0.5"></i>
+              <div class="leading-relaxed text-[11px]">
+                <b>Permanent Audit Logging Active:</b> Aapka login, mobile number aur session me kiye gaye sabhi changes Activity Register me permanently record honge.
+              </div>
+            </div>
+          </div>
+
+          <!-- Error box -->
+          <div id="otp-error-msg" class="hidden bg-rose-50 border border-rose-300 rounded-xl p-3 text-xs text-rose-800 flex items-center gap-2">
+            <i class="fa-solid fa-circle-exclamation text-rose-600"></i>
+            <span id="otp-error-text" class="font-bold">Incorrect OTP code!</span>
+          </div>
+
+          <!-- Verify Button -->
+          <div class="pt-1">
+            <button id="otp-verify-btn" onclick="verifyOtpAndCompleteLogin()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 active:scale-95 text-white font-black text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer border border-emerald-500">
+              <i class="fa-solid fa-lock-open"></i>
+              <span>Verify OTP & Sign In</span>
+            </button>
+          </div>
         </div>
 
         <!-- Clean Links at Bottom -->
         <div class="flex items-center justify-between text-xs font-bold pt-3 border-t border-slate-100">
-          <button type="button" onclick="resendWhatsAppOtp()" class="text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer">
-            <i class="fa-solid fa-rotate-right text-xs"></i>
-            <span>Resend OTP</span>
+          <button id="otp-back-link" type="button" onclick="showOtpPhoneStep()" class="text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer hidden">
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+            <span>Change Phone / Resend</span>
           </button>
+          <span id="otp-resend-spacer" class="text-slate-400"></span>
           <button type="button" onclick="cancelWhatsAppOtpLogin()" class="text-slate-400 hover:text-slate-600 cursor-pointer">
+            Cancel Login
+          </button>
+        </div>
+      </div>
+    </div>
             Cancel
           </button>
         </div>
