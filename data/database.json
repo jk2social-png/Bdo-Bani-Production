@@ -5258,5 +5258,126 @@
     "workNotAlloted": 1,
     "workNotStarted": 2,
     "pendingBills": 5
-  }
+  },
+  "activityLogs": [
+    {
+      "id": "act_1794762433515_d13ye",
+      "timestamp": "2026-11-15T17:07:13.515Z",
+      "action": "USER_LOGIN",
+      "details": "Officer Sh. BDO Bani (JKAS) logged in via verified WhatsApp (+91 9697132353)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762421029_m8s7i",
+      "timestamp": "2026-11-15T17:07:01.029Z",
+      "action": "OTP_DISPATCHED",
+      "details": "Login OTP dispatched to WhatsApp +91 9697132353 for officer Sh. BDO Bani (JKAS) (bdo.bani)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762400135_fw8yb",
+      "timestamp": "2026-11-15T17:06:40.135Z",
+      "action": "WHATSAPP_LINKED",
+      "details": "Admin WhatsApp (919697132353) paired via live QR scan.",
+      "user": "bdo.bani (Admin)",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762370282_us0wv",
+      "timestamp": "2026-11-15T17:06:10.282Z",
+      "action": "USER_LOGIN",
+      "details": "Officer Sh. BDO Bani (JKAS) logged in via verified WhatsApp (+91 9697132353)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762365683_8f7vy",
+      "timestamp": "2026-11-15T17:06:05.683Z",
+      "action": "OTP_DISPATCHED",
+      "details": "Login OTP dispatched to WhatsApp +91 9697132353 for officer Sh. BDO Bani (JKAS) (bdo.bani)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762348346_zvn75",
+      "timestamp": "2026-11-15T17:05:48.346Z",
+      "action": "USER_LOGIN",
+      "details": "Officer Sh. BDO Bani (JKAS) logged in via verified WhatsApp (+91 9697132353)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762340925_cij5y",
+      "timestamp": "2026-11-15T17:05:40.925Z",
+      "action": "OTP_DISPATCHED",
+      "details": "Login OTP dispatched to WhatsApp +91 9697132353 for officer Sh. BDO Bani (JKAS) (bdo.bani)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762322494_9c1ju",
+      "timestamp": "2026-11-15T17:05:22.494Z",
+      "action": "USER_LOGIN",
+      "details": "Officer Sh. BDO Bani (JKAS) logged in via verified WhatsApp (+91 9697132353)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762311146_4ope6",
+      "timestamp": "2026-11-15T17:05:11.146Z",
+      "action": "OTP_DISPATCHED",
+      "details": "Login OTP dispatched to WhatsApp +91 9697132353 for officer Sh. BDO Bani (JKAS) (bdo.bani)",
+      "user": "bdo.bani",
+      "officerName": "bdo.bani",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794762110831_fr0fh",
+      "timestamp": "2026-11-15T17:01:50.831Z",
+      "action": "OTP_DISPATCHED",
+      "details": "Login OTP dispatched to WhatsApp +91 9697132353 for officer Sh. BDO Bani (JKAS) (bdo.bani)",
+      "user": "bdo.bani",
+      "officerName": "bdo.bani",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "action": "SYSTEM_INITIALIZED",
+      "device": "Local Diagnostic",
+      "details": "WhatsApp 2FA Gateway & Audit Logging System Verified",
+      "timestamp": "2026-11-15T22:30:00.000Z",
+      "phone": "+91 9697132353",
+      "officerName": "System Test",
+      "role": "admin"
+    }
+  ]
 }
