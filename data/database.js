@@ -1,7 +1,3 @@
-/**
- * BDO BANI DISTRICT CAPEX & MLA CDF MASTER DATA
- * Rural Development Department, Block Bani, District Kathua, J&K
- */
 window.BDO_INITIAL_DATA = {
   "priOngoing": [
     {
@@ -61,7 +57,7 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.45,
       "cummlExpdt": 4.71,
       "physicalStatus": "Completed",
       "startDate": "05.12.2025",
@@ -159,11 +155,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.49,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-08-11",
+      "completionDate": "2026-10-31",
       "reasonNotCompleted": ""
     },
     {
@@ -191,11 +187,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.59,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-02",
+      "completionDate": "2026-11-14",
       "reasonNotCompleted": ""
     },
     {
@@ -258,7 +254,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-11",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -290,7 +286,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-24",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -321,9 +317,9 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-19",
+      "completionDate": "2026-11-06",
       "reasonNotCompleted": ""
     },
     {
@@ -386,7 +382,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-14",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -415,11 +411,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.34,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-08-13",
+      "completionDate": "2026-11-05",
       "reasonNotCompleted": ""
     },
     {
@@ -450,7 +446,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-14",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -481,7 +477,7 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
+      "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
@@ -514,7 +510,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-27",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -545,9 +541,9 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-08-23",
+      "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
     {
@@ -578,7 +574,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-11-13",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -641,8 +637,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-04",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -671,11 +667,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.09,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-24",
+      "completionDate": "2026-11-05",
       "reasonNotCompleted": ""
     },
     {
@@ -738,7 +734,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-10-16",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -769,8 +765,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-11",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -802,7 +798,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-11",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -834,7 +830,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-15",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -865,8 +861,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-08-14",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -898,7 +894,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-15",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -929,8 +925,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-09",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -962,7 +958,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-13",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1058,7 +1054,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-13",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1089,9 +1085,9 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-28",
+      "completionDate": "2026-11-08",
       "reasonNotCompleted": ""
     },
     {
@@ -1121,8 +1117,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-08-20",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -1186,7 +1182,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-29",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1218,7 +1214,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-09",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1250,7 +1246,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-07",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1282,7 +1278,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-07",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1311,11 +1307,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-09-17",
+      "completionDate": "2026-11-06",
       "reasonNotCompleted": ""
     },
     {
@@ -1345,9 +1341,9 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-17",
+      "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
     {
@@ -1378,7 +1374,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-14",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1410,7 +1406,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-05",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1442,7 +1438,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-05",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1473,8 +1469,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-20",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -1503,11 +1499,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.84,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "startDate": "2026-09-20",
+      "completionDate": "2026-11-12",
       "reasonNotCompleted": ""
     },
     {
@@ -1538,7 +1534,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-29",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1601,8 +1597,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-08-14",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -1633,9 +1629,9 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-17",
+      "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
     {
@@ -1695,11 +1691,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.99,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-19",
+      "completionDate": "10.11-2026",
       "reasonNotCompleted": ""
     },
     {
@@ -1730,7 +1726,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-19",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1761,8 +1757,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-29",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -1794,7 +1790,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-28",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1826,7 +1822,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-28",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1858,7 +1854,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-11",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1890,7 +1886,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-28",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1919,11 +1915,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.49,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-09-01",
+      "completionDate": "2026-10-09",
       "reasonNotCompleted": ""
     },
     {
@@ -1954,7 +1950,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-10-24",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -1986,7 +1982,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-28",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2018,7 +2014,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-10-13",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2050,7 +2046,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-15",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2082,7 +2078,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-17",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2113,7 +2109,7 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Not Alloted",
       "startDate": "",
       "completionDate": "",
       "reasonNotCompleted": ""
@@ -2146,7 +2142,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-11",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2178,7 +2174,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-04",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2207,11 +2203,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.34,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-24",
+      "completionDate": "2026-11-11",
       "reasonNotCompleted": ""
     },
     {
@@ -2242,7 +2238,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-01",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2274,7 +2270,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-21",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2306,7 +2302,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-20",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2335,10 +2331,10 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.15,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-08-24",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2367,11 +2363,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.84,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-08-13",
+      "completionDate": "2026-10-13",
       "reasonNotCompleted": ""
     },
     {
@@ -2399,11 +2395,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.84,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-08-11",
+      "completionDate": "2026-10-31",
       "reasonNotCompleted": ""
     },
     {
@@ -2434,7 +2430,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-10-13",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2465,8 +2461,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-18",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -2498,7 +2494,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-18",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2530,7 +2526,7 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "In Progress",
-      "startDate": "",
+      "startDate": "2026-09-17",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2591,11 +2587,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.94,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-25",
+      "completionDate": "2026-11-05",
       "reasonNotCompleted": ""
     },
     {
@@ -2660,8 +2656,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "0",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-01",
       "completionDate": "0",
       "reasonNotCompleted": ""
     }
@@ -2692,11 +2688,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.99,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-09-17",
+      "completionDate": "2026-11-15",
       "reasonNotCompleted": ""
     },
     {
@@ -2726,8 +2722,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-08-24",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -2759,8 +2755,8 @@ window.BDO_INITIAL_DATA = {
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-09-17",
+      "completionDate": "2026-11-05",
       "reasonNotCompleted": ""
     },
     {
@@ -2790,8 +2786,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-08-11",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -2822,8 +2818,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-08-24",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -2854,8 +2850,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-07-11",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
     },
@@ -2884,11 +2880,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.49,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-09",
+      "completionDate": "2026-11-02",
       "reasonNotCompleted": ""
     },
     {
@@ -2918,8 +2914,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-07",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -2948,11 +2944,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.49,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-01",
+      "completionDate": "2026-10-31",
       "reasonNotCompleted": ""
     },
     {
@@ -2982,9 +2978,9 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-24",
+      "completionDate": "2026-11-05",
       "reasonNotCompleted": ""
     },
     {
@@ -3012,11 +3008,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.99,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-04",
+      "completionDate": "2026-11-06",
       "reasonNotCompleted": ""
     },
     {
@@ -3046,8 +3042,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-04",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -3078,8 +3074,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-01",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -3110,8 +3106,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-29",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -3140,11 +3136,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.49,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-09-04",
+      "completionDate": "2026-11-01",
       "reasonNotCompleted": ""
     },
     {
@@ -3174,8 +3170,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-01",
       "completionDate": "",
       "reasonNotCompleted": ""
     },
@@ -3206,8 +3202,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-08-11",
       "completionDate": "",
       "reasonNotCompleted": ""
     }
@@ -3241,8 +3237,8 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In progress",
-      "startDate": "0",
+      "physicalStatus": "In Progress",
+      "startDate": "2026-09-15",
       "completionDate": "0",
       "reasonNotCompleted": ""
     }
@@ -3273,11 +3269,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.74,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "15.08.2026",
+      "completionDate": "2026-11-01",
       "reasonNotCompleted": ""
     },
     {
@@ -3305,11 +3301,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.75,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "20.08.2026",
+      "completionDate": "30.10.2026",
       "reasonNotCompleted": ""
     },
     {
@@ -3339,7 +3335,7 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
+      "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
@@ -3371,7 +3367,7 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
+      "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
@@ -3401,11 +3397,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.74,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-08-20",
+      "completionDate": "2026-10-10",
       "reasonNotCompleted": ""
     },
     {
@@ -3435,7 +3431,7 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "Completed",
+      "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "30-10-2026",
       "reasonNotCompleted": ""
@@ -3465,11 +3461,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.74,
       "cummlExpdt": 0,
       "physicalStatus": "Completed",
-      "startDate": "",
-      "completionDate": "30-10-2026",
+      "startDate": "2026-08-28",
+      "completionDate": "2026-10-22",
       "reasonNotCompleted": ""
     },
     {
@@ -3497,11 +3493,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 0.49,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-08-24",
+      "completionDate": "2026-10-10",
       "reasonNotCompleted": ""
     },
     {
@@ -3563,9 +3559,9 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "expdtBookedTreasury": 0,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-08-25",
+      "completionDate": "2026-10-24",
       "reasonNotCompleted": ""
     },
     {
@@ -3593,11 +3589,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtAllotment": 0,
       "actualExpdtContingency": 0,
       "actualExpdtTotal": 0,
-      "expdtBookedTreasury": 0,
+      "expdtBookedTreasury": 1.24,
       "cummlExpdt": 0,
-      "physicalStatus": "In Progress",
-      "startDate": "",
-      "completionDate": "",
+      "physicalStatus": "Completed",
+      "startDate": "2026-08-15",
+      "completionDate": "2026-10-20",
       "reasonNotCompleted": ""
     }
   ],
