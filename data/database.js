@@ -1,3 +1,7 @@
+/**
+ * BDO BANI DISTRICT CAPEX & MLA CDF MASTER DATA
+ * Rural Development Department, Block Bani, District Kathua, J&K
+ */
 window.BDO_INITIAL_DATA = {
   "priOngoing": [
     {
@@ -5370,6 +5374,28 @@ window.BDO_INITIAL_DATA = {
     "pendingBills": 5
   },
   "activityLogs": [
+    {
+      "id": "act_1794975723905_38vmd",
+      "timestamp": "2026-11-18T04:22:03.905Z",
+      "action": "USER_LOGIN",
+      "details": "Officer Sh. BDO Bani (JKAS) logged in via verified WhatsApp (+91 9697132353)",
+      "user": "bdo.bani",
+      "officerName": "Sh. BDO Bani (JKAS)",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
+    {
+      "id": "act_1794975718075_ehxzr",
+      "timestamp": "2026-11-18T04:21:58.084Z",
+      "action": "OTP_DISPATCHED",
+      "details": "Login OTP dispatched to WhatsApp +91 9697132353 for officer Sh. BDO Bani (JKAS) (bdo.bani)",
+      "user": "bdo.bani",
+      "officerName": "bdo.bani",
+      "phone": "9697132353",
+      "role": "admin",
+      "device": "Windows Desktop App"
+    },
     {
       "id": "act_1794974210268_cjlbf",
       "timestamp": "2026-11-18T03:56:50.268Z",
