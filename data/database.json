@@ -855,10 +855,11 @@
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-09-15",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 23,
@@ -921,10 +922,11 @@
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-09-15",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 25,
@@ -1152,10 +1154,11 @@
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-08-20",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 32,
@@ -1911,10 +1914,11 @@
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-09-11",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 55,
@@ -2175,10 +2179,11 @@
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "Not Alloted",
+      "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "In Progress"
     },
     {
       "sno": 63,

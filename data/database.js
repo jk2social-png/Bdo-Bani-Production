@@ -859,10 +859,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-09-15",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 23,
@@ -925,10 +926,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-09-15",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 25,
@@ -1156,10 +1158,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-08-20",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 32,
@@ -1915,10 +1918,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "In Progress",
+      "physicalStatus": "Physically Completed",
       "startDate": "2026-09-11",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "Completed"
     },
     {
       "sno": 55,
@@ -2179,10 +2183,11 @@ window.BDO_INITIAL_DATA = {
       "actualExpdtTotal": 0,
       "cummlExpdt": 0,
       "expdtBookedTreasury": 0,
-      "physicalStatus": "Not Alloted",
+      "physicalStatus": "In Progress",
       "startDate": "",
       "completionDate": "",
-      "reasonNotCompleted": ""
+      "reasonNotCompleted": "",
+      "status": "In Progress"
     },
     {
       "sno": 63,
