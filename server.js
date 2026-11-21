@@ -255,6 +255,41 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // API ROUTE 6b: GET /api/sheet3-cdf-sheet (Live Fetch Sheet #3 MLA-CDF Google Sheet)
+  if (reqPath === '/api/sheet3-cdf-sheet' && req.method === 'GET') {
+    try {
+      const gUrl = 'https://docs.google.com/spreadsheets/d/18DBf43SveMSHn1hTEPGZBNoejVSsUYgtUpe0TLO6XvI/export?format=xlsx';
+      const XLSX = require('xlsx');
+
+      function fetchXLSXBuffer(targetUrl) {
+        return new Promise((resolve, reject) => {
+          https.get(targetUrl, res => {
+            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+              return fetchXLSXBuffer(res.headers.location).then(resolve).catch(reject);
+            }
+            const chunks = [];
+            res.on('data', c => chunks.push(c));
+            res.on('end', () => resolve(Buffer.concat(chunks)));
+          }).on('error', reject);
+        });
+      }
+
+      const buf = await fetchXLSXBuffer(gUrl);
+      const wb = XLSX.read(buf, { type: 'buffer' });
+      const rawRows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
+
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({ success: true, rawRows }));
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ success: false, error: e.message }));
+    }
+    return;
+  }
+
   // API ROUTE 6: POST /api/whatsapp/disconnect
   if (reqPath === '/api/whatsapp/disconnect' && req.method === 'POST') {
     try {
