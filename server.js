@@ -219,6 +219,42 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // API ROUTE 6: GET /api/daily-bani-sheet (Live Fetch Daily Bani Google Sheet)
+  if (reqPath === '/api/daily-bani-sheet' && req.method === 'GET') {
+    try {
+      const gUrl = 'https://docs.google.com/spreadsheets/d/10vQXS5D36tGuvaBNEpe4xYBRs6RKUqv6BHq_eboosNQ/export?format=xlsx';
+      const XLSX = require('xlsx');
+
+      function fetchXLSXBuffer(targetUrl) {
+        return new Promise((resolve, reject) => {
+          https.get(targetUrl, res => {
+            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+              return fetchXLSXBuffer(res.headers.location).then(resolve).catch(reject);
+            }
+            const chunks = [];
+            res.on('data', c => chunks.push(c));
+            res.on('end', () => resolve(Buffer.concat(chunks)));
+          }).on('error', reject);
+        });
+      }
+
+      const buf = await fetchXLSXBuffer(gUrl);
+      const wb = XLSX.read(buf, { type: 'buffer' });
+      const finRows = XLSX.utils.sheet_to_json(wb.Sheets['Financial-2026-27'], { header: 1 });
+      const physRows = XLSX.utils.sheet_to_json(wb.Sheets['Physical-2026-27'], { header: 1 });
+
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({ success: true, finRows, physRows }));
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ success: false, error: e.message }));
+    }
+    return;
+  }
+
   // API ROUTE 6: POST /api/whatsapp/disconnect
   if (reqPath === '/api/whatsapp/disconnect' && req.method === 'POST') {
     try {
