@@ -12984,56 +12984,50 @@ function renderSheet3CDFContent() {
     <div class="p-6 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-4 border no-print"
          style="background: linear-gradient(135deg, #0b1329 0%, #0f172a 50%, #1e293b 100%) !important; border: 1.5px solid #334155 !important;">
       <div class="space-y-1.5">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-xs"
-                style="background: rgba(16, 185, 129, 0.25) !important; color: #34d399 !important; border: 1px solid rgba(16, 185, 129, 0.45) !important;">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Official MLA-CDF Daily Monitoring (District Capex 2026-27)
-          </span>
-          <span class="px-3 py-1 rounded-full text-[11px] font-bold shadow-xs flex items-center gap-1.5"
-                style="background: rgba(59, 130, 246, 0.25) !important; color: #93c5fd !important; border: 1px solid rgba(59, 130, 246, 0.45) !important;">
-            <i class="fa-solid fa-arrows-rotate"></i>
-            <span>Live Direct Fetch Active</span>
-          </span>
-          <span class="text-xs font-semibold" style="color: #94a3b8 !important;">
-            Synced: <b style="color: #f1f5f9 !important;">${lastSyncStr}</b>
+        <div class="flex flex-wrap items-center gap-3">
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2.5"
+              style="color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+            <i class="fa-solid fa-landmark" style="color: #fbbf24 !important;"></i>
+            <span>District Capex Budget (MLA-CDF 2026–27) Daily Monitoring</span>
+          </h2>
+          <span class="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm"
+                style="background: rgba(14, 165, 233, 0.18) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.4) !important;">
+            <i class="fa-solid fa-arrows-rotate text-sky-400"></i>
+            Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
           </span>
         </div>
-        <h2 class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2.5"
-            style="color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-          <i class="fa-solid fa-landmark" style="color: #fbbf24 !important;"></i>
-          <span>District Capex Budget (MLA-CDF 2026–27) Daily Monitoring</span>
-        </h2>
-        <p class="text-xs leading-relaxed max-w-3xl" style="color: #cbd5e1 !important;">
-          Live synchronized with official Google Sheet. <b>Physical Progress Table</b> is presented above, followed directly by the <b>Financial Progress Table (CDF 2026-27)</b>.
-        </p>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex flex-wrap items-center gap-2.5">
+      <!-- Action Buttons (2x2 Grid on Mobile with equal width and height, Flex on Desktop) -->
+      <div class="mobile-btn-grid-2x2">
         <a href="${SHEET3_CDF_GOOGLE_SHEET_PAGE_URL}" target="_blank"
-           class="px-4 py-2.5 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
-           style="background: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(8px);">
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           style="background: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(8px); text-decoration: none !important;">
           <i class="fa-solid fa-arrow-up-right-from-square" style="color: #fbbf24 !important;"></i>
           <span>Open Google Sheet</span>
         </a>
         <button id="sheet3-refresh-btn" onclick="refreshSheet3LiveCDF(true)"
-           class="px-4 py-2.5 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
            style="background: #059669 !important; color: #ffffff !important; border: 1px solid #10b981 !important;">
           <i class="fa-solid fa-arrows-rotate" style="color: #a7f3d0 !important;"></i>
           <span>Refresh Live Sheet</span>
         </button>
         <button onclick="toggleSheet3BaniOnly()"
-           class="px-4 py-2.5 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
            style="background: ${filterBaniOnly ? '#f59e0b' : '#334155'} !important; color: ${filterBaniOnly ? '#0f172a' : '#ffffff'} !important; border: 1px solid ${filterBaniOnly ? '#fbbf24' : '#475569'} !important;">
           <i class="fa-solid fa-filter ${filterBaniOnly ? 'text-slate-900' : 'text-amber-400'}"></i>
-          <span>${filterBaniOnly ? 'Focus: Bani Only Active' : 'Filter: All Blocks'}</span>
+          <span>${filterBaniOnly ? 'Focus: Bani Only' : 'Filter: All Blocks'}</span>
+        </button>
+        <button onclick="exportSheet3Excel()"
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           style="background: #0284c7 !important; color: #ffffff !important; border: 1px solid #38bdf8 !important;">
+          <i class="fa-solid fa-file-excel" style="color: #bae6fd !important;"></i>
+          <span>Excel (Both Tables)</span>
         </button>
       </div>
     </div>
   `;
 
-  // 2. KPI Cards Bar (Exact BDO Staff Position Cards with colored backgrounds)
   const kpiRibbonHtml = `
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 no-print w-full">
       <!-- Card 1: Cyan (Recommended Works Bani) -->
@@ -13838,38 +13832,43 @@ function renderSheet1LiveContent() {
             Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
           </span>
         </div>
-        <div class="flex flex-wrap items-center gap-2.5 pt-1">
-          <a href="#table-sheet1-part1" class="px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-             style="background: #0284c7 !important; color: #ffffff !important; border: 1.5px solid #38bdf8 !important; text-decoration: none !important;">
-            <i class="fa-solid fa-arrow-down" style="color: #e0f2fe !important;"></i>
-            <span>Part 1: Physical Progress</span>
-          </a>
-          <a href="#table-sheet1-part2" class="px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-             style="background: #059669 !important; color: #ffffff !important; border: 1.5px solid #34d399 !important; text-decoration: none !important;">
-            <i class="fa-solid fa-arrow-down" style="color: #d1fae5 !important;"></i>
-            <span>Part 2: Financial Progress</span>
-          </a>
-        </div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-2.5">
+      <!-- Action & Navigation 6 Buttons (2x3 Grid on Mobile with equal width and height, Flex on Desktop) -->
+      <div class="mobile-btn-grid-2x3">
+        <a href="#table-sheet1-part1" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+           style="background: #0284c7 !important; color: #ffffff !important; border: 1.5px solid #38bdf8 !important; text-decoration: none !important;">
+          <i class="fa-solid fa-arrow-down" style="color: #e0f2fe !important;"></i>
+          <span>Part 1: Physical Progress</span>
+        </a>
+        <a href="#table-sheet1-part2" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+           style="background: #059669 !important; color: #ffffff !important; border: 1.5px solid #34d399 !important; text-decoration: none !important;">
+          <i class="fa-solid fa-arrow-down" style="color: #d1fae5 !important;"></i>
+          <span>Part 2: Financial Progress</span>
+        </a>
         <a href="${SHEET1_BANI_GOOGLE_SHEET_PAGE_URL}" target="_blank"
-           class="px-4 py-2.5 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
-           style="background: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(8px);">
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           style="background: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(8px); text-decoration: none !important;">
           <i class="fa-solid fa-arrow-up-right-from-square" style="color: #fbbf24 !important;"></i>
           <span>Open Google Sheet</span>
         </a>
         <button id="sheet1-refresh-btn" onclick="fetchSheet1LiveBaniData(true)"
-           class="px-4 py-2.5 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
            style="background: #059669 !important; color: #ffffff !important; border: 1px solid #10b981 !important;">
           <i class="fa-solid fa-arrows-rotate" style="color: #a7f3d0 !important;"></i>
           <span>Refresh Live Sheet</span>
         </button>
         <button onclick="toggleSheet1CapexOnly()"
-           class="px-4 py-2.5 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
            style="background: ${filterCapex ? '#f59e0b' : '#334155'} !important; color: ${filterCapex ? '#0f172a' : '#ffffff'} !important; border: 1px solid ${filterCapex ? '#fbbf24' : '#475569'} !important;">
           <i class="fa-solid fa-filter ${filterCapex ? 'text-slate-900' : 'text-amber-400'}"></i>
-          <span>${filterCapex ? 'Focus: Capex Core Active' : 'Filter: All Schemes'}</span>
+          <span>${filterCapex ? 'Focus: Capex Core' : 'Filter: All Schemes'}</span>
+        </button>
+        <button onclick="exportSheet1Excel()"
+           class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+           style="background: #0284c7 !important; color: #ffffff !important; border: 1px solid #38bdf8 !important;">
+          <i class="fa-solid fa-file-excel" style="color: #bae6fd !important;"></i>
+          <span>Excel Download</span>
         </button>
       </div>
     </div>
@@ -14795,6 +14794,19 @@ async function fetchSheet2LiveDCBData(userTriggered = false) {
   }
 }
 
+
+function setSheet2BaniFilter(isBani) {
+  sheet2DCBState.filterBaniOnly = isBani;
+  if (typeof showToast === 'function') {
+    showToast(isBani ? 'Showing Block Bani rows only across all 4 tables.' : 'Showing all district blocks & divisions.', 'info');
+  }
+  const cont = typeof document !== 'undefined' ? (document.getElementById('main-content') || document.getElementById('mainContent')) : null;
+  if (cont && typeof renderDailySheetsHub === 'function') {
+    renderDailySheetsHub(cont);
+  }
+}
+window.setSheet2BaniFilter = setSheet2BaniFilter;
+
 function toggleSheet2BaniOnly() {
   sheet2DCBState.filterBaniOnly = !sheet2DCBState.filterBaniOnly;
   if (typeof showToast === 'function') {
@@ -14829,7 +14841,7 @@ function renderSheet2LiveContent() {
   const topHeaderHtml = `
     <div class="p-6 rounded-2xl shadow-xl space-y-4 border no-print"
          style="background: linear-gradient(135deg, #0b1329 0%, #0f172a 50%, #1e293b 100%) !important; border: 1.5px solid #334155 !important;">
-      <!-- Row 1: Title & Sync Time on Left, Action Buttons on Right (No wrapping empty black bar!) -->
+      <!-- Row 1: Title & Sync Time on Left, Action Buttons in 2x3 on Right -->
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div class="flex flex-wrap items-center gap-3">
           <h2 class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2.5"
@@ -14844,33 +14856,40 @@ function renderSheet2LiveContent() {
           </span>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2.5">
+        <!-- 6 Action Buttons (2x3 Grid on Mobile with equal width and height, Flex on Desktop) -->
+        <div class="mobile-btn-grid-2x3">
           <a href="${SHEET2_DCB_GOOGLE_SHEET_PAGE_URL}" target="_blank"
-             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
-             style="background: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(8px);">
+             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+             style="background: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(8px); text-decoration: none !important;">
             <i class="fa-solid fa-arrow-up-right-from-square" style="color: #fbbf24 !important;"></i>
             <span>Open Google Sheet</span>
           </a>
           <button id="sheet2-refresh-btn" onclick="fetchSheet2LiveDCBData(true)"
-             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
              style="background: #059669 !important; color: #ffffff !important; border: 1px solid #10b981 !important;">
             <i class="fa-solid fa-arrows-rotate" style="color: #a7f3d0 !important;"></i>
             <span>Refresh Live Sheet</span>
           </button>
-          <button onclick="toggleSheet2BaniOnly()"
-             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+          <button onclick="setSheet2BaniFilter(false)"
+             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+             style="background: ${!filterBaniOnly ? '#f59e0b' : '#334155'} !important; color: ${!filterBaniOnly ? '#0f172a' : '#ffffff'} !important; border: 1px solid ${!filterBaniOnly ? '#fbbf24' : '#475569'} !important;">
+            <i class="fa-solid fa-layer-group ${!filterBaniOnly ? 'text-slate-900' : 'text-amber-400'}"></i>
+            <span>Filter: All Blocks</span>
+          </button>
+          <button onclick="setSheet2BaniFilter(true)"
+             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
              style="background: ${filterBaniOnly ? '#f59e0b' : '#334155'} !important; color: ${filterBaniOnly ? '#0f172a' : '#ffffff'} !important; border: 1px solid ${filterBaniOnly ? '#fbbf24' : '#475569'} !important;">
-            <i class="fa-solid fa-filter ${filterBaniOnly ? 'text-slate-900' : 'text-amber-400'}"></i>
-            <span>${filterBaniOnly ? 'Focus: Bani Only Active' : 'Filter: All Blocks'}</span>
+            <i class="fa-solid fa-location-dot ${filterBaniOnly ? 'text-slate-900' : 'text-emerald-400'}"></i>
+            <span>Focus: Bani Only</span>
           </button>
           <button onclick="exportSheet2Excel()"
-             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
              style="background: #0284c7 !important; color: #ffffff !important; border: 1px solid #38bdf8 !important;">
             <i class="fa-solid fa-file-excel" style="color: #bae6fd !important;"></i>
             <span>Excel (All 4 Sheets)</span>
           </button>
           <button onclick="exportSheet2PDF()"
-             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
+             class="px-3.5 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-95"
              style="background: #dc2626 !important; color: #ffffff !important; border: 1px solid #ef4444 !important;">
             <i class="fa-solid fa-file-pdf" style="color: #fecaca !important;"></i>
             <span>PDF Print</span>
@@ -14878,28 +14897,30 @@ function renderSheet2LiveContent() {
         </div>
       </div>
 
-      <!-- Row 2: 4 Table Jump Navigation Buttons (Vibrant colors, 100% white bold readable text!) -->
-      <div class="flex flex-wrap items-center gap-2.5 pt-3 border-t border-slate-700/60">
-        <a href="#table-sheet2-expdt-new" class="px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-           style="background: #1d4ed8 !important; color: #ffffff !important; border: 1.5px solid #60a5fa !important; text-decoration: none !important;">
-          <i class="fa-solid fa-arrow-down" style="color: #93c5fd !important;"></i>
-          <span>Table 1: Expdt (New Works)</span>
-        </a>
-        <a href="#table-sheet2-expdt-ongoing" class="px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-           style="background: #b45309 !important; color: #ffffff !important; border: 1.5px solid #fbbf24 !important; text-decoration: none !important;">
-          <i class="fa-solid fa-arrow-down" style="color: #fde68a !important;"></i>
-          <span>Table 2: Expdt (Ongoing Works)</span>
-        </a>
-        <a href="#table-sheet2-meeting-ongoing" class="px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-           style="background: #0f766e !important; color: #ffffff !important; border: 1.5px solid #2dd4bf !important; text-decoration: none !important;">
-          <i class="fa-solid fa-arrow-down" style="color: #a7f3d0 !important;"></i>
-          <span>Table 3: DCB Meeting (Ongoing)</span>
-        </a>
-        <a href="#table-sheet2-meeting-new" class="px-3.5 py-1.5 rounded-xl text-xs font-black shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-           style="background: #6d28d9 !important; color: #ffffff !important; border: 1.5px solid #a78bfa !important; text-decoration: none !important;">
-          <i class="fa-solid fa-arrow-down" style="color: #ddd6fe !important;"></i>
-          <span>Table 4: DCB Meeting (New)</span>
-        </a>
+      <!-- Row 2: 4 Table Jump Navigation Buttons in 2x2 Grid on Mobile, Flex on Desktop -->
+      <div class="pt-3 border-t border-slate-700/60">
+        <div class="mobile-btn-grid-2x2">
+          <a href="#table-sheet2-expdt-new" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+             style="background: #1d4ed8 !important; color: #ffffff !important; border: 1.5px solid #60a5fa !important; text-decoration: none !important;">
+            <i class="fa-solid fa-arrow-down" style="color: #93c5fd !important;"></i>
+            <span>Table 1: Expdt (New Works)</span>
+          </a>
+          <a href="#table-sheet2-expdt-ongoing" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+             style="background: #b45309 !important; color: #ffffff !important; border: 1.5px solid #fbbf24 !important; text-decoration: none !important;">
+            <i class="fa-solid fa-arrow-down" style="color: #fde68a !important;"></i>
+            <span>Table 2: Expdt (Ongoing Works)</span>
+          </a>
+          <a href="#table-sheet2-meeting-ongoing" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+             style="background: #0f766e !important; color: #ffffff !important; border: 1.5px solid #2dd4bf !important; text-decoration: none !important;">
+            <i class="fa-solid fa-arrow-down" style="color: #a7f3d0 !important;"></i>
+            <span>Table 3: DCB Meeting (Ongoing)</span>
+          </a>
+          <a href="#table-sheet2-meeting-new" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+             style="background: #6d28d9 !important; color: #ffffff !important; border: 1.5px solid #a78bfa !important; text-decoration: none !important;">
+            <i class="fa-solid fa-arrow-down" style="color: #ddd6fe !important;"></i>
+            <span>Table 4: DCB Meeting (New)</span>
+          </a>
+        </div>
       </div>
     </div>
   `;

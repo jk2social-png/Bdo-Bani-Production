@@ -1910,3 +1910,49 @@ html, body {
   color: #047857 !important;
   font-weight: 700 !important;
 }
+
+
+/* Responsive 2x3 & 2x2 Grid for Action Buttons in Daily Monitoring Google Sheet Views */
+.mobile-btn-grid-2x3 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.mobile-btn-grid-2x2 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.mobile-btn-grid-2x3 > *,
+.mobile-btn-grid-2x2 > * {
+  width: 100% !important;
+  min-height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 8px 10px !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  font-size: 11.5px !important;
+}
+
+@media (min-width: 640px) {
+  .mobile-btn-grid-2x3,
+  .mobile-btn-grid-2x2 {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: auto !important;
+  }
+  .mobile-btn-grid-2x3 > *,
+  .mobile-btn-grid-2x2 > * {
+    width: auto !important;
+    min-height: 38px !important;
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+  }
+}

@@ -1,5 +1,5 @@
 // Service Worker for BDO Bani PWA Web App
-const CACHE_NAME = 'bdo-bani-v20261122_v18';
+const CACHE_NAME = 'bdo-bani-v20261122_v19';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
