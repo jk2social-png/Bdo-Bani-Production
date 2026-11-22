@@ -4152,7 +4152,7 @@ function renderMeetingAbstract(container) {
               <span class="w-2.5 h-2.5 rounded-full bg-amber-600 inline-block"></span>
               Table 1A: Physical Ongoing Works (2026-27)
             </h3>
-            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">Meeting Abstract 1A • ${ongoingPhyTotal.total} Ongoing Works</span>
+            
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
@@ -4215,7 +4215,7 @@ function renderMeetingAbstract(container) {
               <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
               Table 1B: Physical New Works (2026-27)
             </h3>
-            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">Meeting Abstract 1B • ${phyTotal.total} Works</span>
+            
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
@@ -4341,7 +4341,7 @@ function renderMeetingAbstract(container) {
               <span class="w-2.5 h-2.5 rounded-full bg-amber-600 inline-block"></span>
               Table 2A: Financial Ongoing Works (2026-27)
             </h3>
-            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">Fig Rs. In Lakh (Exact 3-Decimal Precision)</span>
+            
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
@@ -4393,7 +4393,7 @@ function renderMeetingAbstract(container) {
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
               Table 2B: Financial New Works (2026-27)
             </h3>
-            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">Fig Rs. In Lakh (Exact 3-Decimal Precision)</span>
+            
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
@@ -4447,7 +4447,7 @@ function renderMeetingAbstract(container) {
               <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block"></span>
               Table 2C: Consolidated Financial Status (Ongoing + New Works 2026-27)
             </h3>
-            <span class="text-xs font-bold text-indigo-900 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">Official DDC Review Format • Fig Rs. in Lakh (Exact 3-Decimal Precision)</span>
+            
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
@@ -4524,7 +4524,7 @@ function renderMeetingAbstract(container) {
                 <i class="fa-solid fa-triangle-exclamation text-rose-600"></i>
                 1. Works Not Allotted (${notAllottedWorks.length} Works)
               </h4>
-              <span class="text-[11px] text-slate-500 font-medium">Target: Immediate Tendering & Allotment</span>
+              
             </div>
             ${notAllottedWorks.length === 0 ? `
               <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs font-bold text-emerald-800 flex items-center gap-2">
@@ -4552,7 +4552,7 @@ function renderMeetingAbstract(container) {
                         <tr class="hover:bg-rose-50/50 transition-colors">
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                           <td class="font-bold text-rose-950">${w.panchayat}</td>
-                          <td class="font-medium text-slate-800">${w.name}</td>
+                          <td class="font-medium text-slate-800 text-left px-3">${w.name}</td>
                           <td class="text-right font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
                           <td class="text-right font-mono text-rose-700 font-bold">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-200">${w.physicalStatus || 'Not Alloted'}</span></td>
@@ -4573,7 +4573,7 @@ function renderMeetingAbstract(container) {
                 <i class="fa-solid fa-clock-rotate-left text-amber-600"></i>
                 2. Works Not Started on Ground (${notStartedWorks.length} Works)
               </h4>
-              <span class="text-[11px] text-slate-500 font-medium">Target: Immediate Ground Initiation / Permission Clearance</span>
+              
             </div>
             ${notStartedWorks.length === 0 ? `
               <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs font-bold text-emerald-800 flex items-center gap-2">
@@ -4601,7 +4601,7 @@ function renderMeetingAbstract(container) {
                         <tr class="hover:bg-amber-50/50 transition-colors">
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                           <td class="font-bold text-amber-950">${w.panchayat}</td>
-                          <td class="font-medium text-slate-800">${w.name}</td>
+                          <td class="font-medium text-slate-800 text-left px-3">${w.name}</td>
                           <td class="text-right font-mono font-bold text-indigo-950">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300">${w.physicalStatus || 'Not Started'}</span></td>
                           <td class="text-slate-600 text-xs italic">${w.reasonNotCompleted || 'Forest / Clearance Permission Required'}</td>
@@ -4622,7 +4622,7 @@ function renderMeetingAbstract(container) {
                 <i class="fa-solid fa-circle-check text-teal-600"></i>
                 3. Physically Completed Works (${completedWorks.length} Works under ${focusTitle})
               </h4>
-              <span class="text-[11px] text-slate-500 font-medium">Target: Quality Verification & Final Bill Settlement</span>
+              
             </div>
             ${completedWorks.length === 0 ? `
               <div class="p-3 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-600">
