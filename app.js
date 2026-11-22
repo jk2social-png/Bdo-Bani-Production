@@ -4324,11 +4324,11 @@ function renderMeetingAbstract(container) {
                   <th class="py-2.5 px-4 border-r border-blue-900 text-left min-w-[120px]">Scheme</th>
                   <th class="py-2.5 px-3 border-r border-blue-900">Total No. of<br>works</th>
                   <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>received</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Amount of bills<br>received</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of bills<br>received</th>
                   <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Amount of<br>Bills cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Amount of Bills<br>Submitted in Treasury</th>
-                  <th class="py-2.5 px-4 text-right">Funds<br>Released</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of<br>Bills cleared</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of Bills<br>Submitted in Treasury</th>
+                  <th class="py-2.5 px-4 text-center">Funds<br>Released</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
@@ -4337,21 +4337,21 @@ function renderMeetingAbstract(container) {
                   <td class="text-left font-bold text-blue-900">PRIs</td>
                   <td class="font-bold">${ongoingTotalWorks}</td>
                   <td>${ongoingBillsReceived}</td>
-                  <td class="text-right font-medium">${ongoingAmtBillsReceived.toFixed(3)}</td>
+                  <td class="text-center font-medium font-mono">${ongoingAmtBillsReceived.toFixed(3)}</td>
                   <td>${ongoingBillsCleared}</td>
-                  <td class="text-right font-medium text-emerald-800">${ongoingAmtBillsCleared.toFixed(3)}</td>
-                  <td class="text-right font-medium text-indigo-900">${ongoingBillsTreasury.toFixed(3)}</td>
-                  <td class="text-right font-bold text-teal-800">${ongoingFundsReleased.toFixed(3)}</td>
+                  <td class="text-center font-medium text-emerald-800 font-mono">${ongoingAmtBillsCleared.toFixed(3)}</td>
+                  <td class="text-center font-medium text-indigo-900 font-mono">${ongoingBillsTreasury.toFixed(3)}</td>
+                  <td class="text-center font-bold text-teal-800 font-mono">${ongoingFundsReleased.toFixed(3)}</td>
                 </tr>
                 <tr class="total-row bg-[#dbeafe] text-[#1e3a8a] font-black text-center border-t-2 border-b-2 border-[#1e40af] text-xs shadow-sm">
-                  <td colspan="2" class="py-2 px-3 text-left uppercase tracking-wide">Total Ongoing (A):</td>
+                  <td colspan="2" class="py-2 px-3 text-center uppercase tracking-wide font-black">Total Ongoing (A):</td>
                   <td>${ongoingTotalWorks}</td>
                   <td>${ongoingBillsReceived}</td>
-                  <td class="text-right">${ongoingAmtBillsReceived.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${ongoingAmtBillsReceived.toFixed(3)}</td>
                   <td>${ongoingBillsCleared}</td>
-                  <td class="text-right">${ongoingAmtBillsCleared.toFixed(3)}</td>
-                  <td class="text-right">${ongoingBillsTreasury.toFixed(3)}</td>
-                  <td class="text-right">${ongoingFundsReleased.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${ongoingAmtBillsCleared.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${ongoingBillsTreasury.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${ongoingFundsReleased.toFixed(3)}</td>
                 </tr>
               </tbody>
             </table>
@@ -4376,11 +4376,11 @@ function renderMeetingAbstract(container) {
                   <th class="py-2.5 px-4 border-r border-blue-900 text-left min-w-[120px]">Scheme</th>
                   <th class="py-2.5 px-3 border-r border-blue-900">Total No. of<br>works</th>
                   <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>received</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Amount of bills<br>received</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of bills<br>received</th>
                   <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Amount of<br>Bills cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Amount of Bills<br>Submitted in Treasury</th>
-                  <th class="py-2.5 px-4 text-right">Funds<br>Released</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of<br>Bills cleared</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of Bills<br>Submitted in Treasury</th>
+                  <th class="py-2.5 px-4 text-center">Funds<br>Released</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
@@ -4390,22 +4390,22 @@ function renderMeetingAbstract(container) {
                     <td class="text-left font-bold text-blue-900">${r.schemeName}</td>
                     <td class="font-bold">${r.totalWorks}</td>
                     <td>${r.billsReceived}</td>
-                    <td class="text-right font-bold text-slate-800">${r.amtBillsReceived.toFixed(3)}</td>
+                    <td class="text-center font-bold text-slate-800 font-mono">${r.amtBillsReceived.toFixed(3)}</td>
                     <td>${r.billsCleared}</td>
-                    <td class="text-right font-bold text-emerald-800">${r.amtBillsCleared.toFixed(3)}</td>
-                    <td class="text-right font-bold text-indigo-900">${r.billsTreasury.toFixed(3)}</td>
-                    <td class="text-right font-bold text-teal-800">${r.fundsReleased.toFixed(3)}</td>
+                    <td class="text-center font-bold text-emerald-800 font-mono">${r.amtBillsCleared.toFixed(3)}</td>
+                    <td class="text-center font-bold text-indigo-900 font-mono">${r.billsTreasury.toFixed(3)}</td>
+                    <td class="text-center font-bold text-teal-800 font-mono">${r.fundsReleased.toFixed(3)}</td>
                   </tr>
                 `).join('')}
                 <tr class="total-row bg-[#dbeafe] text-[#1e3a8a] font-black text-center border-t-2 border-b-2 border-[#1e40af] text-xs shadow-sm">
-                  <td colspan="2" class="py-2 px-3 text-left uppercase tracking-wide">Total Financial New (B):</td>
+                  <td colspan="2" class="py-2 px-3 text-center uppercase tracking-wide font-black">Total Financial New (B):</td>
                   <td class="font-bold">${finNewTotal.totalWorks}</td>
                   <td>${finNewTotal.billsReceived}</td>
-                  <td class="text-right font-bold">${finNewTotal.amtBillsReceived.toFixed(3)}</td>
+                  <td class="text-center font-bold font-mono">${finNewTotal.amtBillsReceived.toFixed(3)}</td>
                   <td>${finNewTotal.billsCleared}</td>
-                  <td class="text-right font-bold">${finNewTotal.amtBillsCleared.toFixed(3)}</td>
-                  <td class="text-right font-bold">${finNewTotal.billsTreasury.toFixed(3)}</td>
-                  <td class="text-right font-bold">${finNewTotal.fundsReleased.toFixed(3)}</td>
+                  <td class="text-center font-bold font-mono">${finNewTotal.amtBillsCleared.toFixed(3)}</td>
+                  <td class="text-center font-bold font-mono">${finNewTotal.billsTreasury.toFixed(3)}</td>
+                  <td class="text-center font-bold font-mono">${finNewTotal.fundsReleased.toFixed(3)}</td>
                 </tr>
               </tbody>
             </table>
@@ -4428,11 +4428,11 @@ function renderMeetingAbstract(container) {
                 <tr class="text-[11px] font-bold text-center">
                   <th class="py-2.5 px-3 border-r border-blue-900 w-14">S.NO</th>
                   <th class="py-2.5 px-4 border-r border-blue-900 text-left min-w-[120px]">Component / Scheme</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Approved Outlay<br>2026-27</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Allotted<br>Cost</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Savings</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Availability /<br>Funds Released</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-right">Actual<br>Expenditure</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Approved Outlay<br>2026-27</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Allotted<br>Cost</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Savings</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Availability /<br>Funds Released</th>
+                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Actual<br>Expenditure</th>
                   <th class="py-2.5 px-4 text-center">% Expdt against<br>Allotment</th>
                 </tr>
               </thead>
@@ -4453,12 +4453,12 @@ function renderMeetingAbstract(container) {
                   `;
                 }).join('')}
                 <tr class="total-row bg-[#e0e7ff] text-[#312e81] font-black border-t-2 border-b-2 border-[#4338ca] text-xs shadow-sm">
-                  <td colspan="2" class="py-2 px-3 text-left uppercase tracking-wide">Total Consolidated Financial (A+B):</td>
-                  <td class="text-right">${conFinTotal.approved.toFixed(3)}</td>
-                  <td class="text-right">${conFinTotal.allotment.toFixed(3)}</td>
-                  <td class="text-right">${conFinTotal.savings.toFixed(3)}</td>
-                  <td class="text-right">${conFinTotal.funds.toFixed(3)}</td>
-                  <td class="text-right">${conFinTotal.actual.toFixed(3)}</td>
+                  <td colspan="2" class="py-2 px-3 text-center uppercase tracking-wide font-black">Total Consolidated Financial (A+B):</td>
+                  <td class="text-center font-mono font-bold">${conFinTotal.approved.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${conFinTotal.allotment.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${conFinTotal.savings.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${conFinTotal.funds.toFixed(3)}</td>
+                  <td class="text-center font-mono font-bold">${conFinTotal.actual.toFixed(3)}</td>
                   <td class="text-center">${conFinTotal.allotment > 0 ? ((conFinTotal.actual / conFinTotal.allotment) * 100).toFixed(1) + '%' : '0.0%'}</td>
                 </tr>
               </tbody>
@@ -4468,18 +4468,19 @@ function renderMeetingAbstract(container) {
 
         <!-- PART 2: SCRUTINY LISTS -->
         <div class="p-4 space-y-6 bg-slate-50/40">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
-            <div></div>
-
-            <!-- Focus Scheme Selector Pills -->
-            <div class="flex items-center gap-1.5 no-print">
-              <span class="text-xs font-bold text-slate-600 mr-1">Scheme:</span>
-              <button onclick="setMeetingFocusScheme('pri')" class="px-2.5 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${activeFocusScheme === 'pri' ? 'bg-blue-800 text-white border-blue-900 shadow-xs' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}">PRI Capex</button>
-              <button onclick="setMeetingFocusScheme('ddc')" class="px-2.5 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${activeFocusScheme === 'ddc' ? 'bg-blue-800 text-white border-blue-900 shadow-xs' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}">DDC Capex</button>
-              <button onclick="setMeetingFocusScheme('bdc')" class="px-2.5 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${activeFocusScheme === 'bdc' ? 'bg-blue-800 text-white border-blue-900 shadow-xs' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}">BDC Capex</button>
-              <button onclick="setMeetingFocusScheme('st')" class="px-2.5 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${activeFocusScheme === 'st' ? 'bg-blue-800 text-white border-blue-900 shadow-xs' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}">ST Plan</button>
-              <button onclick="setMeetingFocusScheme('apdp')" class="px-2.5 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${activeFocusScheme === 'apdp' ? 'bg-blue-800 text-white border-blue-900 shadow-xs' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}">APDP</button>
-              <button onclick="setMeetingFocusScheme('all')" class="px-2.5 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${activeFocusScheme === 'all' ? 'bg-blue-800 text-white border-blue-900 shadow-xs' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}">All Schemes</button>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-200 pb-3 no-print">
+            <div class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-blue-600"></i>
+              <span>Scheme:</span>
+            </div>
+            <!-- Focus Scheme Selector Pills: 3x2 Grid on Mobile (Full Width), Flex on Desktop -->
+            <div class="grid grid-cols-3 sm:flex sm:flex-wrap items-center gap-2 w-full sm:w-auto">
+              <button onclick="setMeetingFocusScheme('pri')" class="w-full sm:w-auto h-9 px-3 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center text-center shadow-xs ${activeFocusScheme === 'pri' ? 'bg-[#0891b2] text-white border-[#0891b2] shadow-md ring-2 ring-cyan-300' : 'bg-[#e0f2fe] text-[#0369a1] border-[#bae6fd] hover:bg-[#bae6fd]'}">PRI Capex</button>
+              <button onclick="setMeetingFocusScheme('ddc')" class="w-full sm:w-auto h-9 px-3 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center text-center shadow-xs ${activeFocusScheme === 'ddc' ? 'bg-[#059669] text-white border-[#059669] shadow-md ring-2 ring-emerald-300' : 'bg-[#d1fae5] text-[#065f46] border-[#a7f3d0] hover:bg-[#a7f3d0]'}">DDC Capex</button>
+              <button onclick="setMeetingFocusScheme('bdc')" class="w-full sm:w-auto h-9 px-3 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center text-center shadow-xs ${activeFocusScheme === 'bdc' ? 'bg-[#6366f1] text-white border-[#6366f1] shadow-md ring-2 ring-indigo-300' : 'bg-[#ede9fe] text-[#5b21b6] border-[#ddd6fe] hover:bg-[#ddd6fe]'}">BDC Capex</button>
+              <button onclick="setMeetingFocusScheme('st')" class="w-full sm:w-auto h-9 px-3 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center text-center shadow-xs ${activeFocusScheme === 'st' ? 'bg-[#d97706] text-white border-[#d97706] shadow-md ring-2 ring-amber-300' : 'bg-[#fef3c7] text-[#92400e] border-[#fde68a] hover:bg-[#fde68a]'}">ST Plan</button>
+              <button onclick="setMeetingFocusScheme('apdp')" class="w-full sm:w-auto h-9 px-3 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center text-center shadow-xs ${activeFocusScheme === 'apdp' ? 'bg-[#dc2626] text-white border-[#dc2626] shadow-md ring-2 ring-red-300' : 'bg-[#ffe4e6] text-[#9f1239] border-[#fecdd3] hover:bg-[#fecdd3]'}">APDP</button>
+              <button onclick="setMeetingFocusScheme('all')" class="w-full sm:w-auto h-9 px-3 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center text-center shadow-xs ${activeFocusScheme === 'all' ? 'bg-[#0f172a] text-white border-[#0f172a] shadow-md ring-2 ring-slate-400' : 'bg-[#f1f5f9] text-[#334155] border-[#cbd5e1] hover:bg-[#e2e8f0]'}">All Schemes</button>
             </div>
           </div>
 
@@ -4504,8 +4505,8 @@ function renderMeetingAbstract(container) {
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
                       <th class="py-2 px-3 w-28">Panchayat</th>
                       <th class="py-2.5 px-3 text-left" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important;">Name of Work</th>
-                      <th class="py-2 px-3 w-24 text-right">AAA Cost (₹ L)</th>
-                      <th class="py-2 px-3 w-24 text-right">Alloted Cost</th>
+                      <th class="py-2 px-3 w-24 text-center">AAA Cost (₹ L)</th>
+                      <th class="py-2 px-3 w-24 text-center">Alloted Cost</th>
                       <th class="py-2 px-3 w-28 text-center">Status</th>
                       <th class="py-2 px-3 w-36">JE / TA Incharge</th>
                     </tr>
@@ -4519,8 +4520,8 @@ function renderMeetingAbstract(container) {
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                           <td class="font-bold text-rose-950">${w.panchayat}</td>
                           <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important; word-break: break-word !important; line-height: 1.4 !important;">${w.name}</td>
-                          <td class="text-right font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
-                          <td class="text-right font-mono text-rose-700 font-bold">₹${(w.allotmentCost || 0).toFixed(3)}</td>
+                          <td class="text-center font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
+                          <td class="text-center font-mono text-rose-700 font-bold">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-200">${w.physicalStatus || 'Not Alloted'}</span></td>
                           <td class="text-slate-600 text-[11px] font-medium">${staffText}</td>
                         </tr>
@@ -4551,9 +4552,9 @@ function renderMeetingAbstract(container) {
                   <thead class="bg-amber-900 text-white">
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
-                      <th class="py-2 px-3 w-28">Panchayat</th>
+                      <th class="py-2 px-3 w-28 text-center">Panchayat</th>
                       <th class="py-2.5 px-3 text-left" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important;">Name of Work</th>
-                      <th class="py-2 px-3 w-24 text-right">Alloted Cost (₹ L)</th>
+                      <th class="py-2 px-3 w-24 text-center">Alloted Cost (₹ L)</th>
                       <th class="py-2 px-3 w-28 text-center">Status</th>
                       <th class="py-2 px-3">Reason / Remarks</th>
                       <th class="py-2 px-3 w-36">JE / TA Incharge</th>
@@ -4566,9 +4567,9 @@ function renderMeetingAbstract(container) {
                       return `
                         <tr class="hover:bg-amber-50/50 transition-colors">
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
-                          <td class="font-bold text-amber-950">${w.panchayat}</td>
+                          <td class="text-center font-bold text-amber-950">${w.panchayat}</td>
                           <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important; word-break: break-word !important; line-height: 1.4 !important;">${w.name}</td>
-                          <td class="text-right font-mono font-bold text-indigo-950">₹${(w.allotmentCost || 0).toFixed(3)}</td>
+                          <td class="text-center font-mono font-bold text-indigo-950">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300">${w.physicalStatus || 'Not Started'}</span></td>
                           <td class="text-slate-600 text-xs italic">${w.reasonNotCompleted || 'Forest / Clearance Permission Required'}</td>
                           <td class="text-slate-600 text-[11px] font-medium">${staffText}</td>
@@ -4600,11 +4601,11 @@ function renderMeetingAbstract(container) {
                   <thead class="bg-teal-900 text-white">
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
-                      <th class="py-2 px-3 w-28">Panchayat</th>
+                      <th class="py-2 px-3 w-28 text-center">Panchayat</th>
                       <th class="py-2.5 px-3 text-left" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important;">Name of Work</th>
-                      <th class="py-2 px-3 w-24 text-right">AAA Cost (₹ L)</th>
-                      <th class="py-2 px-3 w-24 text-right">Alloted Cost (₹ L)</th>
-                      <th class="py-2 px-3 w-24 text-right">Expdt (₹ L)</th>
+                      <th class="py-2 px-3 w-24 text-center">AAA Cost (₹ L)</th>
+                      <th class="py-2 px-3 w-24 text-center">Alloted Cost (₹ L)</th>
+                      <th class="py-2 px-3 w-24 text-center">Expdt (₹ L)</th>
                       <th class="py-2.5 px-3 text-center whitespace-nowrap" style="width: 135px !important; min-width: 135px !important; white-space: nowrap !important;">Completion</th>
                     </tr>
                   </thead>
@@ -4612,11 +4613,11 @@ function renderMeetingAbstract(container) {
                     ${completedWorks.map((w, idx) => `
                       <tr class="hover:bg-teal-50/50 transition-colors">
                         <td class="text-center font-bold text-slate-500">${idx + 1}</td>
-                        <td class="font-bold text-teal-950">${w.panchayat}</td>
+                        <td class="text-center font-bold text-teal-950">${w.panchayat}</td>
                           <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important; word-break: break-word !important; line-height: 1.4 !important;">${w.name}</td>
-                        <td class="text-right font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
-                        <td class="text-right font-mono font-medium text-indigo-900">₹${(w.allotmentCost || 0).toFixed(3)}</td>
-                        <td class="text-right font-mono font-bold text-emerald-800">₹${(w.actualExpdtTotal || 0).toFixed(3)}</td>
+                        <td class="text-center font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
+                        <td class="text-center font-mono font-medium text-indigo-900">₹${(w.allotmentCost || 0).toFixed(3)}</td>
+                        <td class="text-center font-mono font-bold text-emerald-800">₹${(w.actualExpdtTotal || 0).toFixed(3)}</td>
                         <td class="text-center whitespace-nowrap" style="width: 125px !important; min-width: 125px !important; white-space: nowrap !important;"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 inline-block whitespace-nowrap" style="white-space: nowrap !important;">100% Completed</span></td>
                       </tr>
                     `).join('')}
