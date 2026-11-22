@@ -1296,6 +1296,65 @@ body {
   color: #2563eb;
 }
 
+/* 6. Soft Indigo Card (ALLOTMENTS / PACES) */
+.metric-card-indigo {
+  background: #eef2ff; /* soft indigo-50 */
+  border-color: #c7d2fe; /* indigo-200 */
+}
+.metric-card-indigo .metric-title {
+  color: #3730a3;
+}
+.metric-card-indigo .metric-val {
+  color: #0f172a;
+}
+.metric-card-indigo .metric-sub {
+  color: #4f46e5;
+}
+
+/* 7. Soft Purple Card */
+.metric-card-purple {
+  background: #faf5ff; /* soft purple-50 */
+  border-color: #e9d5ff; /* purple-200 */
+}
+.metric-card-purple .metric-title {
+  color: #581c87;
+}
+.metric-card-purple .metric-val {
+  color: #0f172a;
+}
+.metric-card-purple .metric-sub {
+  color: #7e22ce;
+}
+
+/* 8. Soft Teal Card */
+.metric-card-teal {
+  background: #f0fdfa; /* soft teal-50 */
+  border-color: #99f6e4; /* teal-200 */
+}
+.metric-card-teal .metric-title {
+  color: #115e59;
+}
+.metric-card-teal .metric-val {
+  color: #0f172a;
+}
+.metric-card-teal .metric-sub {
+  color: #0d9488;
+}
+
+/* Explicit colors for purple/indigo presets and badges */
+.bg-purple-600 { background-color: #9333ea !important; }
+.bg-purple-700 { background-color: #7e22ce !important; }
+.bg-purple-800 { background-color: #6b21a8 !important; }
+.text-purple-600 { color: #9333ea !important; }
+.text-purple-700 { color: #7e22ce !important; }
+.text-purple-900 { color: #581c87 !important; }
+.text-purple-950 { color: #3b0764 !important; }
+.border-purple-300 { border-color: #d8b4fe !important; }
+.border-purple-400 { border-color: #c084fc !important; }
+.border-purple-500 { border-color: #a855f7 !important; }
+.bg-purple-50 { background-color: #faf5ff !important; }
+.bg-purple-100 { background-color: #f3e8ff !important; }
+
 /* ==========================================================
    PROMINENT ACTIVE TAB HIGHLIGHT (Universal Instant Recognition)
    ========================================================== */
