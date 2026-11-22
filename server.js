@@ -290,6 +290,64 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // API ROUTE 6c: GET /api/sheet2-dcb-sheet (Live Fetch Sheet #2 Daily Expdtt DCB Kathua Google Sheet)
+  if (reqPath === '/api/sheet2-dcb-sheet' && req.method === 'GET') {
+    try {
+      const gUrl = 'https://docs.google.com/spreadsheets/d/1RaKzdz9wSCQaQdtjxIsPcZO2e4Pw9Od2USq39KQWeZg/export?format=csv&gid=2114934525';
+      function fetchCSV(targetUrl) {
+        return new Promise((resolve, reject) => {
+          https.get(targetUrl, res => {
+            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+              return fetchCSV(res.headers.location).then(resolve).catch(reject);
+            }
+            let d = '';
+            res.on('data', c => d += c);
+            res.on('end', () => resolve(d));
+          }).on('error', reject);
+        });
+      }
+      const csvText = await fetchCSV(gUrl);
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({ success: true, csvText }));
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ success: false, error: e.message }));
+    }
+    return;
+  }
+
+  // API ROUTE 6d: GET /api/sheet1-bani-sheet (Live Fetch Sheet #1 Daily Bani Physical Progress Google Sheet)
+  if (reqPath === '/api/sheet1-bani-sheet' && req.method === 'GET') {
+    try {
+      const gUrl = 'https://docs.google.com/spreadsheets/d/10vQXS5D36tGuvaBNEpe4xYBRs6RKUqv6BHq_eboosNQ/export?format=csv&gid=1884788730';
+      function fetchCSV(targetUrl) {
+        return new Promise((resolve, reject) => {
+          https.get(targetUrl, res => {
+            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+              return fetchCSV(res.headers.location).then(resolve).catch(reject);
+            }
+            let d = '';
+            res.on('data', c => d += c);
+            res.on('end', () => resolve(d));
+          }).on('error', reject);
+        });
+      }
+      const csvText = await fetchCSV(gUrl);
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({ success: true, csvText }));
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ success: false, error: e.message }));
+    }
+    return;
+  }
+
   // API ROUTE 6: POST /api/whatsapp/disconnect
   if (reqPath === '/api/whatsapp/disconnect' && req.method === 'POST') {
     try {
