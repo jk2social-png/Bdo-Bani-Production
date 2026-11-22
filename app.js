@@ -13289,7 +13289,7 @@ function renderSheet3CDFContent() {
       <!-- Responsive Table Container with Full Grid Lines -->
       <div class="overflow-x-auto custom-scrollbar max-h-[750px]">
         <table class="w-full text-center text-xs" style="border-collapse: collapse !important; border: 2px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-sm" style="background-color: #d9f99d !important;">
+          <thead class="shadow-sm" style="background-color: #d9f99d !important;">
             <!-- Row 1: Main Headers -->
             <tr class="text-slate-950 font-black" style="background-color: #d9f99d !important; border-bottom: 1.5px solid #64748b !important;">
               <th rowspan="2" class="py-2.5 px-2 text-center w-12" style="border: 1px solid #64748b !important;">S.No</th>
@@ -13491,7 +13491,7 @@ function renderSheet3CDFContent() {
       <!-- Responsive Table Container with Full Grid Lines -->
       <div class="overflow-x-auto custom-scrollbar max-h-[750px]">
         <table class="w-full text-center text-xs" style="border-collapse: collapse !important; border: 2px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-sm" style="background-color: #d9f99d !important;">
+          <thead class="shadow-sm" style="background-color: #d9f99d !important;">
             <!-- Row 1: Main Headers -->
             <tr class="text-slate-950 font-black" style="background-color: #d9f99d !important; border-bottom: 1.5px solid #64748b !important;">
               <th rowspan="2" class="py-2.5 px-3 text-center min-w-[130px]" style="border: 1px solid #64748b !important;">Name of the Assembly Constituency</th>
@@ -13706,7 +13706,7 @@ function parseSheet1RawData(physRows, finRows) {
       sectionC: parsePhysSection(physRows, 39, 53, 54)
     },
     financial: finRows ? {
-      title: 'Status of Expenditure under DCB / UT, 2026-27 (RDD Sector Only)',
+      title: 'Status of Expenditure under DCB / UT, 2026-27',
       subtitle: '(₹ in Lakhs)',
       gid: '113066318',
       sectionA: parseFinSection(finRows, 5, 19, 20),
@@ -14098,9 +14098,9 @@ function renderSheet1LiveContent() {
         </div>
       </div>
 
-      <div class="overflow-x-auto custom-scrollbar" style="max-height: 75vh;">
+      <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-xs border-collapse font-sans" style="border: 1.5px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-xs">
+          <thead class="shadow-xs">
             <tr style="background: #e2e8f0; color: #0f172a; font-weight: 800;">
               <th rowspan="2" class="px-3 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 90px;">Block</th>
               <th rowspan="2" class="px-2 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 45px;">S.NO</th>
@@ -14179,9 +14179,9 @@ function renderSheet1LiveContent() {
         </div>
       </div>
 
-      <div class="overflow-x-auto custom-scrollbar" style="max-height: 75vh;">
+      <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-xs border-collapse font-sans" style="border: 1.5px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-xs">
+          <thead class="shadow-xs">
             <tr style="background: #e2e8f0; color: #0f172a; font-weight: 800;">
               <th rowspan="2" class="px-3 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 90px;">Block</th>
               <th rowspan="2" class="px-2 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 45px;">S#</th>
@@ -15022,9 +15022,9 @@ function renderSheet2LiveContent() {
         </div>
       </div>
 
-      <div class="overflow-x-auto custom-scrollbar" style="max-height: 70vh;">
+      <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-xs border-collapse font-sans" style="border: 1.5px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-xs" style="background: #e2e8f0; color: #0f172a; font-weight: 800;">
+          <thead class="shadow-xs" style="background: #e2e8f0; color: #0f172a; font-weight: 800;">
             <tr>
               <th class="px-2 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 45px;">S. No.</th>
               <th class="px-2 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 90px;">Date</th>
@@ -15103,9 +15103,9 @@ function renderSheet2LiveContent() {
         </div>
       </div>
 
-      <div class="overflow-x-auto custom-scrollbar" style="max-height: 70vh;">
+      <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-xs border-collapse font-sans" style="border: 1.5px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-xs" style="background: #fef3c7; color: #78350f; font-weight: 800;">
+          <thead class="shadow-xs" style="background: #fef3c7; color: #78350f; font-weight: 800;">
             <tr>
               <th class="px-2 py-2 text-center" style="border: 1px solid #d97706 !important; min-width: 45px;">S. No.</th>
               <th class="px-2 py-2 text-center" style="border: 1px solid #d97706 !important; min-width: 90px;">Monitoring Date</th>
@@ -15178,9 +15178,9 @@ function renderSheet2LiveContent() {
         </div>
       </div>
 
-      <div class="overflow-x-auto custom-scrollbar" style="max-height: 70vh;">
+      <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-xs border-collapse font-sans" style="border: 1.5px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-xs">
+          <thead class="shadow-xs">
             <tr style="background: #ccfbf1; color: #115e59; font-weight: 800;">
               <th rowspan="2" class="px-2 py-2 text-center" style="border: 1px solid #14b8a6 !important; min-width: 45px;">S. No.</th>
               <th rowspan="2" class="px-3 py-2 text-left" style="border: 1px solid #14b8a6 !important; min-width: 140px;">Department/BDO</th>
@@ -15258,9 +15258,9 @@ function renderSheet2LiveContent() {
         </div>
       </div>
 
-      <div class="overflow-x-auto custom-scrollbar" style="max-height: 70vh;">
+      <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-xs border-collapse font-sans" style="border: 1.5px solid #64748b !important;">
-          <thead class="sticky top-0 z-20 shadow-xs">
+          <thead class="shadow-xs">
             <tr style="background: #e0e7ff; color: #3730a3; font-weight: 800;">
               <th rowspan="2" class="px-2 py-2 text-center" style="border: 1px solid #818cf8 !important; min-width: 45px;">S. No.</th>
               <th rowspan="2" class="px-3 py-2 text-left" style="border: 1px solid #818cf8 !important; min-width: 140px;">Department/BDO</th>
@@ -20397,20 +20397,20 @@ function renderGoogleSheetConsolidatedFormat(container) {
             </h1>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2.5">
-            <button onclick="fetchSheet2LiveDCBData(true).then(() => { const c = document.getElementById('mainContent'); if (c) renderGoogleSheetConsolidatedFormat(c); })" class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs rounded-xl shadow-md transition-all flex items-center gap-2 hover:scale-102 active:scale-95 cursor-pointer border border-emerald-400">
+          <div class="mobile-btn-grid-2x2">
+            <button onclick="fetchSheet2LiveDCBData(true).then(() => { const c = document.getElementById('mainContent'); if (c) renderGoogleSheetConsolidatedFormat(c); })" class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95 cursor-pointer border border-emerald-400">
               <i class="fa-solid fa-arrows-rotate text-emerald-200"></i>
               <span>Refresh Live Sheet</span>
             </button>
-            <button onclick="exportGoogleSheetConsolidatedExcel()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-emerald-900/30 transition-all flex items-center gap-2 hover:scale-102 active:scale-95 cursor-pointer">
+            <button onclick="exportGoogleSheetConsolidatedExcel()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-emerald-900/30 transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95 cursor-pointer">
               <i class="fa-solid fa-file-excel text-emerald-200 text-sm"></i>
-              <span>Export All 4 Formats to Excel</span>
+              <span>Export All 4 to Excel</span>
             </button>
-            <button onclick="window.print()" class="px-3.5 py-2.5 bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 hover:scale-102 active:scale-95 cursor-pointer">
+            <button onclick="window.print()" class="px-3.5 py-2.5 bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 hover:scale-102 active:scale-95 cursor-pointer">
               <i class="fa-solid fa-print"></i>
               <span>Print Official Format</span>
             </button>
-            <a href="https://docs.google.com/spreadsheets/d/1RaKzdz9wSCQaQdtjxIsPcZO2e4Pw9Od2USq39KQWeZg/edit?gid=361569517#gid=361569517" target="_blank" class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
+            <a href="https://docs.google.com/spreadsheets/d/1RaKzdz9wSCQaQdtjxIsPcZO2e4Pw9Od2USq39KQWeZg/edit?gid=361569517#gid=361569517" target="_blank" class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-bold text-xs rounded-xl shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer" style="text-decoration: none !important;">
               <i class="fa-solid fa-arrow-up-right-from-square text-emerald-400"></i>
               <span>Live Google Sheet</span>
             </a>
@@ -20451,12 +20451,7 @@ function renderGoogleSheetConsolidatedFormat(container) {
               </h2>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-[11px] font-bold border border-emerald-400/30 flex items-center gap-1.5">
-              <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i>
-              <span>Synced: ${syncTimeStr}</span>
-            </span>
-          </div>
+          
         </div>
 
         <div class="overflow-x-auto">
@@ -20522,12 +20517,7 @@ function renderGoogleSheetConsolidatedFormat(container) {
               </h2>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-[11px] font-bold border border-emerald-400/30 flex items-center gap-1.5">
-              <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i>
-              <span>Synced: ${syncTimeStr}</span>
-            </span>
-          </div>
+          
         </div>
 
         <div class="overflow-x-auto">
@@ -20584,13 +20574,7 @@ function renderGoogleSheetConsolidatedFormat(container) {
               </h2>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-[11px] font-bold border border-emerald-400/30 flex items-center gap-1.5">
-              <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i>
-              <span>Synced: ${syncTimeStr}</span>
-            </span>
-          </div>
+          
         </div>
 
         <div class="overflow-x-auto">
@@ -20656,13 +20640,7 @@ function renderGoogleSheetConsolidatedFormat(container) {
               </h2>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-[11px] font-bold border border-emerald-400/30 flex items-center gap-1.5">
-              <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i>
-              <span>Synced: ${syncTimeStr}</span>
-            </span>
-          </div>
+          
         </div>
 
         <div class="overflow-x-auto">
@@ -21447,11 +21425,11 @@ function renderDailyBaniReportView(container) {
           </button>
           <button onclick="setDailyBaniViewMode('financial')" class="px-4 py-2 text-xs font-black rounded-lg transition-all flex items-center gap-2 cursor-pointer ${viewMode === 'financial' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}">
             <i class="fa-solid fa-coins text-amber-500"></i>
-            <span>Sheet 1: Financial-2026-27 (15 Cols)</span>
+            <span>Financial Progress (2026–27)</span>
           </button>
           <button onclick="setDailyBaniViewMode('physical')" class="px-4 py-2 text-xs font-black rounded-lg transition-all flex items-center gap-2 cursor-pointer ${viewMode === 'physical' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}">
             <i class="fa-solid fa-helmet-safety text-emerald-600"></i>
-            <span>Sheet 2: Physical-2026-27 (34 Cols)</span>
+            <span>Physical Progress (2026–27)</span>
           </button>
         </div>
 
@@ -21474,12 +21452,12 @@ function renderDailyBaniReportView(container) {
 function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullStamp) {
   // Single Unified Professional Executive Color: Deep Navy
   const thBg = 'background-color: #0e2a47; color: #ffffff; border-color: #244970;';
-  const thRow1Sticky = 'position: sticky; top: 0; z-index: 30; ' + thBg;
-  const thRow2Sticky = 'position: sticky; top: 37px; z-index: 28; ' + thBg;
+  const thRow1 = thBg;
+  const thRow2 = thBg;
 
   // Left frozen columns: S. No. and Scheme
-  const thCol1 = 'position: sticky; left: 0; z-index: 35; min-width: 55px; max-width: 55px; ' + thBg;
-  const thCol2 = 'position: sticky; left: 55px; z-index: 35; min-width: 200px; max-width: 220px; ' + thBg;
+  const thCol1 = 'min-width: 55px; max-width: 55px; ' + thBg;
+  const thCol2 = 'min-width: 200px; max-width: 220px; ' + thBg;
 
   return `
     <div class="bg-white rounded-2xl border border-slate-300 shadow-md overflow-hidden">
@@ -21489,13 +21467,11 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
           <h2 class="text-base md:text-lg font-black tracking-wide text-white">
             Status of Expenditure under DCB / UT, 2026-27 (RDD Sector Only)
           </h2>
-          <p class="text-[11px] text-blue-200 mt-0.5">
-            Exact 14-Column Grid (Optimized for Block Bani) | Target: <b>Block Bani</b>
-          </p>
+          
         </div>
         <div class="flex items-center gap-2">
           <div class="px-3 py-1 bg-white/10 text-cyan-300 rounded-lg text-xs font-bold border border-cyan-300/30 font-mono">
-            Block: <strong class="text-white">Bani</strong> • Updated: <strong class="text-white">${fullStamp}</strong>
+            Updated: <strong class="text-white">${fullStamp}</strong>
           </div>
           <span class="px-3 py-1 bg-white/10 text-amber-300 rounded-lg text-xs font-black border border-amber-300/30">
             (₹. in Lakhs)
@@ -21503,52 +21479,52 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
         </div>
       </div>
 
-      <!-- Sticky Scroll Container -->
-      <div style="max-height: 72vh; overflow: auto; position: relative;" class="border border-slate-200 custom-scrollbar">
+      <!--  Scroll Container -->
+      <div class="overflow-x-auto border border-slate-200 custom-scrollbar">
         <table class="w-full text-xs text-left border-collapse font-sans min-w-[1450px]">
-          <!-- Table Headings with Single Unified Color & Strict Sticky -->
+          <!-- Table Headings with Single Unified Color & Strict  -->
           <thead class="text-[11px] font-black text-center shadow">
             <tr style="height: 37px;">
-              <th rowspan="2" style="${thCol1} top: 0;" class="p-2 border border-slate-600 text-center">
+              <th rowspan="2" style="${thCol1}" class="p-2 border border-slate-600 text-center">
                 S. No.
               </th>
-              <th rowspan="2" style="${thCol2} top: 0;" class="p-2 border border-slate-600 text-left">
+              <th rowspan="2" style="${thCol2}" class="p-2 border border-slate-600 text-left">
                 Scheme
               </th>
-              <th colspan="2" style="${thRow1Sticky}" class="p-2 border border-slate-600">
+              <th colspan="2" style="${thRow1}" class="p-2 border border-slate-600">
                 From XEN REW Kathua
               </th>
-              <th colspan="2" style="${thRow1Sticky}" class="p-2 border border-slate-600">
+              <th colspan="2" style="${thRow1}" class="p-2 border border-slate-600">
                 Exp.(Actual + Booked)
               </th>
-              <th colspan="2" style="${thRow1Sticky}" class="p-2 border border-slate-600">
+              <th colspan="2" style="${thRow1}" class="p-2 border border-slate-600">
                 Actual Exped.
               </th>
-              <th colspan="2" style="${thRow1Sticky}" class="p-2 border border-slate-600">
+              <th colspan="2" style="${thRow1}" class="p-2 border border-slate-600">
                 Booked Expend in Try.
               </th>
-              <th rowspan="2" style="${thRow1Sticky} min-w-[105px];" class="p-2 border border-slate-600">
+              <th rowspan="2" style="${thRow1} min-w-[105px];" class="p-2 border border-slate-600">
                 Approved Outlay 2026-27
               </th>
-              <th rowspan="2" style="${thRow1Sticky} min-w-[110px];" class="p-2 border border-slate-600">
+              <th rowspan="2" style="${thRow1} min-w-[110px];" class="p-2 border border-slate-600">
                 Total Funds Received ( Availability)
               </th>
-              <th rowspan="2" style="${thRow1Sticky} min-w-[105px];" class="p-2 border border-slate-600">
+              <th rowspan="2" style="${thRow1} min-w-[105px];" class="p-2 border border-slate-600">
                 Total Allotment Cost
               </th>
-              <th rowspan="2" style="${thRow1Sticky} min-w-[105px];" class="p-2 border border-slate-600">
+              <th rowspan="2" style="${thRow1} min-w-[105px];" class="p-2 border border-slate-600">
                 Expenditure in %age(wrt Allotment)
               </th>
             </tr>
             <tr style="height: 38px;" class="text-[10px]">
-              <th style="${thRow2Sticky} min-w-[85px];" class="p-1.5 border border-slate-600">No. of Bills Received</th>
-              <th style="${thRow2Sticky} min-w-[95px];" class="p-1.5 border border-slate-600">Amount of Bills received</th>
-              <th style="${thRow2Sticky} min-w-[85px];" class="p-1.5 border border-slate-600">No. of Bills Cleared</th>
-              <th style="${thRow2Sticky} min-w-[125px];" class="p-1.5 border border-slate-600">Amount of Bills Cleared & Forwarded to Treasury</th>
-              <th style="${thRow2Sticky} min-w-[85px];" class="p-1.5 border border-slate-600">No. of Bills Cleared</th>
-              <th style="${thRow2Sticky} min-w-[95px];" class="p-1.5 border border-slate-600">Amount of Bills Cleared</th>
-              <th style="${thRow2Sticky} min-w-[95px];" class="p-1.5 border border-slate-600">No. of Bills Pending for clearance</th>
-              <th style="${thRow2Sticky} min-w-[115px];" class="p-1.5 border border-slate-600">Amount of Bills Pending for clearance</th>
+              <th style="${thRow2} min-w-[85px];" class="p-1.5 border border-slate-600">No. of Bills Received</th>
+              <th style="${thRow2} min-w-[95px];" class="p-1.5 border border-slate-600">Amount of Bills received</th>
+              <th style="${thRow2} min-w-[85px];" class="p-1.5 border border-slate-600">No. of Bills Cleared</th>
+              <th style="${thRow2} min-w-[125px];" class="p-1.5 border border-slate-600">Amount of Bills Cleared & Forwarded to Treasury</th>
+              <th style="${thRow2} min-w-[85px];" class="p-1.5 border border-slate-600">No. of Bills Cleared</th>
+              <th style="${thRow2} min-w-[95px];" class="p-1.5 border border-slate-600">Amount of Bills Cleared</th>
+              <th style="${thRow2} min-w-[95px];" class="p-1.5 border border-slate-600">No. of Bills Pending for clearance</th>
+              <th style="${thRow2} min-w-[115px];" class="p-1.5 border border-slate-600">Amount of Bills Pending for clearance</th>
             </tr>
           </thead>
 
@@ -21556,8 +21532,8 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
 
             <!-- ================= SECTION A: ONGOING WORKS ================= -->
             <tr class="bg-blue-100/90 font-black text-blue-950 border-y-2 border-blue-400">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #dbeafe;" class="p-2 text-center font-bold">A</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #dbeafe;" colspan="13" class="p-2 uppercase tracking-wider text-xs">
+              <td style="background-color: #dbeafe;" class="p-2 text-center font-bold">A</td>
+              <td style="background-color: #dbeafe;" colspan="13" class="p-2 uppercase tracking-wider text-xs">
                 Ongoing Works
               </td>
             </tr>
@@ -21565,10 +21541,10 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
               const rowBg = r.def.id === 'pri' ? '#fef3c7' : '#ffffff';
               return `
                 <tr style="background-color: ${rowBg};" class="hover:bg-amber-100/80 transition-colors">
-                  <td style="position: sticky; left: 0; z-index: 15; background-color: ${rowBg};" class="p-2 text-center text-slate-700 font-mono font-bold border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 text-center text-slate-700 font-mono font-bold border-r border-slate-200">
                     ${r.def.sNo}
                   </td>
-                  <td style="position: sticky; left: 55px; z-index: 15; background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
                     <span>${r.def.name}</span>
                     ${r.def.id === 'pri' ? '<span class="ml-1.5 px-1.5 py-0.5 rounded text-[9px] bg-amber-200 text-amber-900 font-black border border-amber-300">4 Works</span>' : ''}
                   </td>
@@ -21589,8 +21565,8 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
             }).join('')}
             <!-- Sub-Total (A) -->
             <tr style="background-color: #0e2a47; color: #ffffff;" class="font-black border-y-2 border-slate-900 text-xs">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #0e2a47;" class="p-2.5 text-center"></td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #0e2a47;" class="p-2.5 uppercase tracking-wide border-r border-slate-700 text-amber-300">
+              <td style="background-color: #0e2a47;" class="p-2.5 text-center"></td>
+              <td style="background-color: #0e2a47;" class="p-2.5 uppercase tracking-wide border-r border-slate-700 text-amber-300">
                 Sub-Total (A)
               </td>
               <td class="p-2.5 text-center border-r border-slate-700">${formatDailyCell(subTotalA.billsRecCount)}</td>
@@ -21609,8 +21585,8 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
 
             <!-- ================= SECTION B: NEW WORKS ================= -->
             <tr class="bg-emerald-100/90 font-black text-emerald-950 border-y-2 border-emerald-400">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #d1fae5;" class="p-2 text-center font-bold">B</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #d1fae5;" colspan="13" class="p-2 uppercase tracking-wider text-xs">
+              <td style="background-color: #d1fae5;" class="p-2 text-center font-bold">B</td>
+              <td style="background-color: #d1fae5;" colspan="13" class="p-2 uppercase tracking-wider text-xs">
                 New Works
               </td>
             </tr>
@@ -21618,10 +21594,10 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
               const rowBg = r.def.id === 'pri' ? '#ecfdf5' : '#ffffff';
               return `
                 <tr style="background-color: ${rowBg};" class="hover:bg-slate-100/80 transition-colors">
-                  <td style="position: sticky; left: 0; z-index: 15; background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
                     ${r.def.sNo}
                   </td>
-                  <td style="position: sticky; left: 55px; z-index: 15; background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
                     <span>${r.def.name}</span>
                     ${r.def.id === 'pri' ? '<span class="ml-1.5 px-1 py-0.2 rounded text-[9px] bg-emerald-200 text-emerald-900 font-black">78 Works</span>' : ''}
                   </td>
@@ -21642,8 +21618,8 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
             }).join('')}
             <!-- Sub-Total (B) -->
             <tr style="background-color: #0e2a47; color: #ffffff;" class="font-black border-y-2 border-slate-900 text-xs">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #0e2a47;" class="p-2.5 text-center"></td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #0e2a47;" class="p-2.5 uppercase tracking-wide border-r border-slate-700 text-emerald-300">
+              <td style="background-color: #0e2a47;" class="p-2.5 text-center"></td>
+              <td style="background-color: #0e2a47;" class="p-2.5 uppercase tracking-wide border-r border-slate-700 text-emerald-300">
                 Sub-Total (B)
               </td>
               <td class="p-2.5 text-center border-r border-slate-700">${formatDailyCell(subTotalB.billsRecCount)}</td>
@@ -21662,8 +21638,8 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
 
             <!-- ================= SECTION C: ONGOING + NEW WORKS ================= -->
             <tr class="bg-purple-100/90 font-black text-purple-950 border-y-2 border-purple-400">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #ede9fe;" class="p-2 text-center font-bold">C</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #ede9fe;" colspan="13" class="p-2 uppercase tracking-wider text-xs">
+              <td style="background-color: #ede9fe;" class="p-2 text-center font-bold">C</td>
+              <td style="background-color: #ede9fe;" colspan="13" class="p-2 uppercase tracking-wider text-xs">
                 Ongoing+New Works (Consolidated)
               </td>
             </tr>
@@ -21671,10 +21647,10 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
               const rowBg = r.def.id === 'pri' ? '#f5f3ff' : '#ffffff';
               return `
                 <tr style="background-color: ${rowBg};" class="hover:bg-slate-100/80 transition-colors">
-                  <td style="position: sticky; left: 0; z-index: 15; background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
                     ${r.def.sNo}
                   </td>
-                  <td style="position: sticky; left: 55px; z-index: 15; background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
                     <span>${r.def.name}</span>
                     ${r.def.id === 'pri' ? '<span class="ml-1.5 px-1.5 py-0.2 rounded text-[9px] bg-indigo-200 text-indigo-950 font-black">4 + 78 = 82 Works</span>' : ''}
                   </td>
@@ -21695,8 +21671,8 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
             }).join('')}
             <!-- Grand Total (A+B) -->
             <tr style="background-color: #06192d; color: #ffffff;" class="font-black border-t-2 border-slate-900 text-xs shadow-lg">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #06192d;" class="p-3 text-center text-amber-400">★</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #06192d;" class="p-3 uppercase tracking-wide border-r border-slate-700 text-amber-300">
+              <td style="background-color: #06192d;" class="p-3 text-center text-amber-400">★</td>
+              <td style="background-color: #06192d;" class="p-3 uppercase tracking-wide border-r border-slate-700 text-amber-300">
                 G-Total (A+B)
               </td>
               <td class="p-3 text-center border-r border-slate-700 text-cyan-300">${formatDailyCell(grandTotal.billsRecCount)}</td>
@@ -21722,12 +21698,12 @@ function renderFinancialTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSt
 function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullStamp) {
   // Single Unified Professional Executive Color: Deep Navy
   const thBg = 'background-color: #0e2a47; color: #ffffff; border-color: #244970;';
-  const thRow1Sticky = 'position: sticky; top: 0; z-index: 30; ' + thBg;
-  const thRow2Sticky = 'position: sticky; top: 48px; z-index: 28; ' + thBg;
+  const thRow1 = '' + thBg;
+  const thRow2 = thBg;
 
   // Left frozen columns: S. No. and Component
-  const thCol1 = 'position: sticky; left: 0; z-index: 35; min-width: 55px; max-width: 55px; ' + thBg;
-  const thCol2 = 'position: sticky; left: 55px; z-index: 35; min-width: 200px; max-width: 220px; ' + thBg;
+  const thCol1 = 'min-width: 55px; max-width: 55px; ' + thBg;
+  const thCol2 = 'min-width: 200px; max-width: 220px; ' + thBg;
 
   return `
     <div class="bg-white rounded-2xl border border-slate-300 shadow-md overflow-hidden">
@@ -21737,81 +21713,77 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
           <h2 class="text-base md:text-lg font-black tracking-wide text-white">
             Physical Progress under Different Schemes for the financial year 2026-27
           </h2>
-          <p class="text-[11px] text-blue-200 mt-0.5">
-            Exact 33-Column Grid (Optimized for Block Bani) | Target: <b>Block Bani</b>
-          </p>
+          
         </div>
         <div class="flex items-center gap-2">
           <div class="px-3 py-1 bg-white/10 text-cyan-300 rounded-lg text-xs font-bold border border-cyan-300/30 font-mono">
             Block: <strong class="text-white">Bani</strong> • Updated: <strong class="text-white">${fullStamp}</strong>
           </div>
-          <span class="px-3 py-1 bg-white/10 text-emerald-300 rounded-lg text-xs font-black border border-emerald-300/30">
-            33 Columns (Non-Constt + Constt + Total)
-          </span>
+          
         </div>
       </div>
 
-      <!-- Sticky Scroll Container -->
-      <div style="max-height: 72vh; overflow: auto; position: relative;" class="border border-slate-200 custom-scrollbar">
+      <!--  Scroll Container -->
+      <div class="overflow-x-auto border border-slate-200 custom-scrollbar">
         <table class="w-full text-xs text-left border-collapse font-sans min-w-[2980px]">
-          <!-- Table Headings with Single Unified Color & Strict Sticky -->
+          <!-- Table Headings with Single Unified Color & Strict  -->
           <thead class="text-[11px] font-black text-center shadow">
             <tr style="height: 48px;">
-              <th rowspan="2" style="${thCol1} top: 0;" class="p-2 border border-slate-600 text-center">
+              <th rowspan="2" style="${thCol1}" class="p-2 border border-slate-600 text-center">
                 S. No.
               </th>
-              <th rowspan="2" style="${thCol2} top: 0;" class="p-2 border border-slate-600 text-left">
+              <th rowspan="2" style="${thCol2}" class="p-2 border border-slate-600 text-left">
                 Component
               </th>
-              <th rowspan="2" style="${thRow1Sticky} min-w-[130px];" class="p-2 border border-slate-600 leading-tight">
+              <th rowspan="2" style="${thRow1} min-w-[130px];" class="p-2 border border-slate-600 leading-tight">
                 Total No of works ( constt+Non Constt) approved for the financial year 2026-27
               </th>
-              <th colspan="10" style="${thRow1Sticky}" class="p-2 border border-slate-600">
+              <th colspan="10" style="${thRow1}" class="p-2 border border-slate-600">
                 Non-Construction works
               </th>
-              <th colspan="10" style="${thRow1Sticky}" class="p-2 border border-slate-600">
+              <th colspan="10" style="${thRow1}" class="p-2 border border-slate-600">
                 Construction works
               </th>
-              <th colspan="10" style="${thRow1Sticky}" class="p-2 border border-slate-600">
+              <th colspan="10" style="${thRow1}" class="p-2 border border-slate-600">
                 Total Constt +Non Constt
               </th>
             </tr>
             <tr style="height: 48px;" class="text-[10px] leading-tight">
               <!-- Non-Construction 10 cols (Exact Google Sheet Wording) -->
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Approved works</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works AA Accorded</th>
-              <th style="${thRow2Sticky} min-w-[105px];" class="p-1 border border-slate-600">Works against which order placed on Gem Portal</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works Alloted</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works taken up</th>
-              <th style="${thRow2Sticky} min-w-[85px];" class="p-1 border border-slate-600">Works completed Physical only</th>
-              <th style="${thRow2Sticky} min-w-[95px];" class="p-1 border border-slate-600">Works completed both Physical & Financial</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works inprogress</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works not started</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works having dispute</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Approved works</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works AA Accorded</th>
+              <th style="${thRow2} min-w-[105px];" class="p-1 border border-slate-600">Works against which order placed on Gem Portal</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works Alloted</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works taken up</th>
+              <th style="${thRow2} min-w-[85px];" class="p-1 border border-slate-600">Works completed Physical only</th>
+              <th style="${thRow2} min-w-[95px];" class="p-1 border border-slate-600">Works completed both Physical & Financial</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works inprogress</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works not started</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works having dispute</th>
 
               <!-- Construction 10 cols (Exact Google Sheet Wording) -->
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Approved works</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works AA Accorded</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works Tendered</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works Alloted</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works taken up</th>
-              <th style="${thRow2Sticky} min-w-[85px];" class="p-1 border border-slate-600">Works completed Physical only</th>
-              <th style="${thRow2Sticky} min-w-[95px];" class="p-1 border border-slate-600">Works completed both Physical & Financial</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works inprogress</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works not started</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works having dispute</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Approved works</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works AA Accorded</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works Tendered</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works Alloted</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works taken up</th>
+              <th style="${thRow2} min-w-[85px];" class="p-1 border border-slate-600">Works completed Physical only</th>
+              <th style="${thRow2} min-w-[95px];" class="p-1 border border-slate-600">Works completed both Physical & Financial</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works inprogress</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works not started</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works having dispute</th>
 
               <!-- Total Constt +Non Constt 10 cols (Exact Google Sheet Wording) -->
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Approved works</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works AA Accorded</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works Tendered</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works Alloted</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works taken up</th>
-              <th style="${thRow2Sticky} min-w-[85px];" class="p-1 border border-slate-600">Works completed Physical only</th>
-              <th style="${thRow2Sticky} min-w-[95px];" class="p-1 border border-slate-600">Works completed both Physical & Financial</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works inprogress</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works not started</th>
-              <th style="${thRow2Sticky} min-w-[70px];" class="p-1 border border-slate-600">Works having dispute</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Approved works</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works AA Accorded</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works Tendered</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works Alloted</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works taken up</th>
+              <th style="${thRow2} min-w-[85px];" class="p-1 border border-slate-600">Works completed Physical only</th>
+              <th style="${thRow2} min-w-[95px];" class="p-1 border border-slate-600">Works completed both Physical & Financial</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works inprogress</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works not started</th>
+              <th style="${thRow2} min-w-[70px];" class="p-1 border border-slate-600">Works having dispute</th>
             </tr>
           </thead>
 
@@ -21819,8 +21791,8 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
 
             <!-- ================= SECTION A: ONGOING WORKS ================= -->
             <tr class="bg-blue-100/90 font-black text-blue-950 border-y-2 border-blue-400">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #dbeafe;" class="p-2 text-center font-bold">A</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #dbeafe;" colspan="32" class="p-2 uppercase tracking-wider text-xs">
+              <td style="background-color: #dbeafe;" class="p-2 text-center font-bold">A</td>
+              <td style="background-color: #dbeafe;" colspan="32" class="p-2 uppercase tracking-wider text-xs">
                 Ongoing works
               </td>
             </tr>
@@ -21828,10 +21800,10 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
               const rowBg = r.def.id === 'pri' ? '#fef3c7' : '#ffffff';
               return `
                 <tr style="background-color: ${rowBg};" class="hover:bg-amber-100/80 transition-colors">
-                  <td style="position: sticky; left: 0; z-index: 15; background-color: ${rowBg};" class="p-2 text-center text-slate-700 font-mono font-bold border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 text-center text-slate-700 font-mono font-bold border-r border-slate-200">
                     ${r.def.sNo}
                   </td>
-                  <td style="position: sticky; left: 55px; z-index: 15; background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
                     <span>${r.def.name}</span>
                     ${r.def.id === 'pri' ? '<span class="ml-1 px-1.5 py-0.5 rounded text-[9px] bg-amber-200 text-amber-900 font-black border border-amber-300">4 Works</span>' : ''}
                   </td>
@@ -21877,8 +21849,8 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
             }).join('')}
             <!-- Sub-Total (A) -->
             <tr style="background-color: #0e2a47; color: #ffffff;" class="font-black border-y-2 border-slate-900 text-xs">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #0e2a47;" class="p-2 text-center"></td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #0e2a47;" class="p-2 uppercase tracking-wide border-r border-slate-700 text-amber-300">
+              <td style="background-color: #0e2a47;" class="p-2 text-center"></td>
+              <td style="background-color: #0e2a47;" class="p-2 uppercase tracking-wide border-r border-slate-700 text-amber-300">
                 Sub-Total (A)
               </td>
               <td class="p-2 text-center border-r border-slate-700 text-amber-300 font-black">${formatDailyCell(subTotalA.approvedTotal)}</td>
@@ -21922,8 +21894,8 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
 
             <!-- ================= SECTION B: NEW WORKS ================= -->
             <tr class="bg-emerald-100/90 font-black text-emerald-950 border-y-2 border-emerald-400">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #d1fae5;" class="p-2 text-center font-bold">B</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #d1fae5;" colspan="32" class="p-2 uppercase tracking-wider text-xs">
+              <td style="background-color: #d1fae5;" class="p-2 text-center font-bold">B</td>
+              <td style="background-color: #d1fae5;" colspan="32" class="p-2 uppercase tracking-wider text-xs">
                 New works
               </td>
             </tr>
@@ -21931,10 +21903,10 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
               const rowBg = r.def.id === 'pri' ? '#ecfdf5' : '#ffffff';
               return `
                 <tr style="background-color: ${rowBg};" class="hover:bg-slate-100/80 transition-colors">
-                  <td style="position: sticky; left: 0; z-index: 15; background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
                     ${r.def.sNo}
                   </td>
-                  <td style="position: sticky; left: 55px; z-index: 15; background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
                     <span>${r.def.name}</span>
                     ${r.def.id === 'pri' ? '<span class="ml-1 px-1 rounded text-[9px] bg-emerald-200 text-emerald-900 font-black">78 Works</span>' : ''}
                   </td>
@@ -21980,8 +21952,8 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
             }).join('')}
             <!-- Sub-Total (B) -->
             <tr style="background-color: #0e2a47; color: #ffffff;" class="font-black border-y-2 border-slate-900 text-xs">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #0e2a47;" class="p-2 text-center"></td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #0e2a47;" class="p-2 uppercase tracking-wide border-r border-slate-700 text-emerald-300">
+              <td style="background-color: #0e2a47;" class="p-2 text-center"></td>
+              <td style="background-color: #0e2a47;" class="p-2 uppercase tracking-wide border-r border-slate-700 text-emerald-300">
                 Sub-Total (B)
               </td>
               <td class="p-2 text-center border-r border-slate-700 text-emerald-300 font-black">${formatDailyCell(subTotalB.approvedTotal)}</td>
@@ -22025,8 +21997,8 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
 
             <!-- ================= SECTION C: ONGOING + NEW WORKS ================= -->
             <tr class="bg-purple-100/90 font-black text-purple-950 border-y-2 border-purple-400">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #ede9fe;" class="p-2 text-center font-bold">C</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #ede9fe;" colspan="32" class="p-2 uppercase tracking-wider text-xs">
+              <td style="background-color: #ede9fe;" class="p-2 text-center font-bold">C</td>
+              <td style="background-color: #ede9fe;" colspan="32" class="p-2 uppercase tracking-wider text-xs">
                 Ongoing+New works (Consolidated)
               </td>
             </tr>
@@ -22034,10 +22006,10 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
               const rowBg = r.def.id === 'pri' ? '#f5f3ff' : '#ffffff';
               return `
                 <tr style="background-color: ${rowBg};" class="hover:bg-slate-100/80 transition-colors">
-                  <td style="position: sticky; left: 0; z-index: 15; background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 text-center text-slate-600 font-mono font-bold border-r border-slate-200">
                     ${r.def.sNo}
                   </td>
-                  <td style="position: sticky; left: 55px; z-index: 15; background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
+                  <td style="background-color: ${rowBg};" class="p-2 font-bold text-slate-900 border-r border-slate-200">
                     <span>${r.def.name}</span>
                     ${r.def.id === 'pri' ? '<span class="ml-1.5 px-1.5 py-0.2 rounded text-[9px] bg-indigo-200 text-indigo-950 font-black">4 + 78 = 82 Works</span>' : ''}
                   </td>
@@ -22083,8 +22055,8 @@ function renderPhysicalTableHTML(rows, subTotalA, subTotalB, grandTotal, fullSta
             }).join('')}
             <!-- Grand Total (A+B) -->
             <tr style="background-color: #06192d; color: #ffffff;" class="font-black border-t-2 border-slate-900 text-xs shadow-lg">
-              <td style="position: sticky; left: 0; z-index: 15; background-color: #06192d;" class="p-3 text-center text-amber-400">★</td>
-              <td style="position: sticky; left: 55px; z-index: 15; background-color: #06192d;" class="p-3 uppercase tracking-wide border-r border-slate-700 text-amber-300">
+              <td style="background-color: #06192d;" class="p-3 text-center text-amber-400">★</td>
+              <td style="background-color: #06192d;" class="p-3 uppercase tracking-wide border-r border-slate-700 text-amber-300">
                 G-Total (A+B)
               </td>
               <td class="p-2 text-center border-r border-slate-700 text-amber-300 font-black">${formatDailyCell(grandTotal.approvedTotal)}</td>

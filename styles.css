@@ -1488,12 +1488,13 @@ body {
     padding-left: 0.25rem !important;
     padding-right: 0.25rem !important;
   }
-  #header-daily-bani-btn span {
+    #header-daily-bani-btn span {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
     display: inline-block !important;
     max-width: 100% !important;
+    font-size: 11px !important;
   }
 
   /* 2. Compact Panchayat Bar (Pyt Dropdown) */
