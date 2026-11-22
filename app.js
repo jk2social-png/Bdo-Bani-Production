@@ -4059,18 +4059,10 @@ function renderMeetingAbstract(container) {
       <div class="bg-white rounded-2xl border border-slate-200/90 shadow-md overflow-hidden">
         <div class="p-4 bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 text-white flex flex-wrap items-center justify-between gap-4 shadow-sm">
           <div>
-            <div class="text-[10px] uppercase font-black tracking-widest text-amber-300 flex items-center gap-1.5">
-              <i class="fa-solid fa-file-signature"></i> OFFICE OF THE BLOCK DEVELOPMENT OFFICER BANI
-              ${isPytFiltered ? `<span class="bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase">Panchayat: ${state.selectedPanchayat}</span>` : ''}
-            </div>
-            <h2 class="text-base font-extrabold text-white mt-0.5">
+            ${isPytFiltered ? `<div class="mb-1.5"><span class="bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase">Panchayat: ${state.selectedPanchayat}</span></div>` : ''}
+            <h2 class="text-base font-extrabold text-white">
               Abstract for Meeting — Physical & Financial Status under District Capex Budget 2026-27
             </h2>
-            <div class="text-xs text-blue-200/90 mt-1 flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded bg-blue-500/30 text-[10px] font-mono uppercase font-bold text-white">Official DDC Review Format</span>
-              <span>•</span>
-              <span>Block: <b>Bani</b> • District: <b>Kathua (J&K)</b> • Financial Year <b>2026-27</b> • Live Synced from MPR Register</span>
-            </div>
           </div>
           <div class="flex items-center gap-2 no-print">
             <button onclick="exportMeetingAbstractToExcel()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer">
@@ -4278,7 +4270,6 @@ function renderMeetingAbstract(container) {
               <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block"></span>
               Table 1C: Consolidated Physical Status (Ongoing + New Works 2026-27)
             </h3>
-            <span class="text-xs font-bold text-indigo-900 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">Consolidated Physical • ${consolidatedPhyTotal.total} Works</span>
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
@@ -4497,13 +4488,7 @@ function renderMeetingAbstract(container) {
         <!-- PART 2: SCRUTINY LISTS -->
         <div class="p-4 space-y-6 bg-slate-50/40">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
-            <div>
-              <h3 class="text-base font-black uppercase tracking-wide text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-list-check text-rose-600"></i>
-                Critical Scrutiny & Focus Lists for Meeting Review
-              </h3>
-              <p class="text-xs text-slate-500 mt-0.5">Focus: <b>${focusTitle}</b> • Reviewing Not Allotted, Not Started & Completed Works</p>
-            </div>
+            <div></div>
 
             <!-- Focus Scheme Selector Pills -->
             <div class="flex items-center gap-1.5 no-print">
@@ -4639,7 +4624,7 @@ function renderMeetingAbstract(container) {
                       <th class="py-2 px-3 w-24 text-right">AAA Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Alloted Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Expdt (₹ L)</th>
-                      <th class="py-2.5 px-3 text-center whitespace-nowrap" style="width: 125px !important; min-width: 125px !important; white-space: nowrap !important;">Completion</th>
+                      <th class="py-2.5 px-3 text-center whitespace-nowrap" style="width: 135px !important; min-width: 135px !important; white-space: nowrap !important;">Completion</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-teal-100">
