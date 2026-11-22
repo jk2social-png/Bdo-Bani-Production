@@ -1468,13 +1468,27 @@ body {
     white-space: nowrap !important;
   }
   #header-auth-btn {
-    grid-column: span 2 !important;
+    grid-column: span 1 !important;
     max-width: 100% !important;
     overflow: hidden !important;
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
   }
   #header-auth-btn span {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    max-width: 100% !important;
+  }
+  #header-daily-bani-btn {
+    grid-column: span 1 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+  #header-daily-bani-btn span {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;

@@ -979,6 +979,15 @@ function selectScheme(schemeKey) {
     }
   });
 
+  const headerDailyBaniBtn = document.getElementById('header-daily-bani-btn');
+  if (headerDailyBaniBtn) {
+    if (schemeKey === 'kathua_sync') {
+      headerDailyBaniBtn.classList.add('ring-2', 'ring-amber-300', 'shadow-amber-400/50');
+    } else {
+      headerDailyBaniBtn.classList.remove('ring-2', 'ring-amber-300', 'shadow-amber-400/50');
+    }
+  }
+
   const schemeConf = SCHEME_SUB_NAV[schemeKey] || SCHEME_SUB_NAV['capex'];
 
   // Dynamically refresh top Panchayat dropdown with counts of the active scheme
@@ -12984,17 +12993,16 @@ function renderSheet3CDFContent() {
     <div class="p-6 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-4 border no-print"
          style="background: linear-gradient(135deg, #0b1329 0%, #0f172a 50%, #1e293b 100%) !important; border: 1.5px solid #334155 !important;">
       <div class="space-y-1.5">
-        <div class="flex flex-wrap items-center gap-3">
-          <h2 class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2.5"
+        <div>
+          <h2 class="text-lg sm:text-2xl font-black tracking-tight leading-snug"
               style="color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-            <i class="fa-solid fa-landmark" style="color: #fbbf24 !important;"></i>
             <span>District Capex Budget (MLA-CDF 2026–27) Daily Monitoring</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 ml-2.5 rounded-full text-xs font-bold shadow-sm align-middle whitespace-nowrap"
+                  style="background: rgba(14, 165, 233, 0.18) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.4) !important;">
+              <i class="fa-solid fa-arrows-rotate text-sky-400"></i>
+              Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
+            </span>
           </h2>
-          <span class="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm"
-                style="background: rgba(14, 165, 233, 0.18) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.4) !important;">
-            <i class="fa-solid fa-arrows-rotate text-sky-400"></i>
-            Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
-          </span>
         </div>
       </div>
 
@@ -13820,17 +13828,16 @@ function renderSheet1LiveContent() {
     <div class="p-6 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-4 border no-print"
          style="background: linear-gradient(135deg, #0b1329 0%, #0f172a 50%, #1e293b 100%) !important; border: 1.5px solid #334155 !important;">
       <div class="space-y-1.5">
-        <div class="flex flex-wrap items-center gap-3">
-          <h2 class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2.5"
+        <div>
+          <h2 class="text-lg sm:text-2xl font-black tracking-tight leading-snug"
               style="color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-            <i class="fa-solid fa-chart-line" style="color: #fbbf24 !important;"></i>
             <span>Daily Bani Progress (112 Works) — Physical & Financial 2026–27</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 ml-2.5 rounded-full text-xs font-bold shadow-sm align-middle whitespace-nowrap"
+                  style="background: rgba(14, 165, 233, 0.18) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.4) !important;">
+              <i class="fa-solid fa-arrows-rotate text-sky-400"></i>
+              Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
+            </span>
           </h2>
-          <span class="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm"
-                style="background: rgba(14, 165, 233, 0.18) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.4) !important;">
-            <i class="fa-solid fa-arrows-rotate text-sky-400"></i>
-            Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
-          </span>
         </div>
       </div>
 
@@ -14843,17 +14850,16 @@ function renderSheet2LiveContent() {
          style="background: linear-gradient(135deg, #0b1329 0%, #0f172a 50%, #1e293b 100%) !important; border: 1.5px solid #334155 !important;">
       <!-- Row 1: Title & Sync Time on Left, Action Buttons in 2x3 on Right -->
       <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="flex flex-wrap items-center gap-3">
-          <h2 class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2.5"
+        <div>
+          <h2 class="text-lg sm:text-2xl font-black tracking-tight leading-snug"
               style="color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-            <i class="fa-solid fa-landmark" style="color: #fbbf24 !important;"></i>
             <span>District Capex Budget (DCB), 2026–27 Daily Monitoring</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 ml-2.5 rounded-full text-xs font-bold shadow-sm align-middle whitespace-nowrap"
+                  style="background: rgba(14, 165, 233, 0.18) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.4) !important;">
+              <i class="fa-solid fa-arrows-rotate text-sky-400"></i>
+              Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
+            </span>
           </h2>
-          <span class="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm"
-                style="background: rgba(14, 165, 233, 0.18) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.4) !important;">
-            <i class="fa-solid fa-arrows-rotate text-sky-400"></i>
-            Synced: <b style="color: #ffffff !important;">${lastSyncStr}</b>
-          </span>
         </div>
 
         <!-- 6 Action Buttons (2x3 Grid on Mobile with equal width and height, Flex on Desktop) -->
@@ -18132,23 +18138,21 @@ function updateHeaderAuthUI() {
   const btn = document.getElementById('header-auth-btn');
   const icon = document.getElementById('header-auth-icon');
   const text = document.getElementById('header-auth-text');
-  if (!btn || !icon || !text) return;
+  if (!btn || !text) return;
+  if (icon) icon.style.display = 'none';
 
   if (isGuestUser()) {
-    btn.className = "px-3.5 py-1.5 bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-800/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer";
+    btn.className = "px-2.5 sm:px-3.5 py-1.5 bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-800/25 transition-all flex items-center justify-center hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap";
     btn.title = "Officer Sign In (Authorized Access)";
-    icon.className = "fa-solid fa-right-to-bracket text-amber-300";
     text.innerHTML = '<span class="hidden sm:inline">Officer Sign In</span><span class="inline sm:hidden">Sign In</span>';
   } else if (isJEUser()) {
     const jeProf = getCurrentJEProfile();
-    btn.className = "px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-700/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer";
+    btn.className = "px-2.5 sm:px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-700/25 transition-all flex items-center justify-center hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap";
     btn.title = "JE Photo Upload Mode — Click to Sign Out";
-    icon.className = "fa-solid fa-camera text-amber-300";
     text.innerHTML = '<span class="font-bold text-xs">' + (jeProf ? jeProf.name : 'JE Mode') + ' (Sign Out)</span>';
   } else {
-    btn.className = "px-3.5 py-1.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-xs rounded-xl shadow-md shadow-rose-700/25 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer";
+    btn.className = "px-2.5 sm:px-3.5 py-1.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-xs rounded-xl shadow-md shadow-rose-700/25 transition-all flex items-center justify-center hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap";
     btn.title = "Sign Out of BDO Bani Portal";
-    icon.className = "fa-solid fa-right-from-bracket";
     text.innerHTML = '<span class="font-bold text-xs">Sign Out</span>';
   }
 
@@ -20383,16 +20387,14 @@ function renderGoogleSheetConsolidatedFormat(container) {
       <!-- TOP OFFICIAL HEADER & CONTROL BAR -->
       <div style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); color: #ffffff;" class="text-white p-5 rounded-2xl shadow-xl border border-emerald-700/60 no-print">
         <div class="flex flex-wrap items-center justify-between gap-4">
-          <div class="space-y-1.5">
-            <h1 class="text-xl md:text-2xl font-black text-white tracking-tight flex items-center gap-2.5">
+          <div>
+            <h1 class="text-xl md:text-2xl font-black text-white tracking-tight leading-snug">
               <span>District Capex Budget (DCB) — Daily Monitoring Official Format</span>
-            </h1>
-            <div class="flex items-center gap-2 pt-1">
-              <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-extrabold text-xs border border-emerald-400/40 flex items-center gap-1.5 shadow-sm">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 ml-2.5 rounded-full bg-emerald-500/20 text-emerald-300 font-extrabold text-xs border border-emerald-400/40 shadow-sm align-middle whitespace-nowrap">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>Live Google Sheet Synced: ${syncTimeStr}</span>
               </span>
-            </div>
+            </h1>
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
