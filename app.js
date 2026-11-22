@@ -2129,23 +2129,11 @@ function renderDashboard(container) {
     <!-- Panchayat Master Matrix Table -->
     <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden mb-6">
       <div class="p-4 bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300">
-            <i class="fa-solid fa-table-cells-large text-base"></i>
-          </div>
-          <div>
-            <h3 class="text-sm font-extrabold text-white tracking-wide flex items-center gap-2">
-              Panchayat-Wise Consolidated Progress Matrix
-              <span class="bg-blue-500/30 text-blue-200 border border-blue-400/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                17 Panchayats (${activeSchemes.length} Active Schemes)
-              </span>
-            </h3>
-            <p class="text-xs text-blue-200/80 mt-0.5">
-              Dynamically filtered for: ${activeSchemes.map(s => s.cfg.name).join(' + ')}
-            </p>
-          </div>
+        <div>
+          <h3 class="text-sm font-extrabold text-white tracking-wide">
+            Panchayat-Wise Consolidated Progress Matrix
+          </h3>
         </div>
-
         <!-- Action Buttons: 2x2 Grid on Mobile, Inline on Desktop -->
         <div class="w-full sm:w-auto grid grid-cols-2 gap-2 sm:flex sm:items-center no-print">
           <button onclick="window.toggleDashboardTableView('consolidated')"
@@ -3629,27 +3617,20 @@ function renderCapexAbstractTable(container) {
     <div class="bg-white rounded-2xl border border-slate-200/90 shadow-md overflow-hidden">
       <div class="p-4 bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white flex flex-wrap items-center justify-between gap-4 shadow-sm no-print">
         <div>
-          <div class="text-[10px] uppercase font-black tracking-widest text-blue-300 flex items-center gap-1.5">
-            <i class="fa-solid fa-table-list"></i> Office of the Block Development Officer Bani
-            ${state.selectedPanchayat && state.selectedPanchayat !== 'ALL' ? `<span class="bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase shadow-xs">Panchayat: ${state.selectedPanchayat}</span>` : ''}
-          </div>
-          <h2 class="text-base font-extrabold text-white mt-0.5">
+          ${state.selectedPanchayat && state.selectedPanchayat !== 'ALL' ? `<div class="mb-1.5"><span class="bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase shadow-xs">Panchayat: ${state.selectedPanchayat}</span></div>` : ''}
+          <h2 class="text-base font-extrabold text-white">
             Physical & Financial Status under District Capex Budget 2026-27 (RDD Works: DDC/BDC/PRI/ABDP/APDP/Ele Edu/Sec Edu/YSS)
           </h2>
-          <div class="text-xs text-blue-200/80 mt-1">
-            Consolidated Progress Abstract Sheet • Official District Format • ${state.selectedPanchayat && state.selectedPanchayat !== 'ALL' ? `Filtered by Panchayat: <strong class="text-amber-300 font-bold">${state.selectedPanchayat}</strong>` : 'All Panchayats Consolidated'}
-          </div>
         </div>
-        <div class="flex items-center gap-2 no-print">
-          <button onclick="exportCurrentViewToExcel()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer">
+        <div class="grid grid-cols-2 gap-2 w-full sm:w-auto no-print">
+          <button onclick="exportCurrentViewToExcel()" class="w-full justify-center px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer">
             <i class="fa-solid fa-file-excel"></i> Export Excel
           </button>
-          <button onclick="printCurrentViewPDF()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors border border-slate-700 cursor-pointer">
+          <button onclick="printCurrentViewPDF()" class="w-full justify-center px-3 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors border border-slate-700 cursor-pointer">
             <i class="fa-solid fa-print"></i> Print Report
           </button>
         </div>
       </div>
-
       <!-- ===== TABLE 1: PHYSICAL STATUS (Matches Sheet1 Cols A-AG) ===== -->
       <div class="px-4 pt-4">
         <div class="text-center mb-2">
@@ -4517,12 +4498,12 @@ function renderMeetingAbstract(container) {
               </div>
             ` : `
               <div class="overflow-x-auto rounded-xl border border-rose-200 shadow-xs bg-white">
-                <table class="w-full text-left border-collapse gov-table text-xs">
+                <table class="w-full text-left border-collapse gov-table text-xs" style="min-width: 900px !important;">
                   <thead class="bg-rose-900 text-white">
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
                       <th class="py-2 px-3 w-28">Panchayat</th>
-                      <th class="py-2.5 px-3 text-left" style="text-align: left !important;">Name of Work</th>
+                      <th class="py-2.5 px-3 text-left" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important;">Name of Work</th>
                       <th class="py-2 px-3 w-24 text-right">AAA Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Alloted Cost</th>
                       <th class="py-2 px-3 w-28 text-center">Status</th>
@@ -4537,7 +4518,7 @@ function renderMeetingAbstract(container) {
                         <tr class="hover:bg-rose-50/50 transition-colors">
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                           <td class="font-bold text-rose-950">${w.panchayat}</td>
-                          <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important;">${w.name}</td>
+                          <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important; word-break: break-word !important; line-height: 1.4 !important;">${w.name}</td>
                           <td class="text-right font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
                           <td class="text-right font-mono text-rose-700 font-bold">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-200">${w.physicalStatus || 'Not Alloted'}</span></td>
@@ -4566,12 +4547,12 @@ function renderMeetingAbstract(container) {
               </div>
             ` : `
               <div class="overflow-x-auto rounded-xl border border-amber-200 shadow-xs bg-white">
-                <table class="w-full text-left border-collapse gov-table text-xs">
+                <table class="w-full text-left border-collapse gov-table text-xs" style="min-width: 980px !important;">
                   <thead class="bg-amber-900 text-white">
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
                       <th class="py-2 px-3 w-28">Panchayat</th>
-                      <th class="py-2.5 px-3 text-left" style="text-align: left !important;">Name of Work</th>
+                      <th class="py-2.5 px-3 text-left" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important;">Name of Work</th>
                       <th class="py-2 px-3 w-24 text-right">Alloted Cost (₹ L)</th>
                       <th class="py-2 px-3 w-28 text-center">Status</th>
                       <th class="py-2 px-3">Reason / Remarks</th>
@@ -4586,7 +4567,7 @@ function renderMeetingAbstract(container) {
                         <tr class="hover:bg-amber-50/50 transition-colors">
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                           <td class="font-bold text-amber-950">${w.panchayat}</td>
-                          <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important;">${w.name}</td>
+                          <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important; word-break: break-word !important; line-height: 1.4 !important;">${w.name}</td>
                           <td class="text-right font-mono font-bold text-indigo-950">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300">${w.physicalStatus || 'Not Started'}</span></td>
                           <td class="text-slate-600 text-xs italic">${w.reasonNotCompleted || 'Forest / Clearance Permission Required'}</td>
@@ -4615,12 +4596,12 @@ function renderMeetingAbstract(container) {
               </div>
             ` : `
               <div class="overflow-x-auto rounded-xl border border-teal-200 shadow-xs bg-white">
-                <table class="w-full text-left border-collapse gov-table text-xs">
+                <table class="w-full text-left border-collapse gov-table text-xs" style="min-width: 880px !important;">
                   <thead class="bg-teal-900 text-white">
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
                       <th class="py-2 px-3 w-28">Panchayat</th>
-                      <th class="py-2.5 px-3 text-left" style="text-align: left !important;">Name of Work</th>
+                      <th class="py-2.5 px-3 text-left" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important;">Name of Work</th>
                       <th class="py-2 px-3 w-24 text-right">AAA Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Alloted Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Expdt (₹ L)</th>
@@ -4632,7 +4613,7 @@ function renderMeetingAbstract(container) {
                       <tr class="hover:bg-teal-50/50 transition-colors">
                         <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                         <td class="font-bold text-teal-950">${w.panchayat}</td>
-                        <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important;">${w.name}</td>
+                          <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important; word-break: break-word !important; line-height: 1.4 !important;">${w.name}</td>
                         <td class="text-right font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
                         <td class="text-right font-mono font-medium text-indigo-900">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                         <td class="text-right font-mono font-bold text-emerald-800">₹${(w.actualExpdtTotal || 0).toFixed(3)}</td>
@@ -17283,7 +17264,7 @@ function renderDynamicWorkWiseTableHTML(works, activeCols, totSanc, totAllot, to
             return `<td class="font-mono text-xs text-blue-900 font-semibold whitespace-nowrap text-center px-1.5">${w.workCode}</td>`;
           }
           if (col.id === 'name') {
-            return `<td class="font-medium text-slate-800 work-desc text-left px-3 leading-snug">${w.name}</td>`;
+            return `<td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important; min-width: 320px !important; width: 380px !important; white-space: normal !important; word-break: break-word !important; line-height: 1.4 !important;">${w.name}</td>`;
           }
           if (col.id === 'ac') {
             return `<td class="text-center text-xs whitespace-nowrap px-1 work-ac-td text-slate-700">${w.ac || '-'}</td>`;
