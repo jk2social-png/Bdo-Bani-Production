@@ -290,28 +290,43 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // API ROUTE 6c: GET /api/sheet2-dcb-sheet (Live Fetch Sheet #2 Daily Expdtt DCB Kathua Google Sheet)
+  // API ROUTE 6c: GET /api/sheet2-dcb-sheet (Live Fetch Sheet #2 Daily Expdtt DCB Kathua Google Sheet - All 4 Sheets)
   if (reqPath === '/api/sheet2-dcb-sheet' && req.method === 'GET') {
     try {
-      const gUrl = 'https://docs.google.com/spreadsheets/d/1RaKzdz9wSCQaQdtjxIsPcZO2e4Pw9Od2USq39KQWeZg/export?format=csv&gid=2114934525';
-      function fetchCSV(targetUrl) {
+      const gUrl = 'https://docs.google.com/spreadsheets/d/1RaKzdz9wSCQaQdtjxIsPcZO2e4Pw9Od2USq39KQWeZg/export?format=xlsx';
+      const XLSX = require('xlsx');
+
+      function fetchXLSXBuffer(targetUrl) {
         return new Promise((resolve, reject) => {
           https.get(targetUrl, res => {
             if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-              return fetchCSV(res.headers.location).then(resolve).catch(reject);
+              return fetchXLSXBuffer(res.headers.location).then(resolve).catch(reject);
             }
-            let d = '';
-            res.on('data', c => d += c);
-            res.on('end', () => resolve(d));
+            const chunks = [];
+            res.on('data', c => chunks.push(c));
+            res.on('end', () => resolve(Buffer.concat(chunks)));
           }).on('error', reject);
         });
       }
-      const csvText = await fetchCSV(gUrl);
+
+      const buf = await fetchXLSXBuffer(gUrl);
+      const wb = XLSX.read(buf, { type: 'buffer' });
+      const expdtNewRows = XLSX.utils.sheet_to_json(wb.Sheets['Expdt (NEW Works)'] || {}, { header: 1 });
+      const expdtOngoingRows = XLSX.utils.sheet_to_json(wb.Sheets['Expdt (Ongoing- Works)'] || {}, { header: 1 });
+      const dcbMeetingOngoingRows = XLSX.utils.sheet_to_json(wb.Sheets[' DCB Meeting (14-11-2026 ONGOIN'] || wb.Sheets[wb.SheetNames[0]] || {}, { header: 1 });
+      const dcbMeetingNewRows = XLSX.utils.sheet_to_json(wb.Sheets['DCB Meeting (14-11-2026 NEW WOR'] || wb.Sheets[wb.SheetNames[1]] || {}, { header: 1 });
+
       res.writeHead(200, {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       });
-      res.end(JSON.stringify({ success: true, csvText }));
+      res.end(JSON.stringify({
+        success: true,
+        expdtNewRows,
+        expdtOngoingRows,
+        dcbMeetingOngoingRows,
+        dcbMeetingNewRows
+      }));
     } catch (e) {
       res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
       res.end(JSON.stringify({ success: false, error: e.message }));
@@ -319,28 +334,35 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // API ROUTE 6d: GET /api/sheet1-bani-sheet (Live Fetch Sheet #1 Daily Bani Physical Progress Google Sheet)
+  // API ROUTE 6d: GET /api/sheet1-bani-sheet (Live Fetch Sheet #1 Daily Bani Progress Google Sheet - Both Physical & Financial)
   if (reqPath === '/api/sheet1-bani-sheet' && req.method === 'GET') {
     try {
-      const gUrl = 'https://docs.google.com/spreadsheets/d/10vQXS5D36tGuvaBNEpe4xYBRs6RKUqv6BHq_eboosNQ/export?format=csv&gid=1884788730';
-      function fetchCSV(targetUrl) {
+      const gUrl = 'https://docs.google.com/spreadsheets/d/10vQXS5D36tGuvaBNEpe4xYBRs6RKUqv6BHq_eboosNQ/export?format=xlsx';
+      const XLSX = require('xlsx');
+
+      function fetchXLSXBuffer(targetUrl) {
         return new Promise((resolve, reject) => {
           https.get(targetUrl, res => {
             if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-              return fetchCSV(res.headers.location).then(resolve).catch(reject);
+              return fetchXLSXBuffer(res.headers.location).then(resolve).catch(reject);
             }
-            let d = '';
-            res.on('data', c => d += c);
-            res.on('end', () => resolve(d));
+            const chunks = [];
+            res.on('data', c => chunks.push(c));
+            res.on('end', () => resolve(Buffer.concat(chunks)));
           }).on('error', reject);
         });
       }
-      const csvText = await fetchCSV(gUrl);
+
+      const buf = await fetchXLSXBuffer(gUrl);
+      const wb = XLSX.read(buf, { type: 'buffer' });
+      const physRows = XLSX.utils.sheet_to_json(wb.Sheets['Physical-2026-27'] || {}, { header: 1 });
+      const finRows = XLSX.utils.sheet_to_json(wb.Sheets['Financial-2026-27'] || {}, { header: 1 });
+
       res.writeHead(200, {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       });
-      res.end(JSON.stringify({ success: true, csvText }));
+      res.end(JSON.stringify({ success: true, physRows, finRows }));
     } catch (e) {
       res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
       res.end(JSON.stringify({ success: false, error: e.message }));
@@ -425,7 +447,7 @@ const server = http.createServer(async (req, res) => {
 
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    /* console.log(`[Server] Port ${PORT} already active, using existing server process.`); */
+    console.log(`[Server] Port ${PORT} already active, using existing server process.`);
   } else {
     console.error('[Server] Error:', err);
   }
@@ -433,9 +455,9 @@ server.on('error', (err) => {
 
 server.listen(PORT, () => {
   const url = `http://localhost:${PORT}`;
-  /* console.log(`=======================================================`); */
-  /* console.log(`  🚀 BDO BANI INTEGRATED WORKS PORTAL & BACKEND ACTIVE`); */
-  /* console.log(`  🌐 Server running at: ${url}`); */
-  /* console.log(`  📡 REST API available at: ${url}/api/data & ${url}/api/kathua-sync`); */
-  /* console.log(`=======================================================`); */
+  console.log(`=======================================================`);
+  console.log(`  🚀 BDO BANI INTEGRATED WORKS PORTAL & BACKEND ACTIVE`);
+  console.log(`  🌐 Server running at: ${url}`);
+  console.log(`  📡 REST API available at: ${url}/api/data & ${url}/api/kathua-sync`);
+  console.log(`=======================================================`);
 });

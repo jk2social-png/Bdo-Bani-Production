@@ -44,7 +44,7 @@ async function startWhatsAppService() {
             margin: 2,
             color: { dark: '#020617', light: '#ffffff' }
           });
-          /* console.log('[WhatsApp-Service] Fresh Live QR Code Generated!'); */
+          console.log('[WhatsApp-Service] Fresh Live QR Code Generated!');
         } catch (e) {
           console.error('[WhatsApp-Service] QR generation error:', e);
         }
@@ -55,7 +55,7 @@ async function startWhatsAppService() {
         currentQR = null;
         const statusCode = lastDisconnect?.error?.output?.statusCode;
         const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
-        /* console.log('[WhatsApp-Service] Connection closed. Reason code:', statusCode, 'Reconnect:', shouldReconnect); */
+        console.log('[WhatsApp-Service] Connection closed. Reason code:', statusCode, 'Reconnect:', shouldReconnect);
         if (shouldReconnect) {
           isStarting = false;
           setTimeout(startWhatsAppService, 4000);
@@ -73,7 +73,7 @@ async function startWhatsAppService() {
         } catch (e) {
           linkedPhone = 'Admin Phone';
         }
-        /* console.log('🎉 [WhatsApp-Service] DEVICE LINKED SUCCESSFULLY! Linked Phone:', linkedPhone); */
+        console.log('🎉 [WhatsApp-Service] DEVICE LINKED SUCCESSFULLY! Linked Phone:', linkedPhone);
       } else if (connection === 'connecting') {
         connectionState = 'connecting';
       }
@@ -115,7 +115,7 @@ async function sendOtp(phone, otpCode, targetUser) {
 
   try {
     await sock.sendMessage(jid, { text: textMsg });
-    /* console.log(`[WhatsApp-Service] ✅ OTP (${otpCode}) sent successfully to ${jid}`); */
+    console.log(`[WhatsApp-Service] ✅ OTP (${otpCode}) sent successfully to ${jid}`);
     return { success: true };
   } catch (err) {
     console.error(`[WhatsApp-Service] ❌ Failed to send OTP to ${jid}:`, err);

@@ -1,5 +1,5 @@
 // Service Worker for BDO Bani PWA Web App
-const CACHE_NAME = 'bdo-bani-v20261118_v6';
+const CACHE_NAME = 'bdo-bani-v20261122_v18';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -9,7 +9,9 @@ const ASSETS_TO_CACHE = [
   './app_logo.png',
   './icon-192.png',
   './icon-512.png',
-  './manifest.json'
+  './manifest.json',
+  './data/sheet1_daily_bani_data.js',
+  './data/sheet2_dcb_data.js'
 ];
 
 // Install: Cache core shell
@@ -22,7 +24,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate: Clean old caches
+// Activate: Clean old caches immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
