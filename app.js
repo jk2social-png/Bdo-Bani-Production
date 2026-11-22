@@ -4537,7 +4537,7 @@ function renderMeetingAbstract(container) {
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
                       <th class="py-2 px-3 w-28">Panchayat</th>
-                      <th class="py-2 px-3">Name of Work</th>
+                      <th class="py-2.5 px-3 text-left" style="text-align: left !important;">Name of Work</th>
                       <th class="py-2 px-3 w-24 text-right">AAA Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Alloted Cost</th>
                       <th class="py-2 px-3 w-28 text-center">Status</th>
@@ -4552,7 +4552,7 @@ function renderMeetingAbstract(container) {
                         <tr class="hover:bg-rose-50/50 transition-colors">
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                           <td class="font-bold text-rose-950">${w.panchayat}</td>
-                          <td class="font-medium text-slate-800 text-left px-3">${w.name}</td>
+                          <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important;">${w.name}</td>
                           <td class="text-right font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
                           <td class="text-right font-mono text-rose-700 font-bold">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-200">${w.physicalStatus || 'Not Alloted'}</span></td>
@@ -4586,7 +4586,7 @@ function renderMeetingAbstract(container) {
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
                       <th class="py-2 px-3 w-28">Panchayat</th>
-                      <th class="py-2 px-3">Name of Work</th>
+                      <th class="py-2.5 px-3 text-left" style="text-align: left !important;">Name of Work</th>
                       <th class="py-2 px-3 w-24 text-right">Alloted Cost (₹ L)</th>
                       <th class="py-2 px-3 w-28 text-center">Status</th>
                       <th class="py-2 px-3">Reason / Remarks</th>
@@ -4601,7 +4601,7 @@ function renderMeetingAbstract(container) {
                         <tr class="hover:bg-amber-50/50 transition-colors">
                           <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                           <td class="font-bold text-amber-950">${w.panchayat}</td>
-                          <td class="font-medium text-slate-800 text-left px-3">${w.name}</td>
+                          <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important;">${w.name}</td>
                           <td class="text-right font-mono font-bold text-indigo-950">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                           <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300">${w.physicalStatus || 'Not Started'}</span></td>
                           <td class="text-slate-600 text-xs italic">${w.reasonNotCompleted || 'Forest / Clearance Permission Required'}</td>
@@ -4635,30 +4635,26 @@ function renderMeetingAbstract(container) {
                     <tr class="text-[11px] font-bold">
                       <th class="py-2 px-2 w-10 text-center">S.No</th>
                       <th class="py-2 px-3 w-28">Panchayat</th>
-                      <th class="py-2 px-3">Name of Work</th>
+                      <th class="py-2.5 px-3 text-left" style="text-align: left !important;">Name of Work</th>
                       <th class="py-2 px-3 w-24 text-right">AAA Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Alloted Cost (₹ L)</th>
                       <th class="py-2 px-3 w-24 text-right">Expdt (₹ L)</th>
-                      <th class="py-2 px-3 w-24 text-center">Completion</th>
+                      <th class="py-2.5 px-3 text-center whitespace-nowrap" style="width: 125px !important; min-width: 125px !important; white-space: nowrap !important;">Completion</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-teal-100">
-                    ${completedWorks.slice(0, 15).map((w, idx) => `
+                    ${completedWorks.map((w, idx) => `
                       <tr class="hover:bg-teal-50/50 transition-colors">
                         <td class="text-center font-bold text-slate-500">${idx + 1}</td>
                         <td class="font-bold text-teal-950">${w.panchayat}</td>
-                        <td class="font-medium text-slate-800">${w.name}</td>
+                        <td class="font-medium text-slate-800 text-left px-3" style="text-align: left !important;">${w.name}</td>
                         <td class="text-right font-mono font-bold text-slate-900">₹${(w.aaaCost || w.approvedCapex || 0).toFixed(3)}</td>
                         <td class="text-right font-mono font-medium text-indigo-900">₹${(w.allotmentCost || 0).toFixed(3)}</td>
                         <td class="text-right font-mono font-bold text-emerald-800">₹${(w.actualExpdtTotal || 0).toFixed(3)}</td>
-                        <td class="text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">100% Completed</span></td>
+                        <td class="text-center whitespace-nowrap" style="width: 125px !important; min-width: 125px !important; white-space: nowrap !important;"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 inline-block whitespace-nowrap" style="white-space: nowrap !important;">100% Completed</span></td>
                       </tr>
                     `).join('')}
-                    ${completedWorks.length > 15 ? `
-                      <tr class="bg-slate-50 text-slate-500 text-center font-bold text-xs">
-                        <td colspan="7" class="py-2">... and ${completedWorks.length - 15} more completed works. Full list visible in MPR Register.</td>
-                      </tr>
-                    ` : ''}
+                    
                   </tbody>
                 </table>
               </div>

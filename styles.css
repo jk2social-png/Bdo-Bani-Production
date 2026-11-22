@@ -80,18 +80,22 @@ body {
   word-break: break-word;
 }
 
-/* Ensure all data figures, numbers, and headers are centered across all tables */
+/* Ensure table data figures and default cells are centered, while respecting text-left and text-right */
 .gov-table th,
 .gov-table td,
-.gov-table th.text-right,
-.gov-table td.text-right,
-.gov-table th.text-left,
-.gov-table td.text-left,
-.gov-table td[class*="text-"],
-.gov-table th[class*="text-"],
 .gov-table tr.total-row td {
-  text-align: center !important;
+  text-align: center;
   vertical-align: middle !important;
+}
+
+.gov-table th.text-left,
+.gov-table td.text-left {
+  text-align: left !important;
+}
+
+.gov-table th.text-right,
+.gov-table td.text-right {
+  text-align: right !important;
 }
 
 /* Work Description Text Wrapping & Readable Width */
