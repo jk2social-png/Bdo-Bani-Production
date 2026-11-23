@@ -3752,6 +3752,146 @@ function setMeetingFocusScheme(schemeKey) {
   refreshCurrentView();
 }
 
+
+// ============================================================================
+// DYNAMIC FINANCIAL DATA HARVESTER FOR MEETING ABSTRACT (TABLES 2A, 2B, 2C)
+// Synchronized directly with Daily Monitoring Sheet 1 Part 2 (Financial Progress)
+// ============================================================================
+function getMeetingAbstractFinancialData(appState) {
+  const fullSheet1 = typeof getSheet1DailyBaniData === 'function' ? getSheet1DailyBaniData() : ((typeof window !== 'undefined' && window.sheet1DailyBaniBaselineData) ? window.sheet1DailyBaniBaselineData : null);
+  const fin = fullSheet1 && fullSheet1.financial ? fullSheet1.financial : ((typeof window !== 'undefined' && window.sheet1DailyBaniBaselineData) ? window.sheet1DailyBaniBaselineData.financial : null);
+
+  const getSecItems = (sec) => (fin && fin[sec] && Array.isArray(fin[sec].items)) ? fin[sec].items : [];
+
+  const findComp = (items, matchNames) => {
+    return items.find(it => {
+      const c = (it.component || '').toLowerCase().trim();
+      return matchNames.some(m => c.includes(m.toLowerCase()));
+    }) || {};
+  };
+
+  const num = (v, defaultVal = 0) => {
+    if (v === undefined || v === null || v === '') return defaultVal;
+    const n = parseFloat(String(v).replace(/,/g, ''));
+    return isNaN(n) ? defaultVal : n;
+  };
+  const intVal = (v, defaultVal = 0) => {
+    if (v === undefined || v === null || v === '') return defaultVal;
+    const n = parseInt(String(v).replace(/,/g, ''), 10);
+    return isNaN(n) ? defaultVal : n;
+  };
+
+  const secA = getSecItems('sectionA');
+  const secB = getSecItems('sectionB');
+  const secC = getSecItems('sectionC');
+
+  // 1. Ongoing (Section A) - PRI Ongoing
+  const priOngoingItem = findComp(secA, ['pri']);
+  const priOngoingList = (appState && appState.db && appState.db.priOngoing) ? appState.db.priOngoing : [];
+  const ongoingTotalWorks = priOngoingList.length || 4;
+  const ongoingBillsReceived = intVal(priOngoingItem.billsRecCount, 4);
+  const ongoingAmtBillsReceived = num(priOngoingItem.billsRecAmt, 3.380);
+  const ongoingBillsCleared = intVal(priOngoingItem.actualClrCount, 4);
+  const ongoingAmtBillsCleared = num(priOngoingItem.actualClrAmt, 3.380);
+  const ongoingBillsTreasury = num(priOngoingItem.billsClrAmt, ongoingAmtBillsCleared);
+  const ongoingApproved = num(priOngoingItem.approvedOutlay, 3.090);
+  const ongoingAllotment = num(priOngoingItem.allotmentCost, 17.405);
+  const ongoingFundsReleased = num(priOngoingItem.fundsReceived, 4.160);
+
+  // 2. New Works (Section B) - PRIs, BDC, DDC, ST Plan, APDP
+  const schemeDefs = [
+    { sNo: 1, schemeName: 'PRIs', match: ['pri'], dbKey: 'priNew', defaultWorks: 78 },
+    { sNo: 2, schemeName: 'BDC', match: ['bdc'], dbKey: 'bdcWorks', defaultWorks: 1 },
+    { sNo: 3, schemeName: 'DDC', match: ['ddc'], dbKey: 'ddcWorks', defaultWorks: 17 },
+    { sNo: 4, schemeName: 'ST Plan', match: ['st-plan', 'st plan', 'ut capex (st-plan)'], dbKey: 'stWorks', defaultWorks: 11 },
+    { sNo: 5, schemeName: 'APDP', match: ['apdp'], dbKey: 'apdpWorks', defaultWorks: 1 }
+  ];
+
+  const finNewRows = schemeDefs.map(def => {
+    const item = findComp(secB, def.match);
+    const worksList = (appState && appState.db && appState.db[def.dbKey]) ? appState.db[def.dbKey] : [];
+    const totalWorks = worksList.length || def.defaultWorks;
+    const billsReceived = intVal(item.billsRecCount, 0);
+    const amtBillsReceived = num(item.billsRecAmt, 0);
+    const billsCleared = intVal(item.actualClrCount, 0);
+    const amtBillsCleared = num(item.actualClrAmt, 0);
+    const billsTreasury = num(item.billsClrAmt, amtBillsCleared);
+    const fundsReleased = num(item.fundsReceived, 0);
+    return {
+      sNo: def.sNo,
+      schemeName: def.schemeName,
+      totalWorks,
+      billsReceived,
+      amtBillsReceived,
+      billsCleared,
+      amtBillsCleared,
+      billsTreasury,
+      fundsReleased
+    };
+  });
+
+  const finNewTotal = {
+    totalWorks: finNewRows.reduce((s, r) => s + r.totalWorks, 0),
+    billsReceived: finNewRows.reduce((s, r) => s + r.billsReceived, 0),
+    amtBillsReceived: finNewRows.reduce((s, r) => s + r.amtBillsReceived, 0),
+    billsCleared: finNewRows.reduce((s, r) => s + r.billsCleared, 0),
+    amtBillsCleared: finNewRows.reduce((s, r) => s + r.amtBillsCleared, 0),
+    billsTreasury: finNewRows.reduce((s, r) => s + r.billsTreasury, 0),
+    fundsReleased: finNewRows.reduce((s, r) => s + r.fundsReleased, 0)
+  };
+
+  // 3. Consolidated (Section C) - DDC, BDC, PRI, APDP, ST / Tribal
+  const conDefs = [
+    { sNo: 1, schemeName: 'DDC', match: ['ddc'] },
+    { sNo: 2, schemeName: 'BDC', match: ['bdc'] },
+    { sNo: 3, schemeName: 'PRI', match: ['pri'] },
+    { sNo: 4, schemeName: 'APDP', match: ['apdp'] },
+    { sNo: 5, schemeName: 'ST / Tribal', match: ['st-plan', 'st plan', 'ut capex (st-plan)'] }
+  ];
+
+  const conFinRows = conDefs.map(def => {
+    const item = findComp(secC, def.match);
+    const approved = num(item.approvedOutlay, 0);
+    const allotment = num(item.allotmentCost, 0);
+    const savings = Math.max(0, approved - allotment);
+    const funds = num(item.fundsReceived, 0);
+    const actual = num(item.actualClrAmt, 0);
+    return {
+      sNo: def.sNo,
+      schemeName: def.schemeName,
+      approved,
+      allotment,
+      savings,
+      funds,
+      actual
+    };
+  });
+
+  const conFinTotal = {
+    approved: conFinRows.reduce((s, r) => s + r.approved, 0),
+    allotment: conFinRows.reduce((s, r) => s + r.allotment, 0),
+    savings: conFinRows.reduce((s, r) => s + r.savings, 0),
+    funds: conFinRows.reduce((s, r) => s + r.funds, 0),
+    actual: conFinRows.reduce((s, r) => s + r.actual, 0)
+  };
+
+  return {
+    ongoingTotalWorks,
+    ongoingBillsReceived,
+    ongoingAmtBillsReceived,
+    ongoingBillsCleared,
+    ongoingAmtBillsCleared,
+    ongoingBillsTreasury,
+    ongoingApproved,
+    ongoingAllotment,
+    ongoingFundsReleased,
+    finNewRows,
+    finNewTotal,
+    conFinRows,
+    conFinTotal
+  };
+}
+
 function renderMeetingAbstract(container) {
   if (typeof healCapexStatuses === 'function' && state && state.db) { healCapexStatuses(state.db); }
   const isPytFiltered = state.selectedPanchayat && state.selectedPanchayat !== 'ALL';
@@ -3895,102 +4035,23 @@ function renderMeetingAbstract(container) {
     fundsReleased: finRows.reduce((s, r) => s + r.fundsReleased, 0)
   };
 
-  // 3. Ongoing Works Financial Computation (Table 2A)
-  const ongoingTotalWorks = 4;
-  const ongoingBillsReceived = 4;
-  const ongoingAmtBillsReceived = 2.530;
-  const ongoingBillsCleared = 3;
-  const ongoingAmtBillsCleared = 1.080;
-  const ongoingBillsTreasury = 1.450;
-  const ongoingApproved = priOngoing.reduce((s, w) => s + (w.approvedCapex || 0), 0) || 21.560;
-  const ongoingAllotment = priOngoing.reduce((s, w) => s + (w.allotmentCost || 0), 0) || 17.405;
-  const ongoingFundsReleased = priOngoing.reduce((s, w) => s + (w.fundsReleased || 0), 0) || 4.160;
-  const ongoingActualExpdt = 2.530;
+  // 3. Ongoing Works Financial Computation (Table 2A, 2B, 2C) - Sourced dynamically from Daily Bani Sheet 1 Part 2
+  const finBundle = getMeetingAbstractFinancialData(state);
+  const ongoingTotalWorks = finBundle.ongoingTotalWorks;
+  const ongoingBillsReceived = finBundle.ongoingBillsReceived;
+  const ongoingAmtBillsReceived = finBundle.ongoingAmtBillsReceived;
+  const ongoingBillsCleared = finBundle.ongoingBillsCleared;
+  const ongoingAmtBillsCleared = finBundle.ongoingAmtBillsCleared;
+  const ongoingBillsTreasury = finBundle.ongoingBillsTreasury;
+  const ongoingApproved = finBundle.ongoingApproved;
+  const ongoingAllotment = finBundle.ongoingAllotment;
+  const ongoingFundsReleased = finBundle.ongoingFundsReleased;
 
-  // Financial New Works 9-Column Bills Tracking (Table 2B - matching Table 2A format exactly)
-  const finNewRows = [
-    {
-      sNo: 1,
-      schemeName: 'PRIs',
-      totalWorks: 78,
-      billsReceived: 13,
-      amtBillsReceived: 21.945,
-      billsCleared: 13,
-      amtBillsCleared: 13.940,
-      billsTreasury: 13.940,
-      fundsReleased: 106.300
-    },
-    {
-      sNo: 2,
-      schemeName: 'BDC',
-      totalWorks: 1,
-      billsReceived: 0,
-      amtBillsReceived: 0.000,
-      billsCleared: 0,
-      amtBillsCleared: 0.000,
-      billsTreasury: 0.000,
-      fundsReleased: 12.500
-    },
-    {
-      sNo: 3,
-      schemeName: 'DDC',
-      totalWorks: 17,
-      billsReceived: 5,
-      amtBillsReceived: 12.535,
-      billsCleared: 5,
-      amtBillsCleared: 6.450,
-      billsTreasury: 6.450,
-      fundsReleased: 23.750
-    },
-    {
-      sNo: 4,
-      schemeName: 'ST Plan',
-      totalWorks: 11,
-      billsReceived: 6,
-      amtBillsReceived: 8.280,
-      billsCleared: 6,
-      amtBillsCleared: 4.700,
-      billsTreasury: 4.700,
-      fundsReleased: 9.750
-    },
-    {
-      sNo: 5,
-      schemeName: 'APDP',
-      totalWorks: 1,
-      billsReceived: 0,
-      amtBillsReceived: 0.000,
-      billsCleared: 0,
-      amtBillsCleared: 0.000,
-      billsTreasury: 0.000,
-      fundsReleased: 5.000
-    }
-  ];
+  const finNewRows = finBundle.finNewRows;
+  const finNewTotal = finBundle.finNewTotal;
 
-  const finNewTotal = {
-    totalWorks: finNewRows.reduce((s, r) => s + r.totalWorks, 0),
-    billsReceived: finNewRows.reduce((s, r) => s + r.billsReceived, 0),
-    amtBillsReceived: finNewRows.reduce((s, r) => s + r.amtBillsReceived, 0),
-    billsCleared: finNewRows.reduce((s, r) => s + r.billsCleared, 0),
-    amtBillsCleared: finNewRows.reduce((s, r) => s + r.amtBillsCleared, 0),
-    billsTreasury: finNewRows.reduce((s, r) => s + r.billsTreasury, 0),
-    fundsReleased: finNewRows.reduce((s, r) => s + r.fundsReleased, 0)
-  };
-
-  // 4. Consolidated Financial Status (Table 4 - Ongoing + New Works 2026-27 matching Official DDC Meeting Review Sheet)
-  const conFinRows = [
-    { sNo: 1, schemeName: 'DDC', approved: finRows[2].approved, allotment: finRows[2].allotment, savings: Math.max(0, finRows[2].approved - finRows[2].allotment), funds: finRows[2].fundsReleased, actual: 0.000 },
-    { sNo: 2, schemeName: 'BDC', approved: finRows[1].approved, allotment: finRows[1].allotment, savings: Math.max(0, finRows[1].approved - finRows[1].allotment), funds: finRows[1].fundsReleased, actual: 0.000 },
-    { sNo: 3, schemeName: 'PRI', approved: finRows[0].approved + ongoingApproved, allotment: finRows[0].allotment + ongoingAllotment, savings: Math.max(0, (finRows[0].approved + ongoingApproved) - (finRows[0].allotment + ongoingAllotment)), funds: finRows[0].fundsReleased + ongoingFundsReleased, actual: ongoingActualExpdt },
-    { sNo: 4, schemeName: 'APDP', approved: finRows[4].approved, allotment: finRows[4].allotment, savings: Math.max(0, finRows[4].approved - finRows[4].allotment), funds: finRows[4].fundsReleased, actual: 0.000 },
-    { sNo: 5, schemeName: 'ST / Tribal', approved: finRows[3].approved, allotment: finRows[3].allotment, savings: Math.max(0, finRows[3].approved - finRows[3].allotment), funds: finRows[3].fundsReleased, actual: 0.000 },
-  ];
-  const conFinTotal = {
-    approved: conFinRows.reduce((s, r) => s + r.approved, 0),
-    allotment: conFinRows.reduce((s, r) => s + r.allotment, 0),
-    savings: conFinRows.reduce((s, r) => s + r.savings, 0),
-    funds: conFinRows.reduce((s, r) => s + r.funds, 0),
-    actual: conFinRows.reduce((s, r) => s + r.actual, 0),
-  };
+  const conFinRows = finBundle.conFinRows;
+  const conFinTotal = finBundle.conFinTotal;
 
   // 5. Focus Scrutiny Scheme (default PRI)
   const activeFocusScheme = window.meetingAbstractFocusScheme || 'pri';
@@ -10025,99 +10086,23 @@ function exportMeetingAbstractToExcel() {
     fundsReleased: finRows.reduce((s, r) => s + r.fundsReleased, 0)
   };
 
-  const ongoingTotalWorks = 4;
-  const ongoingBillsReceived = 4;
-  const ongoingAmtBillsReceived = 2.530;
-  const ongoingBillsCleared = 3;
-  const ongoingAmtBillsCleared = 1.080;
-  const ongoingBillsTreasury = 1.450;
-  const ongoingApproved = priOngoing.reduce((s, w) => s + (w.approvedCapex || 0), 0) || 21.560;
-  const ongoingAllotment = priOngoing.reduce((s, w) => s + (w.allotmentCost || 0), 0) || 17.405;
-  const ongoingFundsReleased = priOngoing.reduce((s, w) => s + (w.fundsReleased || 0), 0) || 4.160;
-  const ongoingActualExpdt = 2.530;
+  // Dynamically sourced financial bundle from Daily Bani Sheet 1 Part 2
+  const finBundle = getMeetingAbstractFinancialData(state);
+  const ongoingTotalWorks = finBundle.ongoingTotalWorks;
+  const ongoingBillsReceived = finBundle.ongoingBillsReceived;
+  const ongoingAmtBillsReceived = finBundle.ongoingAmtBillsReceived;
+  const ongoingBillsCleared = finBundle.ongoingBillsCleared;
+  const ongoingAmtBillsCleared = finBundle.ongoingAmtBillsCleared;
+  const ongoingBillsTreasury = finBundle.ongoingBillsTreasury;
+  const ongoingApproved = finBundle.ongoingApproved;
+  const ongoingAllotment = finBundle.ongoingAllotment;
+  const ongoingFundsReleased = finBundle.ongoingFundsReleased;
 
-  const finNewRows = [
-    {
-      sNo: 1,
-      schemeName: 'PRIs',
-      totalWorks: 78,
-      billsReceived: 13,
-      amtBillsReceived: 21.945,
-      billsCleared: 13,
-      amtBillsCleared: 13.940,
-      billsTreasury: 13.940,
-      fundsReleased: 106.300
-    },
-    {
-      sNo: 2,
-      schemeName: 'BDC',
-      totalWorks: 1,
-      billsReceived: 0,
-      amtBillsReceived: 0.000,
-      billsCleared: 0,
-      amtBillsCleared: 0.000,
-      billsTreasury: 0.000,
-      fundsReleased: 12.500
-    },
-    {
-      sNo: 3,
-      schemeName: 'DDC',
-      totalWorks: 17,
-      billsReceived: 5,
-      amtBillsReceived: 12.535,
-      billsCleared: 5,
-      amtBillsCleared: 6.450,
-      billsTreasury: 6.450,
-      fundsReleased: 23.750
-    },
-    {
-      sNo: 4,
-      schemeName: 'ST Plan',
-      totalWorks: 11,
-      billsReceived: 6,
-      amtBillsReceived: 8.280,
-      billsCleared: 6,
-      amtBillsCleared: 4.700,
-      billsTreasury: 4.700,
-      fundsReleased: 9.750
-    },
-    {
-      sNo: 5,
-      schemeName: 'APDP',
-      totalWorks: 1,
-      billsReceived: 0,
-      amtBillsReceived: 0.000,
-      billsCleared: 0,
-      amtBillsCleared: 0.000,
-      billsTreasury: 0.000,
-      fundsReleased: 5.000
-    }
-  ];
+  const finNewRows = finBundle.finNewRows;
+  const finNewTotal = finBundle.finNewTotal;
 
-  const finNewTotal = {
-    totalWorks: finNewRows.reduce((s, r) => s + r.totalWorks, 0),
-    billsReceived: finNewRows.reduce((s, r) => s + r.billsReceived, 0),
-    amtBillsReceived: finNewRows.reduce((s, r) => s + r.amtBillsReceived, 0),
-    billsCleared: finNewRows.reduce((s, r) => s + r.billsCleared, 0),
-    amtBillsCleared: finNewRows.reduce((s, r) => s + r.amtBillsCleared, 0),
-    billsTreasury: finNewRows.reduce((s, r) => s + r.billsTreasury, 0),
-    fundsReleased: finNewRows.reduce((s, r) => s + r.fundsReleased, 0)
-  };
-
-  const conFinRows = [
-    { sNo: 1, schemeName: 'DDC', approved: finRows[2].approved, allotment: finRows[2].allotment, savings: Math.max(0, finRows[2].approved - finRows[2].allotment), funds: finRows[2].fundsReleased, actual: 0.000 },
-    { sNo: 2, schemeName: 'BDC', approved: finRows[1].approved, allotment: finRows[1].allotment, savings: Math.max(0, finRows[1].approved - finRows[1].allotment), funds: finRows[1].fundsReleased, actual: 0.000 },
-    { sNo: 3, schemeName: 'PRI', approved: finRows[0].approved + ongoingApproved, allotment: finRows[0].allotment + ongoingAllotment, savings: Math.max(0, (finRows[0].approved + ongoingApproved) - (finRows[0].allotment + ongoingAllotment)), funds: finRows[0].fundsReleased + ongoingFundsReleased, actual: ongoingActualExpdt },
-    { sNo: 4, schemeName: 'APDP', approved: finRows[4].approved, allotment: finRows[4].allotment, savings: Math.max(0, finRows[4].approved - finRows[4].allotment), funds: finRows[4].fundsReleased, actual: 0.000 },
-    { sNo: 5, schemeName: 'ST / Tribal', approved: finRows[3].approved, allotment: finRows[3].allotment, savings: Math.max(0, finRows[3].approved - finRows[3].allotment), funds: finRows[3].fundsReleased, actual: 0.000 },
-  ];
-  const conFinTotal = {
-    approved: conFinRows.reduce((s, r) => s + r.approved, 0),
-    allotment: conFinRows.reduce((s, r) => s + r.allotment, 0),
-    savings: conFinRows.reduce((s, r) => s + r.savings, 0),
-    funds: conFinRows.reduce((s, r) => s + r.funds, 0),
-    actual: conFinRows.reduce((s, r) => s + r.actual, 0),
-  };
+  const conFinRows = finBundle.conFinRows;
+  const conFinTotal = finBundle.conFinTotal;
 
   // SHEET 1: ABSTRACT FOR MEETING
   const sheet1Headers = ['S.NO', 'Scheme / Component', 'Total works', 'AA Accorded', 'Tendered', 'Alloted', 'Taken up', 'Physically Completed', 'In Progress', 'Not Started', 'Not Alloted', 'Dispute'];
@@ -13739,6 +13724,12 @@ async function fetchSheet1LiveBaniData(userTriggered = false) {
 
     if (userTriggered && typeof showToast === 'function') {
       showToast('Daily Bani Google Sheet synchronized live successfully!', 'success');
+    }
+    if (typeof state !== 'undefined' && state.currentTab === 'meeting_abstract') {
+      const cont = typeof document !== 'undefined' ? document.getElementById('main-content') : null;
+      if (cont && typeof renderMeetingAbstract === 'function') {
+        renderMeetingAbstract(cont);
+      }
     }
     if (typeof state !== 'undefined' && state.activeSyncSheet === 1) {
       const cont = typeof document !== 'undefined' ? document.getElementById('main-content') : null;
