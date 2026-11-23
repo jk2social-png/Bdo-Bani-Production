@@ -3892,6 +3892,86 @@ function getMeetingAbstractFinancialData(appState) {
   };
 }
 
+
+// Universal Financial Rows Renderer matching Daily Monitoring Sheet 1 Part 2
+function renderDailyBaniFinRows(sec, secLetter, secTitle, filterCapex = false) {
+  if (!sec) return '';
+  let items = sec.items || [];
+  if (filterCapex) {
+    items = items.filter(it => ['pri', 'ddc', 'bdc', 'apdp', 'st'].some(k => (it.component || '').toLowerCase().includes(k)));
+  }
+  const isGrand = secLetter === 'C';
+
+  let html = `
+    <tr style="background: ${isGrand ? '#1e293b' : '#f1f5f9'} !important; border: 1px solid #94a3b8 !important;">
+      <td colspan="15" class="px-3 py-1.5 font-black text-xs uppercase tracking-wider"
+          style="color: ${isGrand ? '#38bdf8' : '#0f172a'} !important; border: 1px solid #94a3b8 !important;">
+        SECTION ${secLetter}: ${secTitle} (${items.length} Schemes)
+      </td>
+    </tr>
+  `;
+
+  items.forEach((it, idx) => {
+    const isPriority = ['pri', 'ddc', 'bdc', 'apdp', 'st'].some(k => (it.component || '').toLowerCase().includes(k));
+    const rowBg = isPriority ? '#f0fdf4' : (idx % 2 === 0 ? '#ffffff' : '#f8fafc');
+
+    const blockCellHtml = (idx === 0)
+      ? `<td rowspan="${items.length}" class="px-3 py-2 text-center font-extrabold text-slate-800 bg-slate-100 align-middle whitespace-nowrap shadow-xs" style="border: 1.5px solid #94a3b8 !important; vertical-align: middle; font-size: 13px;">Bani</td>`
+      : '';
+
+    html += `
+      <tr style="background: ${rowBg} !important; border: 1px solid #cbd5e1 !important;" class="hover:bg-amber-50/40 transition-colors">
+        ${blockCellHtml}
+        <td class="px-2 py-1.5 text-center font-bold text-slate-600" style="border: 1px solid #cbd5e1 !important;">${it.sNo || (idx + 1)}</td>
+        <td class="px-2.5 py-1.5 font-bold ${isPriority ? 'text-emerald-950 font-extrabold' : 'text-slate-800'} whitespace-nowrap" style="border: 1px solid #cbd5e1 !important;">
+          ${it.component || ''}
+        </td>
+        <td class="px-2 py-1.5 text-center font-bold text-slate-700" style="border: 1px solid #cbd5e1 !important;">${it.billsRecCount || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-blue-900 bg-blue-50/40" style="border: 1px solid #cbd5e1 !important;">${it.billsRecAmt || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-slate-700" style="border: 1px solid #cbd5e1 !important;">${it.billsClrCount || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-emerald-900 bg-emerald-50/40" style="border: 1px solid #cbd5e1 !important;">${it.billsClrAmt || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-slate-700" style="border: 1px solid #cbd5e1 !important;">${it.actualClrCount || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-emerald-900" style="border: 1px solid #cbd5e1 !important;">${it.actualClrAmt || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-slate-600" style="border: 1px solid #cbd5e1 !important;">${it.tryPendingCount || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-amber-900" style="border: 1px solid #cbd5e1 !important;">${it.tryPendingAmt || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-slate-800" style="border: 1px solid #cbd5e1 !important;">${it.approvedOutlay || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-bold text-slate-800" style="border: 1px solid #cbd5e1 !important;">${it.fundsReceived || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-extrabold text-blue-950 bg-blue-50/60" style="border: 1px solid #cbd5e1 !important;">${it.allotmentCost || '0'}</td>
+        <td class="px-2 py-1.5 text-center font-black ${parseFloat(it.expPercentage) > 0 ? 'text-emerald-700 bg-emerald-50' : 'text-slate-500'}" style="border: 1px solid #cbd5e1 !important;">${it.expPercentage ? (parseFloat(it.expPercentage).toFixed(2) + '%') : '0.00%'}</td>
+      </tr>
+    `;
+  });
+
+  if (sec.subTotal) {
+    const st = sec.subTotal;
+    const totBg = isGrand ? '#0f172a' : '#dcfce7';
+    const totTxt = isGrand ? '#ffffff' : '#065f46';
+    const totBorder = isGrand ? '#334155' : '#86efac';
+
+    html += `
+      <tr style="background: ${totBg} !important; border: 1.5px solid ${totBorder} !important; font-weight: 900;">
+        <td colspan="3" class="px-3 py-2 font-black uppercase text-center" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">
+          ${isGrand ? 'DISTRICT / BLOCK GRAND TOTAL (A+B)' : (st.component || 'Sub-Total (' + secLetter + ')')}
+        </td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.billsRecCount || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.billsRecAmt || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.billsClrCount || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.billsClrAmt || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.actualClrCount || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.actualClrAmt || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.tryPendingCount || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.tryPendingAmt || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.approvedOutlay || '0'}</td>
+        <td class="px-2 py-2 text-center font-black" style="color: ${totTxt} !important; border: 1px solid ${totBorder} !important;">${st.fundsReceived || '0'}</td>
+        <td class="px-2 py-2 text-center font-black ${isGrand ? 'text-sky-300' : 'text-emerald-900'}" style="border: 1px solid ${totBorder} !important;">${st.allotmentCost || '0'}</td>
+        <td class="px-2 py-2 text-center font-black ${isGrand ? 'text-amber-300' : 'text-emerald-800'}" style="border: 1px solid ${totBorder} !important;">${st.expPercentage ? (parseFloat(st.expPercentage).toFixed(2) + '%') : '-'}</td>
+      </tr>
+    `;
+  }
+
+  return html;
+}
+
 function renderMeetingAbstract(container) {
   if (typeof healCapexStatuses === 'function' && state && state.db) { healCapexStatuses(state.db); }
   const isPytFiltered = state.selectedPanchayat && state.selectedPanchayat !== 'ALL';
@@ -4367,161 +4447,59 @@ function renderMeetingAbstract(container) {
           </div>
         </div>
 
-        <!-- TABLE 2A: FINANCIAL ONGOING WORKS -->
-        <div class="p-4 border-b border-slate-200 space-y-2">
+        <!-- PART 2: FINANCIAL EXPENDITURE STATUS UNDER DCB / UT, 2026-27 (RDD SECTOR ONLY) -->
+        <div class="p-4 border-b border-slate-200 space-y-3">
           <div class="flex items-center justify-between">
-            <h3 class="text-sm font-black uppercase tracking-wide text-blue-950 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-600 inline-block"></span>
-              Table 2A: Financial Ongoing Works (2026-27)
+            <h3 class="text-sm font-black uppercase tracking-wide text-emerald-950 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block shadow-xs"></span>
+              <span>Part 2: Financial Expenditure Status under DCB / UT, 2026-27 (RDD Sector Only)</span>
+              <span style="background: #dcfce7; color: #166534; border: 1px solid #86efac; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 9999px;">₹ in Lakhs</span>
             </h3>
-            
           </div>
 
           <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
-            <table class="w-full text-left border-collapse gov-table text-xs">
-              <thead class="bg-[#1e3a8a] text-white">
-                <tr class="text-[11px] font-bold text-center">
-                  <th class="py-2.5 px-3 border-r border-blue-900 w-14">S.NO</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-left min-w-[120px]">Scheme</th>
-                  <th class="py-2.5 px-3 border-r border-blue-900">Total No. of<br>works</th>
-                  <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>received</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of bills<br>received</th>
-                  <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of<br>Bills cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of Bills<br>Submitted in Treasury</th>
-                  <th class="py-2.5 px-4 text-center">Funds<br>Released</th>
+            <table class="w-full text-xs border-collapse font-sans" style="border: 1.5px solid #64748b !important;">
+              <thead class="shadow-xs">
+                <tr style="background: #e2e8f0; color: #0f172a; font-weight: 800;">
+                  <th rowspan="2" class="px-3 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 80px;">Block</th>
+                  <th rowspan="2" class="px-2 py-2 text-center" style="border: 1px solid #94a3b8 !important; min-width: 45px;">S#</th>
+                  <th rowspan="2" class="px-3 py-2 text-left" style="border: 1px solid #94a3b8 !important; min-width: 160px;">Scheme</th>
+                  <th colspan="2" class="px-3 py-2 text-center text-blue-950" style="background: #bfdbfe !important; border: 1px solid #94a3b8 !important;">
+                    From XEN REW Kathua
+                  </th>
+                  <th colspan="2" class="px-3 py-2 text-center text-emerald-950" style="background: #bbf7d0 !important; border: 1px solid #94a3b8 !important;">
+                    Exp.(Actual + Booked)
+                  </th>
+                  <th colspan="2" class="px-3 py-2 text-center text-teal-950" style="background: #99f6e4 !important; border: 1px solid #94a3b8 !important;">
+                    Actual Exped.
+                  </th>
+                  <th colspan="2" class="px-3 py-2 text-center text-amber-950" style="background: #fde68a !important; border: 1px solid #94a3b8 !important;">
+                    Booked Expend in Try.
+                  </th>
+                  <th rowspan="2" class="px-2.5 py-2 text-center bg-slate-200" style="border: 1px solid #94a3b8 !important; min-width: 80px;">Approved Outlay</th>
+                  <th rowspan="2" class="px-2.5 py-2 text-center bg-slate-200" style="border: 1px solid #94a3b8 !important; min-width: 80px;">Funds Received</th>
+                  <th rowspan="2" class="px-2.5 py-2 text-center bg-blue-100 text-blue-950 font-black" style="border: 1px solid #94a3b8 !important; min-width: 85px;">Allotment Cost</th>
+                  <th rowspan="2" class="px-2 py-2 text-center bg-emerald-100 text-emerald-950 font-black" style="border: 1px solid #94a3b8 !important; min-width: 70px;">Exp. %age</th>
+                </tr>
+                <tr style="background: #f1f5f9; color: #334155; font-size: 10px; font-weight: 700;">
+                  <!-- From XEN REW -->
+                  <th class="px-1.5 py-1 text-center bg-blue-50" style="border: 1px solid #94a3b8 !important; min-width: 60px;">Bills Rec.</th>
+                  <th class="px-1.5 py-1 text-center bg-blue-50" style="border: 1px solid #94a3b8 !important; min-width: 70px;">Amount</th>
+                  <!-- Exp.(Actual + Booked) -->
+                  <th class="px-1.5 py-1 text-center bg-emerald-50" style="border: 1px solid #94a3b8 !important; min-width: 60px;">Bills Clr.</th>
+                  <th class="px-1.5 py-1 text-center bg-emerald-50" style="border: 1px solid #94a3b8 !important; min-width: 70px;">Forwarded Try</th>
+                  <!-- Actual Exped. -->
+                  <th class="px-1.5 py-1 text-center bg-teal-50" style="border: 1px solid #94a3b8 !important; min-width: 60px;">Bills Clr.</th>
+                  <th class="px-1.5 py-1 text-center bg-teal-50" style="border: 1px solid #94a3b8 !important; min-width: 70px;">Amount</th>
+                  <!-- Booked Expend in Try. -->
+                  <th class="px-1.5 py-1 text-center bg-amber-50" style="border: 1px solid #94a3b8 !important; min-width: 60px;">Pending Try</th>
+                  <th class="px-1.5 py-1 text-center bg-amber-50" style="border: 1px solid #94a3b8 !important; min-width: 70px;">Pending Amt</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200">
-                <tr class="hover:bg-blue-50/50 transition-colors text-slate-800 text-center">
-                  <td class="font-bold text-slate-600">1</td>
-                  <td class="text-left font-bold text-blue-900">PRIs</td>
-                  <td class="font-bold">${ongoingTotalWorks}</td>
-                  <td>${ongoingBillsReceived}</td>
-                  <td class="text-center font-medium font-mono">${ongoingAmtBillsReceived.toFixed(3)}</td>
-                  <td>${ongoingBillsCleared}</td>
-                  <td class="text-center font-medium text-emerald-800 font-mono">${ongoingAmtBillsCleared.toFixed(3)}</td>
-                  <td class="text-center font-medium text-indigo-900 font-mono">${ongoingBillsTreasury.toFixed(3)}</td>
-                  <td class="text-center font-bold text-teal-800 font-mono">${ongoingFundsReleased.toFixed(3)}</td>
-                </tr>
-                <tr class="total-row bg-[#dbeafe] text-[#1e3a8a] font-black text-center border-t-2 border-b-2 border-[#1e40af] text-xs shadow-sm">
-                  <td colspan="2" class="py-2 px-3 text-center uppercase tracking-wide font-black">Total Ongoing (A):</td>
-                  <td>${ongoingTotalWorks}</td>
-                  <td>${ongoingBillsReceived}</td>
-                  <td class="text-center font-mono font-bold">${ongoingAmtBillsReceived.toFixed(3)}</td>
-                  <td>${ongoingBillsCleared}</td>
-                  <td class="text-center font-mono font-bold">${ongoingAmtBillsCleared.toFixed(3)}</td>
-                  <td class="text-center font-mono font-bold">${ongoingBillsTreasury.toFixed(3)}</td>
-                  <td class="text-center font-mono font-bold">${ongoingFundsReleased.toFixed(3)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- TABLE 2B: FINANCIAL NEW WORKS -->
-        <div class="p-4 border-b border-slate-200 space-y-2">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-black uppercase tracking-wide text-blue-950 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
-              Table 2B: Financial New Works (2026-27)
-            </h3>
-            
-          </div>
-
-          <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
-            <table class="w-full text-left border-collapse gov-table text-xs">
-              <thead class="bg-[#1e3a8a] text-white">
-                <tr class="text-[11px] font-bold text-center">
-                  <th class="py-2.5 px-3 border-r border-blue-900 w-14">S.NO</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-left min-w-[120px]">Scheme</th>
-                  <th class="py-2.5 px-3 border-r border-blue-900">Total No. of<br>works</th>
-                  <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>received</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of bills<br>received</th>
-                  <th class="py-2.5 px-3 border-r border-blue-900">No. of bills<br>cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of<br>Bills cleared</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Amount of Bills<br>Submitted in Treasury</th>
-                  <th class="py-2.5 px-4 text-center">Funds<br>Released</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200">
-                ${finNewRows.map(r => `
-                  <tr class="hover:bg-blue-50/50 transition-colors text-slate-800 text-center">
-                    <td class="font-bold text-slate-600">${r.sNo}</td>
-                    <td class="text-left font-bold text-blue-900">${r.schemeName}</td>
-                    <td class="font-bold">${r.totalWorks}</td>
-                    <td>${r.billsReceived}</td>
-                    <td class="text-center font-bold text-slate-800 font-mono">${r.amtBillsReceived.toFixed(3)}</td>
-                    <td>${r.billsCleared}</td>
-                    <td class="text-center font-bold text-emerald-800 font-mono">${r.amtBillsCleared.toFixed(3)}</td>
-                    <td class="text-center font-bold text-indigo-900 font-mono">${r.billsTreasury.toFixed(3)}</td>
-                    <td class="text-center font-bold text-teal-800 font-mono">${r.fundsReleased.toFixed(3)}</td>
-                  </tr>
-                `).join('')}
-                <tr class="total-row bg-[#dbeafe] text-[#1e3a8a] font-black text-center border-t-2 border-b-2 border-[#1e40af] text-xs shadow-sm">
-                  <td colspan="2" class="py-2 px-3 text-center uppercase tracking-wide font-black">Total Financial New (B):</td>
-                  <td class="font-bold">${finNewTotal.totalWorks}</td>
-                  <td>${finNewTotal.billsReceived}</td>
-                  <td class="text-center font-bold font-mono">${finNewTotal.amtBillsReceived.toFixed(3)}</td>
-                  <td>${finNewTotal.billsCleared}</td>
-                  <td class="text-center font-bold font-mono">${finNewTotal.amtBillsCleared.toFixed(3)}</td>
-                  <td class="text-center font-bold font-mono">${finNewTotal.billsTreasury.toFixed(3)}</td>
-                  <td class="text-center font-bold font-mono">${finNewTotal.fundsReleased.toFixed(3)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- TABLE 2C: CONSOLIDATED FINANCIAL STATUS (Ongoing + New Works 2026-27 matching Official DDC Meeting Format) -->
-        <div class="p-4 border-b border-slate-200 space-y-2">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-black uppercase tracking-wide text-indigo-950 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block"></span>
-              Table 2C: Consolidated Financial Status (Ongoing + New Works 2026-27)
-            </h3>
-            
-          </div>
-
-          <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-xs">
-            <table class="w-full text-left border-collapse gov-table text-xs">
-              <thead class="bg-[#1e3a8a] text-white">
-                <tr class="text-[11px] font-bold text-center">
-                  <th class="py-2.5 px-3 border-r border-blue-900 w-14">S.NO</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-left min-w-[120px]">Component / Scheme</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Approved Outlay<br>2026-27</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Allotted<br>Cost</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Savings</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Availability /<br>Funds Released</th>
-                  <th class="py-2.5 px-4 border-r border-blue-900 text-center">Actual<br>Expenditure</th>
-                  <th class="py-2.5 px-4 text-center">% Expdt against<br>Allotment</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200">
-                ${conFinRows.map(r => {
-                  const pct = r.allotment > 0 ? ((r.actual / r.allotment) * 100).toFixed(1) + '%' : '0.0%';
-                  return `
-                    <tr class="hover:bg-indigo-50/50 transition-colors text-slate-800 text-center">
-                      <td class="text-center font-bold text-slate-600" style="text-align: center !important;">${r.sNo}</td>
-                      <td class="font-bold text-blue-900 text-center" style="text-align: center !important;">${r.schemeName}</td>
-                      <td class="text-center font-bold font-mono text-slate-900" style="text-align: center !important;">${r.approved.toFixed(3)}</td>
-                      <td class="text-center font-medium font-mono text-indigo-900" style="text-align: center !important;">${r.allotment.toFixed(3)}</td>
-                      <td class="text-center font-medium font-mono text-slate-600" style="text-align: center !important;">${r.savings.toFixed(3)}</td>
-                      <td class="text-center font-bold font-mono text-teal-800" style="text-align: center !important;">${r.funds.toFixed(3)}</td>
-                      <td class="text-center font-bold font-mono text-emerald-800" style="text-align: center !important;">${r.actual.toFixed(3)}</td>
-                      <td class="text-center font-bold font-mono text-slate-700" style="text-align: center !important;">${pct}</td>
-                    </tr>
-                  `;
-                }).join('')}
-                <tr class="total-row bg-[#e0e7ff] text-[#312e81] font-black border-t-2 border-b-2 border-[#4338ca] text-xs shadow-sm">
-                  <td colspan="2" class="py-2 px-3 text-center uppercase tracking-wide font-black">Total Consolidated Financial (A+B):</td>
-                  <td class="text-center font-mono font-bold">${conFinTotal.approved.toFixed(3)}</td>
-                  <td class="text-center font-mono font-bold">${conFinTotal.allotment.toFixed(3)}</td>
-                  <td class="text-center font-mono font-bold">${conFinTotal.savings.toFixed(3)}</td>
-                  <td class="text-center font-mono font-bold">${conFinTotal.funds.toFixed(3)}</td>
-                  <td class="text-center font-mono font-bold">${conFinTotal.actual.toFixed(3)}</td>
-                  <td class="text-center">${conFinTotal.allotment > 0 ? ((conFinTotal.actual / conFinTotal.allotment) * 100).toFixed(1) + '%' : '0.0%'}</td>
-                </tr>
+              <tbody>
+                ${finData ? renderDailyBaniFinRows(finData.sectionA, 'A', 'Ongoing Works') : ''}
+                ${finData ? renderDailyBaniFinRows(finData.sectionB, 'B', 'New Works') : ''}
+                ${finData ? renderDailyBaniFinRows(finData.sectionC, 'C', 'Ongoing+New Works') : ''}
               </tbody>
             </table>
           </div>
