@@ -14994,6 +14994,13 @@ function parseSheet2AllRows(expdtNewRows, expdtOngoingRows, dcbMeetingOngoingRow
       const dept = cleanSheetVal(r[2]);
       if (!dept) continue;
       const isBani = dept.toLowerCase().includes('bani');
+      const bClrTry = cleanSheetVal(r[10]);
+      const balTry = cleanSheetVal(r[13]);
+      let bClrBdo = cleanSheetVal(r[9]);
+      // Core Rule: Bills Cleared at BDO Level = Bills Cleared at Treasury Level + Balance Pending at Treasury Level
+      if ((!bClrBdo || bClrBdo === '0' || bClrBdo === '0.00' || bClrBdo === '0.000') && (parseFloat(bClrTry) > 0 || parseFloat(balTry) > 0)) {
+        bClrBdo = ((parseFloat(bClrTry) || 0) + (parseFloat(balTry) || 0)).toFixed(3);
+      }
       parsedExpdtNew.push({
         sNo: cleanSheetVal(r[0]),
         date: formatSheetDate(r[1]),
@@ -15004,11 +15011,11 @@ function parseSheet2AllRows(expdtNewRows, expdtOngoingRows, dcbMeetingOngoingRow
         amountAllotted: cleanSheetVal(r[6]),
         billsSubXEN: cleanSheetVal(r[7]),
         billsClrXEN: cleanSheetVal(r[8]),
-        billsClrBDO: cleanSheetVal(r[9]),
-        billsClrTreasury: cleanSheetVal(r[10]),
+        billsClrBDO: bClrBdo,
+        billsClrTreasury: bClrTry,
         balXEN: cleanSheetVal(r[11]),
         balBDO: cleanSheetVal(r[12]),
-        balTreasury: cleanSheetVal(r[13]),
+        balTreasury: balTry,
         days: cleanSheetVal(r[14]),
         remarks: cleanSheetVal(r[15]),
         isBani: isBani
@@ -15363,26 +15370,26 @@ function renderSheet2LiveContent() {
 
       <div class="metric-card metric-card-rose">
         <div class="metric-title">Bills to XEN (Bani New)</div>
-        <div class="metric-val">₹${baniRowNew ? baniRowNew.billsSubXEN : '34.48'} L</div>
-        <div class="metric-sub">Cleared at XEN: ₹${baniRowNew ? baniRowNew.billsClrXEN : '34.48'} L</div>
+        <div class="metric-val">₹${baniRowNew ? baniRowNew.billsSubXEN : '67.402'} L</div>
+        <div class="metric-sub">Cleared at XEN: ₹${baniRowNew ? baniRowNew.billsClrXEN : '67.402'} L</div>
       </div>
 
       <div class="metric-card metric-card-amber">
-        <div class="metric-title">Treasury Cleared (Bani New)</div>
-        <div class="metric-val">₹${baniRowNew ? baniRowNew.billsClrTreasury : '20.39'} L</div>
-        <div class="metric-sub">BDO Level: ₹${baniRowNew ? baniRowNew.billsClrBDO : '20.39'} L (100%)</div>
+        <div class="metric-title">BDO Level Cleared (Bani New)</div>
+        <div class="metric-val">₹${baniRowNew ? (baniRowNew.billsClrBDO || '31.462') : '31.462'} L</div>
+        <div class="metric-sub">Try Cleared: ₹${baniRowNew ? baniRowNew.billsClrTreasury : '20.39'} L + Pending: ₹${baniRowNew ? baniRowNew.balTreasury : '11.072'} L</div>
       </div>
 
       <div class="metric-card metric-card-teal">
-        <div class="metric-title">Ongoing Works (Bani)</div>
-        <div class="metric-val">${baniRowOngoing ? baniRowOngoing.completedWorks : '4'} / 4</div>
-        <div class="metric-sub">₹${baniRowOngoing ? baniRowOngoing.billsClrTreasury : '3.38'} L 100% Cleared</div>
+        <div class="metric-title">Treasury Cleared (Bani New)</div>
+        <div class="metric-val">₹${baniRowNew ? baniRowNew.billsClrTreasury : '20.39'} L</div>
+        <div class="metric-sub">Ongoing Try Cleared: ₹${baniRowOngoing ? baniRowOngoing.billsClrTreasury : '3.38'} L</div>
       </div>
 
       <div class="metric-card" style="background: linear-gradient(135deg, #090e17 0%, #111827 50%, #1e293b 100%) !important; color: #ffffff !important; border: 1.5px solid #334155 !important;">
-        <div class="metric-title" style="color: #94a3b8 !important;">BALANCE AT BDO (BANI)</div>
-        <div class="metric-val" style="color: #38bdf8 !important;">₹${baniRowNew ? baniRowNew.balBDO : '14.09'} L</div>
-        <div class="metric-sub" style="color: #cbd5e1 !important;">Bills in pipeline for payment</div>
+        <div class="metric-title" style="color: #94a3b8 !important;">BALANCE PENDING AT TREASURY</div>
+        <div class="metric-val" style="color: #38bdf8 !important;">₹${baniRowNew ? baniRowNew.balTreasury : '11.072'} L</div>
+        <div class="metric-sub" style="color: #cbd5e1 !important;">Bal. at BDO: ₹${baniRowNew ? (baniRowNew.balBDO || '0.00') : '0.00'} L</div>
       </div>
     </div>
   `;
@@ -20677,14 +20684,17 @@ function getGoogleSheetDistrictCapexMetrics() {
   const newTreasuryExpdt = 0.000;
 
   // Bills tracking for New Works (Sheet 3)
-  const newBillsSubmittedXEN = baniRowNew ? (parseFloat(baniRowNew.billsSubXEN) || 34.480) : 34.480;
-  const newBillsClearedXEN = baniRowNew ? (parseFloat(baniRowNew.billsClrXEN) || 34.480) : 34.480;
-  const newBillsClearedBDO = baniRowNew ? (parseFloat(baniRowNew.billsClrBDO) || 20.390) : 20.390;
+  const newBillsSubmittedXEN = baniRowNew ? (parseFloat(baniRowNew.billsSubXEN) || 67.402) : 67.402;
+  const newBillsClearedXEN = baniRowNew ? (parseFloat(baniRowNew.billsClrXEN) || 67.402) : 67.402;
   const newBillsClearedTreasury = baniRowNew ? (parseFloat(baniRowNew.billsClrTreasury) || 20.390) : 20.390;
+  const newPendingTreasury = baniRowNew ? (parseFloat(baniRowNew.balTreasury) || 11.072) : 11.072;
+  const newPendingBDO = baniRowNew ? (parseFloat(baniRowNew.balBDO) || 0.000) : 0.000;
   const newPendingXEN = baniRowNew ? (parseFloat(baniRowNew.balXEN) || 0.000) : 0.000;
-  const newPendingBDO = baniRowNew ? (parseFloat(baniRowNew.balBDO) || 14.090) : 14.090;
-  const newPendingTreasury = baniRowNew ? (parseFloat(baniRowNew.balTreasury) || 0.000) : 0.000;
-  const newRemarks = baniRowNew ? (baniRowNew.remarks || '20 work under PRI and 7 under DDC Physically completed') : '20 work under PRI and 7 under DDC Physically completed';
+  // User's Core Formula: Bills Cleared at Treasury Level + Balance Pending at Treasury Level = Bills Cleared at BDO Level
+  const newBillsClearedBDO = (baniRowNew && parseFloat(baniRowNew.billsClrBDO))
+    ? parseFloat(baniRowNew.billsClrBDO)
+    : (newBillsClearedTreasury + newPendingTreasury);
+  const newRemarks = baniRowNew ? (baniRowNew.remarks || '20 work under PRI and 7 under DDC Physically completed and expenditure Booked on BDO Level 15.82') : '20 work under PRI and 7 under DDC Physically completed and expenditure Booked on BDO Level 15.82';
 
   // Table 1: Meeting New Works
   const meetingNonConstApproved = baniRowMeetingNew ? (parseInt(baniRowMeetingNew.nonConstApproved) || 0) : 0;
