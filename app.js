@@ -23762,9 +23762,14 @@ function renderTreasuryAuditLedgerView() {
                       </div>
                     </td>
 
-                    <!-- XEN Bill Amount -->
-                    <td class="p-3 text-right font-mono font-bold text-slate-700 bg-slate-50/50">
-                      ₹${Number(l.xenAmount || l.bookedAmount || 0).toFixed(3)}
+                    <!-- XEN Bill Amount (1-Click Edit Modal) -->
+                    <td class="p-3 text-right font-mono font-bold text-slate-800 bg-blue-50/50 cursor-pointer hover:bg-blue-100/90 transition-all group"
+                        onclick="openEditLedgerBillModal('${l.id || l.workCode}', '${l.workCode}', '${l.category}', ${Number(l.xenAmount || l.bookedAmount || 0)}, ${Number(l.bookedAmount || 0)}, '${l.submitDate || ''}')"
+                        title="Click to edit actual XEN passed bill amount & details">
+                      <span class="inline-flex items-center gap-1.5 justify-end">
+                        <span class="text-blue-950 font-black">₹${Number(l.xenAmount || l.bookedAmount || 0).toFixed(3)}</span>
+                        <i class="fa-solid fa-pencil text-[9.5px] text-blue-600 opacity-60 group-hover:opacity-100 group-hover:scale-125 transition-all"></i>
+                      </span>
                     </td>
 
                     <!-- Booked in Treasury -->
@@ -24094,6 +24099,177 @@ window.onTreasuryBookSchemeChange = function(scheme) {
   resetWorkSelection();
   filterBookWorkDropdown('');
 };
+
+// 1-Click Modal to Edit Individual Work's XEN Certified Bill & Booked Details
+function openEditLedgerBillModal(ledgerId, workCode, category, currentXenAmt, currentBookedAmt, currentSubmitDate) {
+  const existing = document.getElementById('ledger-bill-edit-modal');
+  if (existing) existing.remove();
+
+  const allWorks = getAllTreasuryWorks();
+  const w = allWorks.find(item => item.workCode === workCode && item._category === category)
+         || allWorks.find(item => item.workCode === workCode) || {};
+
+  const xAmt = currentXenAmt !== undefined ? Number(currentXenAmt).toFixed(3) : '0.000';
+  const bAmt = currentBookedAmt !== undefined ? Number(currentBookedAmt).toFixed(3) : '0.000';
+  const sDate = currentSubmitDate || new Date().toISOString().split('T')[0];
+
+  const modalHtml = `
+    <div id="ledger-bill-edit-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fadeIn">
+      <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden animate-scaleIn">
+        <div class="bg-gradient-to-r from-blue-700 via-indigo-800 to-slate-900 text-white p-4.5 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-cyan-300">
+              <i class="fa-solid fa-pen-to-square text-base"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-black tracking-tight">Edit Bill Details & XEN Certified Amount</h3>
+              <p class="text-[10.5px] text-blue-200 font-semibold">${w._schemeLabel || 'Capex'} • MPR S.No: ${w._schemeSno || '-'}</p>
+            </div>
+          </div>
+          <button onclick="document.getElementById('ledger-bill-edit-modal').remove()" class="w-7 h-7 rounded-lg bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-xs cursor-pointer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="p-5 space-y-4">
+          <!-- Work Summary Info -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded font-mono font-bold text-xs bg-blue-100 text-blue-900 border border-blue-200">${workCode}</span>
+              <span class="text-xs font-semibold text-slate-600"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i>${w.panchayat || ''}</span>
+            </div>
+            <div class="text-xs font-bold text-slate-800 leading-snug pt-0.5">${w.name || ''}</div>
+          </div>
+
+          <div class="p-2.5 bg-blue-50/60 rounded-xl border border-blue-200 text-xs text-blue-950 font-medium leading-relaxed">
+            <i class="fa-solid fa-info-circle text-blue-600 mr-1"></i>
+            Aap yahan actual <strong>XEN passed bill amount</strong> aur <strong>Treasury booked amount</strong> ko direct edit karke correct kar sakte hain. Ye data turant Ledger aur MPR Sheet dono me update ho jayega.
+          </div>
+
+          <!-- Edit Inputs -->
+          <div class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1">
+                  <i class="fa-solid fa-file-invoice text-indigo-600"></i>
+                  <span>XEN Certified Bill Amt (₹ Lakhs):</span>
+                </label>
+                <input type="number" step="0.001" id="edit-ledger-xen-amt" value="${xAmt}" class="w-full p-2.5 rounded-xl border-2 border-indigo-300 font-mono font-black text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 bg-white" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1">
+                  <i class="fa-solid fa-building-columns text-amber-600"></i>
+                  <span>Amount Booked in Try (₹ Lakhs):</span>
+                </label>
+                <input type="number" step="0.001" id="edit-ledger-booked-amt" value="${bAmt}" class="w-full p-2.5 rounded-xl border-2 border-amber-400 font-mono font-black text-xs text-slate-900 focus:ring-2 focus:ring-amber-500 bg-amber-50/30" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1">
+                <i class="fa-solid fa-calendar-day text-blue-600"></i>
+                <span>Submission Date to Treasury:</span>
+              </label>
+              <input type="date" id="edit-ledger-submit-date" value="${sDate}" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+            <button onclick="document.getElementById('ledger-bill-edit-modal').remove()" class="px-3.5 py-2 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-100 cursor-pointer">Cancel</button>
+            <button onclick="
+              const nx = parseFloat(document.getElementById('edit-ledger-xen-amt').value);
+              const nb = parseFloat(document.getElementById('edit-ledger-booked-amt').value);
+              const nd = document.getElementById('edit-ledger-submit-date').value;
+              if (isNaN(nx) || nx < 0) { alert('Please enter a valid XEN Bill Amount!'); return; }
+              if (isNaN(nb) || nb < 0) { alert('Please enter a valid Booked Amount!'); return; }
+              saveEditLedgerBill('${ledgerId}', '${workCode}', '${category}', nx, nb, nd);
+              document.getElementById('ledger-bill-edit-modal').remove();
+            " class="px-4.5 py-2.5 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer transition-all hover:scale-105 active:scale-95">
+              <i class="fa-solid fa-floppy-disk"></i> Save & Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function saveEditLedgerBill(ledgerId, workCode, category, newXenAmt, newBookedAmt, newSubmitDate) {
+  if (!state || !state.db) return;
+
+  // 1. Update Ledger entry
+  const ledger = getTreasuryLedgerRecords();
+  const entry = ledger.find(l => (l.id && l.id === ledgerId) || (l.workCode === workCode));
+  if (entry) {
+    entry.xenAmount = Number(newXenAmt);
+    entry.bookedAmount = Number(newBookedAmt);
+    if (newSubmitDate) entry.submitDate = newSubmitDate;
+  }
+
+  // 2. Update Work record in DB
+  let cat = category;
+  if (!cat || !state.db[cat]) {
+    for (const k of ['priNew', 'ddcWorks', 'bdcWorks', 'stWorks', 'apdpWorks', 'priOngoing', 'mlaWorks']) {
+      if (Array.isArray(state.db[k]) && state.db[k].some(item => item.workCode === workCode || item.code === workCode)) {
+        cat = k;
+        break;
+      }
+    }
+  }
+
+  let workObj = null;
+  if (cat && state.db[cat]) {
+    workObj = state.db[cat].find(item => item.workCode === workCode || item.code === workCode);
+    if (workObj) {
+      workObj.xenBillsAmount = Number(newXenAmt);
+      if (!entry || entry.status === 'PENDING') {
+        workObj.expdtBookedTreasury = Number(newBookedAmt);
+      }
+      // Push live update to Google Sheet
+      pushWorkToGoogleSheet('update', workObj, cat);
+    }
+  }
+
+  // 3. Recalculate scheme total in state.db.xenSchemeBills
+  if (workObj) {
+    let schemeKey = 'new_' + (workObj.scheme || '').toLowerCase().trim();
+    if (cat === 'priOngoing' || (workObj.type && workObj.type.toLowerCase().includes('ongoing'))) {
+      schemeKey = 'ongoing_pri';
+    } else if (cat === 'ddcWorks') schemeKey = 'new_ddc';
+    else if (cat === 'bdcWorks') schemeKey = 'new_bdc';
+    else if (cat === 'stWorks') schemeKey = 'new_st';
+    else if (cat === 'apdpWorks') schemeKey = 'new_apdp';
+    else if (cat === 'priNew') schemeKey = 'new_pri';
+
+    state.db.xenSchemeBills = state.db.xenSchemeBills || {};
+    // Sum all xenAmount for this scheme in the ledger
+    const schemeEntries = ledger.filter(l => {
+      if (schemeKey === 'ongoing_pri') return l.category === 'priOngoing';
+      if (schemeKey === 'new_pri') return l.category === 'priNew' || (l.scheme === 'PRI' && l.category !== 'priOngoing');
+      if (schemeKey === 'new_ddc') return l.scheme === 'DDC';
+      if (schemeKey === 'new_bdc') return l.scheme === 'BDC';
+      if (schemeKey === 'new_st') return l.scheme === 'ST';
+      if (schemeKey === 'new_apdp') return l.scheme === 'APDP';
+      return false;
+    });
+    if (schemeEntries.length > 0) {
+      const totXen = schemeEntries.reduce((s, l) => s + (Number(l.xenAmount) || 0), 0);
+      state.db.xenSchemeBills[schemeKey] = state.db.xenSchemeBills[schemeKey] || { count: schemeEntries.length, amount: 0 };
+      state.db.xenSchemeBills[schemeKey].amount = totXen;
+      state.db.xenSchemeBills[schemeKey].count = schemeEntries.length;
+    }
+  }
+
+  // 4. Save and refresh
+  saveData();
+  refreshCurrentView();
+  if (typeof showToast === 'function') {
+    showToast('Bill details updated: XEN ₹' + Number(newXenAmt).toFixed(3) + ' L, Booked ₹' + Number(newBookedAmt).toFixed(3) + ' L. Google Sheet synced live.', 'success');
+  }
+}
+
 if (typeof window !== "undefined") {
   window.openXenBillsModal = openXenBillsModal;
   window.saveXenBillsData = saveXenBillsData;
@@ -24109,5 +24285,7 @@ if (typeof window !== "undefined") {
   window.confirmClearTreasuryBillWithDate = confirmClearTreasuryBillWithDate;
   window.renderTreasuryAuditLedgerView = renderTreasuryAuditLedgerView;
   window.setTreasuryLedgerStatusFilter = setTreasuryLedgerStatusFilter;
+  window.openEditLedgerBillModal = openEditLedgerBillModal;
+  window.saveEditLedgerBill = saveEditLedgerBill;
   window.exportTreasuryLedgerExcel = exportTreasuryLedgerExcel;
 }
