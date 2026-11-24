@@ -571,6 +571,7 @@ function loadData() {
       if (window.BDO_INITIAL_DATA && window.BDO_INITIAL_DATA.mlaWorks2026) {
         state.db.mlaWorks2026 = JSON.parse(JSON.stringify(window.BDO_INITIAL_DATA.mlaWorks2026));
       }
+      saveData();
       console.log('Loaded database from localStorage');
     } catch (e) {
       console.error('Error parsing saved database, resetting to initial', e);
