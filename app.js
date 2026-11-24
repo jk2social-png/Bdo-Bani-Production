@@ -22607,6 +22607,21 @@ function getAllTreasuryWorks() {
 
 function setTreasuryHubTab(tabName) {
   window.treasuryHubState.activeTab = tabName;
+  const tabMap = {
+    'pending': 'treasury_pending',
+    'cleared': 'treasury_cleared',
+    'book_new': 'treasury_book_new',
+    'ledger': 'treasury_ledger'
+  };
+  const subTabId = tabMap[tabName] || 'treasury_pending';
+  state.currentTab = subTabId;
+  document.querySelectorAll('#sub-nav-buttons .tab-btn').forEach(btn => {
+    if (btn.dataset.tab === subTabId) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
   const container = document.getElementById('main-content');
   if (container) renderTreasuryBillHub(container);
 }
@@ -22658,6 +22673,17 @@ function clearTreasuryBill(workCode, category, customAmount) {
   const allot = Number(w.allotmentCost) || 0;
   w.savings = Math.max(0, allot - w.actualExpdtTotal);
 
+  // 4. Sync Ledger entry
+  try {
+    const ledger = getTreasuryLedgerRecords();
+    let entry = ledger.find(l => (l.workCode === workCode) && l.status === 'PENDING');
+    if (entry) {
+      entry.status = 'CLEARED';
+      entry.clearDate = entry.clearDate || (new Date().toISOString().split('T')[0]);
+      entry.clearedAmount = clearAmt;
+    }
+  } catch(e) {}
+
   // 4. Save to local storage and memory
   saveData();
 
@@ -22678,6 +22704,14 @@ function rejectTreasuryBill(workCode, category) {
   const bookedAmt = Number(w.expdtBookedTreasury) || 0;
   if (confirm(`Are you sure you want to REJECT / RETURN this bill of ₹${bookedAmt.toFixed(3)} L for "${(w.name || '').substring(0, 35)}..."? The booked amount will be cleared without adding to expenditure.`)) {
     w.expdtBookedTreasury = 0;
+    try {
+      const ledger = getTreasuryLedgerRecords();
+      let entry = ledger.find(l => (l.workCode === workCode) && l.status === 'PENDING');
+      if (entry) {
+        entry.status = 'REJECTED';
+        entry.clearDate = new Date().toISOString().split('T')[0];
+      }
+    } catch(e) {}
     saveData();
     pushWorkToGoogleSheet('update', w, category);
     refreshCurrentView();
@@ -22785,6 +22819,16 @@ function revertClearedBillToBooked(workCode, category, amount) {
     const cumml0326 = Number(w.cummlExpdtEnding0326) || 0;
     w.cummlExpdt = cumml0326 + w.actualExpdtTotal;
     w.expdtBookedTreasury = (Number(w.expdtBookedTreasury) || 0) + revertAmt;
+
+    try {
+      const ledger = getTreasuryLedgerRecords();
+      let entry = ledger.find(l => (l.workCode === workCode) && l.status === 'CLEARED');
+      if (entry) {
+        entry.status = 'PENDING';
+        entry.clearDate = null;
+      }
+    } catch(e) {}
+
 
     saveData();
     pushWorkToGoogleSheet('update', w, category);
@@ -23292,11 +23336,11 @@ function renderTreasuryBillsTable(list, activeTab) {
                     ${isPendingView ? `
                       <div class="flex items-center justify-center gap-1">
                         <!-- 1-Click Clear / Pass Bill -->
-                        <button onclick="clearTreasuryBill('${w.workCode}', '${w._category}')" title="Pass / Clear Bill into Expenditure" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-xs transition-transform active:scale-95 cursor-pointer">
-                          <i class="fa-solid fa-check"></i> Pass Bill
+                        <button onclick="openBillClearanceDateModal('${w.workCode}', '${w._category}')" title="Pass / Clear Bill with Date & Voucher into Expenditure" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-xs transition-transform active:scale-95 cursor-pointer">
+                          <i class="fa-solid fa-calendar-check"></i> Pass Bill
                         </button>
-                        <!-- Custom Amount / Partial Clear -->
-                        <button onclick="openCustomClearanceModal('${w.workCode}', '${w._category}')" title="Partial Clearance / Custom Amount" class="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs transition-colors cursor-pointer">
+                        <!-- Custom Amount / Partial Clear with Date -->
+                        <button onclick="openBillClearanceDateModal('${w.workCode}', '${w._category}')" title="Partial Clearance & Clearance Date" class="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs transition-colors cursor-pointer">
                           <i class="fa-solid fa-pen-to-square"></i>
                         </button>
                         <!-- Reject / Return Bill -->
@@ -23959,6 +24003,10 @@ function renderTreasuryBillHub(container) {
             <button onclick="setTreasuryHubTab('book_new')" class="px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all cursor-pointer ${tState.activeTab === 'book_new' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
               <i class="fa-solid fa-plus-circle"></i>
               <span>Book New Bill to Treasury</span>
+            </button>
+            <button onclick="setTreasuryHubTab('ledger')" class="px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all cursor-pointer ${tState.activeTab === 'ledger' ? 'bg-purple-700 text-white shadow-md shadow-purple-700/30' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+              <i class="fa-solid fa-book-bookmark"></i>
+              <span>Treasury Bill Register & Audit Ledger</span>
             </button>
           </div>
 
