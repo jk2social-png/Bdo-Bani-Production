@@ -22645,9 +22645,17 @@ function setTreasurySearchQuery(q) {
 }
 
 function clearTreasuryBill(workCode, category, customAmount) {
-  if (!state.db || !category) return;
-  const list = state.db[category] || [];
-  const w = list.find(item => (item.workCode === workCode) || (item.code === workCode));
+  if (!state.db) return;
+  let list = (category && state.db[category]) ? state.db[category] : [];
+  let w = list.find(item => (item.workCode === workCode) || (item.code === workCode));
+  if (!w) {
+    for (const k of ['priNew', 'ddcWorks', 'bdcWorks', 'stWorks', 'apdpWorks', 'priOngoing', 'mlaWorks', 'mlaWorks2026']) {
+      if (Array.isArray(state.db[k])) {
+        w = state.db[k].find(item => (item.workCode === workCode) || (item.code === workCode));
+        if (w) { category = k; break; }
+      }
+    }
+  }
   if (!w) {
     showToast('Work record not found in database!', 'error');
     return;
@@ -23527,9 +23535,17 @@ function openBillClearanceDateModal(workCode, category, defaultAmount) {
 }
 
 function confirmClearTreasuryBillWithDate(workCode, category, clearAmount, clearDate, voucherNo) {
-  if (!state.db || !category) return;
-  const list = state.db[category] || [];
-  const w = list.find(item => (item.workCode === workCode) || (item.code === workCode));
+  if (!state.db) return;
+  let list = (category && state.db[category]) ? state.db[category] : [];
+  let w = list.find(item => (item.workCode === workCode) || (item.code === workCode));
+  if (!w) {
+    for (const k of ['priNew', 'ddcWorks', 'bdcWorks', 'stWorks', 'apdpWorks', 'priOngoing', 'mlaWorks', 'mlaWorks2026']) {
+      if (Array.isArray(state.db[k])) {
+        w = state.db[k].find(item => (item.workCode === workCode) || (item.code === workCode));
+        if (w) { category = k; break; }
+      }
+    }
+  }
   if (!w) return;
 
   const bookedAmt = Number(w.expdtBookedTreasury) || 0;
