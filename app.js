@@ -2918,7 +2918,7 @@ function renderBDCTable(container) {
           <tbody>
             ${rows}
             <tr class="total-row">
-              <td colspan="10" class="text-right font-bold uppercase">Total BDC:</td>
+              <td colspan="9" class="text-right font-bold uppercase">Total BDC:</td>
               <td class="text-right font-bold">${sums.tenderedCost.toFixed(3)}</td>
               <td colspan="5"></td>
               <td class="text-right font-bold">${sums.origCost.toFixed(3)}</td>
@@ -23172,59 +23172,36 @@ function renderBookNewBillForm(allWorks, initialQuery) {
           <input type="hidden" id="book-new-work-select" value="" />
         </div>
 
-        <!-- Submission Date to Treasury -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-          <div>
-            <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1.5">
-              <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[11px] font-bold">📅</span>
-              <span>Submission Date to Treasury:</span>
-            </label>
-            <input type="date" id="book-new-submit-date" value="${new Date().toISOString().split('T')[0]}" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
-          </div>
-          <div>
-            <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1.5">
-              <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-bold">#</span>
-              <span>BEAMS / Treasury Token Ref (Optional):</span>
-            </label>
-            <input type="text" id="book-new-token-input" placeholder="e.g. BEAMS-2026-BANI-104" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
-          </div>
-        </div>
-
-        <!-- Step 3: XEN REW Kathua Bill Details -->
-        <div class="p-3.5 bg-blue-50/50 rounded-xl border border-blue-200 space-y-2.5">
+        <!-- Step 3: Direct Bill Entry Details -->
+        <div class="p-4 bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-amber-50/60 rounded-xl border border-blue-200 space-y-3">
           <label class="text-xs font-black text-blue-950 flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[11px] font-bold">3</span>
-            <span>From XEN REW Kathua Details:</span>
+            <span class="w-5 h-5 rounded-full bg-blue-700 text-white flex items-center justify-center text-[11px] font-bold">3</span>
+            <span>Enter Bill Details:</span>
           </label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label class="block text-[11px] font-bold text-slate-700 mb-1">XEN Bill Amount (₹ In Lakhs):</label>
-              <input type="number" step="0.001" id="book-new-xen-amt-input" placeholder="e.g. 1.000" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+              <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1">
+                <i class="fa-solid fa-calendar-day text-blue-600 text-[11px]"></i>
+                <span>Submission Date to Treasury:</span>
+              </label>
+              <input type="date" id="book-new-submit-date" value="${new Date().toISOString().split('T')[0]}" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-900 focus:ring-2 focus:ring-blue-500 bg-white" />
             </div>
+
             <div>
-              <label class="block text-[11px] font-bold text-slate-700 mb-1">No. of Bills Received:</label>
-              <input type="number" id="book-new-xen-count-input" value="1" min="1" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+              <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1">
+                <i class="fa-solid fa-file-invoice text-indigo-600 text-[11px]"></i>
+                <span>XEN Passed Bill Amount (₹ Lakhs):</span>
+              </label>
+              <input type="number" step="0.001" id="book-new-xen-amt-input" placeholder="e.g. 1.000" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-900 focus:ring-2 focus:ring-blue-500 bg-white" />
             </div>
-          </div>
-        </div>
 
-        <!-- Step 4: Amount to Book in Treasury & Token Reference -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-          <div>
-            <label class="block text-xs font-black text-slate-700 mb-1.5 flex items-center gap-1.5">
-              <span class="w-5 h-5 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center text-[11px] font-black">4</span>
-              <span>Amount to Book in Try (₹ In Lakhs):</span>
-            </label>
-            <input type="number" step="0.001" id="book-new-amount-input" placeholder="e.g. 0.900" class="w-full p-2.5 rounded-xl border-2 border-amber-400 font-mono font-black text-xs text-slate-900 focus:ring-2 focus:ring-amber-500 bg-amber-50/20" />
-            <span class="text-[10px] text-slate-500 mt-1 block">Books in Treasury Tracker & syncs to MPR Capex Sheet.</span>
-          </div>
-
-          <div>
-            <label class="block text-xs font-black text-slate-700 mb-1.5 flex items-center gap-1.5">
-              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-[11px] font-bold">5</span>
-              <span>Token / Bill Ref. No. (Optional):</span>
-            </label>
-            <input type="text" id="book-new-token-input" placeholder="e.g. BEAMS-2026-BANI-104" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+            <div>
+              <label class="block text-xs font-black text-slate-900 mb-1 flex items-center gap-1">
+                <i class="fa-solid fa-building-columns text-amber-600 text-[11px]"></i>
+                <span>Amount to Book in Try (₹ Lakhs):</span>
+              </label>
+              <input type="number" step="0.001" id="book-new-amount-input" placeholder="e.g. 0.900" class="w-full p-2.5 rounded-xl border-2 border-amber-400 font-mono font-black text-xs text-slate-950 focus:ring-2 focus:ring-amber-500 bg-amber-50/40" />
+            </div>
           </div>
         </div>
 
@@ -23236,10 +23213,8 @@ function renderBookNewBillForm(allWorks, initialQuery) {
             const [wCode, cat] = sel.split('||');
             const amt = document.getElementById('book-new-amount-input').value;
             const xenAmt = document.getElementById('book-new-xen-amt-input') ? document.getElementById('book-new-xen-amt-input').value : amt;
-            const xenCount = document.getElementById('book-new-xen-count-input') ? document.getElementById('book-new-xen-count-input').value : 1;
             const sDate = document.getElementById('book-new-submit-date') ? document.getElementById('book-new-submit-date').value : '';
-            const tNo = document.getElementById('book-new-token-input') ? document.getElementById('book-new-token-input').value.trim() : '';
-            bookTreasuryBill(wCode, cat, amt, xenAmt, xenCount, sDate, tNo);
+            bookTreasuryBill(wCode, cat, amt, xenAmt, 1, sDate, '');
           " class="px-5 py-2.5 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95">
             <i class="fa-solid fa-floppy-disk"></i> Submit & Book Bill to Treasury
           </button>
@@ -23528,10 +23503,7 @@ function openBillClearanceDateModal(workCode, category, defaultAmount) {
               </div>
             </div>
 
-            <div>
-              <label class="block text-xs font-black text-slate-700 mb-1">Treasury Voucher / Ref No. (Optional):</label>
-              <input type="text" id="clearance-modal-voucher-input" placeholder="e.g. TV-BANI-2026-108" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:ring-2 focus:ring-emerald-500 bg-white" />
-            </div>
+            
           </div>
 
           <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
@@ -23539,7 +23511,7 @@ function openBillClearanceDateModal(workCode, category, defaultAmount) {
             <button onclick="
               const dateVal = document.getElementById('clearance-modal-date-input').value || '${todayYMD}';
               const amtVal = parseFloat(document.getElementById('clearance-modal-amt-input').value);
-              const vouchVal = document.getElementById('clearance-modal-voucher-input').value.trim();
+              const vouchVal = '';
               if (isNaN(amtVal) || amtVal <= 0) { alert('Please enter a valid cleared amount!'); return; }
               confirmClearTreasuryBillWithDate('${w.workCode}', '${w._category}', amtVal, dateVal, vouchVal);
               document.getElementById('treasury-clearance-date-modal').remove();
@@ -23745,7 +23717,7 @@ function renderTreasuryAuditLedgerView() {
                 <th class="p-3 text-right">Booked Try (₹ L)</th>
                 <th class="p-3 text-center">Submission Date</th>
                 <th class="p-3 text-center">Clearance Date</th>
-                <th class="p-3 text-center">Token / Ref No.</th>
+                
                 <th class="p-3 text-center w-28">Status</th>
                 <th class="p-3 text-center w-24">Action</th>
               </tr>
@@ -23818,11 +23790,7 @@ function renderTreasuryAuditLedgerView() {
                       `}
                     </td>
 
-                    <!-- Token / Voucher Ref -->
-                    <td class="p-3 text-center font-mono text-[11px] font-semibold text-slate-600">
-                      ${l.voucherNo ? ('<div class="text-emerald-800 font-bold">' + l.voucherNo + '</div>') : ''}
-                      <div class="text-slate-500">${l.tokenNo || '—'}</div>
-                    </td>
+                    
 
                     <!-- Status Badge -->
                     <td class="p-3 text-center">
