@@ -400,6 +400,32 @@ function loadData() {
       healCapexStatuses(state.db);
       saveData();
 
+      // Auto-heal priOngoing to match official MPR Capex Google Sheet (0.00 Booked in Treasury, 3.38 Actual Expdt)
+      if (state.db && Array.isArray(state.db.priOngoing)) {
+        state.db.priOngoing.forEach(w => {
+          if (w.workCode === 'RDDDC2526107291') {
+            w.allotmentCost = 1.94; w.fundsReleased = 0.24; w.actualExpdtAllotment = 0.24; w.actualExpdtTotal = 0.24; w.cummlExpdt = 1.93; w.expdtBookedTreasury = 0;
+          } else if (w.workCode === 'RDDDC2526107508') {
+            w.allotmentCost = 8.70; w.fundsReleased = 2.00; w.actualExpdtAllotment = 1.45; w.actualExpdtTotal = 1.45; w.cummlExpdt = 6.16; w.expdtBookedTreasury = 0;
+          } else if (w.workCode === 'RDDDC2526107717') {
+            w.allotmentCost = 3.44; w.fundsReleased = 1.56; w.actualExpdtAllotment = 1.35; w.actualExpdtTotal = 1.35; w.cummlExpdt = 3.24; w.expdtBookedTreasury = 0;
+          } else if (w.workCode === 'RDDDC2526107778') {
+            w.allotmentCost = 1.19; w.fundsReleased = 0.34; w.actualExpdtAllotment = 0.34; w.actualExpdtTotal = 0.34; w.cummlExpdt = 3.31; w.expdtBookedTreasury = 0;
+          }
+        });
+      }
+
+      // Auto-heal treasuryLedger for RDDDC2526107508 (Dharamshalla at Bhaduar) so it is CLEARED not PENDING
+      if (state.db && Array.isArray(state.db.treasuryLedger)) {
+        const l2 = state.db.treasuryLedger.find(l => l.workCode === 'RDDDC2526107508');
+        if (l2) {
+          l2.status = 'CLEARED';
+          l2.clearDate = l2.clearDate || '2026-11-20';
+          l2.bookedAmount = 1.45;
+          l2.clearedAmount = 1.45;
+        }
+      }
+
       // Auto-heal shifted/corrupted BDC or APDP records if loaded from old cache
       if (state.db && state.db.bdcWorks) {
         state.db.bdcWorks.forEach(w => {
