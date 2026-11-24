@@ -3974,6 +3974,8 @@ function renderDailyBaniFinRows(sec, secLetter, secTitle, filterCapex = false) {
 
 function renderMeetingAbstract(container) {
   if (typeof healCapexStatuses === 'function' && state && state.db) { healCapexStatuses(state.db); }
+  const fullSheet1 = typeof getSheet1DailyBaniData === 'function' ? getSheet1DailyBaniData() : ((typeof window !== 'undefined' && window.sheet1DailyBaniBaselineData) ? window.sheet1DailyBaniBaselineData : null);
+  const finData = fullSheet1 && fullSheet1.financial ? fullSheet1.financial : ((typeof window !== 'undefined' && window.sheet1DailyBaniBaselineData) ? window.sheet1DailyBaniBaselineData.financial : null);
   const isPytFiltered = state.selectedPanchayat && state.selectedPanchayat !== 'ALL';
   const filterByPyt = list => {
     let res = list || [];
