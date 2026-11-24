@@ -665,6 +665,10 @@ function switchTab(tabId) {
   }
 
   state.currentTab = tabId;
+  if (tabId === 'treasury_pending') { window.treasuryHubState.activeTab = 'pending'; }
+  else if (tabId === 'treasury_cleared') { window.treasuryHubState.activeTab = 'cleared'; }
+  else if (tabId === 'treasury_book_new') { window.treasuryHubState.activeTab = 'book_new'; }
+  else if (tabId === 'treasury_ledger') { window.treasuryHubState.activeTab = 'ledger'; }
 
   // Sync sub-nav button classes
   document.querySelectorAll('#sub-nav-buttons .tab-btn').forEach(btn => {
@@ -816,6 +820,7 @@ function refreshCurrentView() {
     case 'treasury_pending':
     case 'treasury_cleared':
     case 'treasury_book_new':
+    case 'treasury_ledger':
     case 'treasury_hub':
       renderTreasuryBillHub(mainContent);
       break;
@@ -888,7 +893,8 @@ const SCHEME_SUB_NAV = {
     items: [
       { id: 'treasury_pending', label: 'Pending Bills in Treasury', icon: 'fa-clock-rotate-left' },
       { id: 'treasury_cleared', label: 'Cleared Bills History', icon: 'fa-circle-check' },
-      { id: 'treasury_book_new', label: 'Book New Bill to Treasury', icon: 'fa-plus-circle' }
+      { id: 'treasury_book_new', label: 'Book New Bill to Treasury', icon: 'fa-plus-circle' },
+      { id: 'treasury_ledger', label: 'Treasury Bill Register & Audit Ledger', icon: 'fa-book-bookmark', badge: 'Ledger' }
     ]
   },
   'custom_report': {
@@ -4235,9 +4241,25 @@ function renderDailyBaniFinRows(sec, secLetter, secTitle, filterCapex = false) {
         <!-- Actual Exped. -->
         <td class="px-2 py-1.5 text-center font-bold text-slate-700" style="border: 1px solid #cbd5e1 !important;">${it.actualClrCount || '0'}</td>
         <td class="px-2 py-1.5 text-center font-bold text-emerald-900" style="border: 1px solid #cbd5e1 !important;">${it.actualClrAmt || '0'}</td>
-        <!-- Booked in Treasury (Pending) -->
-        <td class="px-2 py-1.5 text-center font-bold text-slate-600" style="border: 1px solid #cbd5e1 !important;">${it.tryPendingCount || '0'}</td>
-        <td class="px-2 py-1.5 text-center font-bold text-amber-900" style="border: 1px solid #cbd5e1 !important;">${it.tryPendingAmt || '0'}</td>
+        <!-- Booked in Treasury (Pending with 1-Click Trace to Ledger) -->
+        <td class="px-2 py-1.5 text-center font-bold text-slate-600 cursor-pointer hover:bg-amber-100/80 transition-colors group" 
+            onclick="viewTreasuryLedgerForScheme('${xenSchemeKey}', '${escapeHtml(it.component || '')}')" 
+            title="Click to view work-wise pending bills & MPR S# for ${escapeHtml(it.component || '')}" 
+            style="border: 1px solid #cbd5e1 !important;">
+          <span class="inline-flex items-center gap-1">
+            ${it.tryPendingCount || '0'}
+            ${it.tryPendingCount > 0 ? '<i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-amber-600 opacity-60 group-hover:opacity-100"></i>' : ''}
+          </span>
+        </td>
+        <td class="px-2 py-1.5 text-center font-bold text-amber-900 cursor-pointer hover:bg-amber-100/80 transition-colors group" 
+            onclick="viewTreasuryLedgerForScheme('${xenSchemeKey}', '${escapeHtml(it.component || '')}')" 
+            title="Click to view work-wise pending bills & MPR S# for ${escapeHtml(it.component || '')}" 
+            style="border: 1px solid #cbd5e1 !important;">
+          <span class="inline-flex items-center gap-1">
+            ${it.tryPendingAmt || '0'}
+            ${Number(it.tryPendingAmt) > 0 ? '<i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-amber-600 opacity-60 group-hover:opacity-100"></i>' : ''}
+          </span>
+        </td>
         <!-- Budget / Outlay Columns -->
         <td class="px-2 py-1.5 text-center font-bold text-slate-800" style="border: 1px solid #cbd5e1 !important;">${it.approvedOutlay || '0'}</td>
         <td class="px-2 py-1.5 text-center font-bold text-slate-800" style="border: 1px solid #cbd5e1 !important;">${it.fundsReceived || '0'}</td>
@@ -22663,7 +22685,7 @@ function rejectTreasuryBill(workCode, category) {
   }
 }
 
-function bookTreasuryBill(workCode, category, amount, xenAmount, xenCount) {
+function bookTreasuryBill(workCode, category, amount, xenAmount, xenCount, submitDate, tokenNo) {
   const amt = parseFloat(amount);
   if (isNaN(amt) || amt <= 0) {
     showToast('Please enter a valid bill amount in Lakhs (e.g. 0.90)!', 'error');
@@ -22711,6 +22733,32 @@ function bookTreasuryBill(workCode, category, amount, xenAmount, xenCount) {
   }
   state.db.xenSchemeBills[schemeKey].count = (Number(state.db.xenSchemeBills[schemeKey].count) || 0) + xCount;
   state.db.xenSchemeBills[schemeKey].amount = (Number(state.db.xenSchemeBills[schemeKey].amount) || 0) + xAmt;
+
+  // Add entry into Treasury Audit Ledger
+  const ledger = getTreasuryLedgerRecords();
+  const subDateVal = submitDate || new Date().toISOString().split('T')[0];
+  ledger.unshift({
+    id: 'LEDGER-' + Date.now(),
+    workCode: w.workCode || w.code,
+    category: category,
+    scheme: w._shortScheme || w.scheme || 'CAPEX',
+    schemeLabel: w._schemeLabel || w.scheme,
+    mprSno: w._schemeSno || w.sno || 1,
+    workName: w.name,
+    panchayat: w.panchayat,
+    allotmentCost: Number(w.allotmentCost || 0),
+    fundsReleased: Number(w.fundsReleased || 0),
+    xenAmount: xAmt,
+    xenCount: xCount,
+    bookedAmount: amt,
+    submitDate: subDateVal,
+    clearDate: null,
+    status: 'PENDING',
+    tokenNo: tokenNo || ('BEAMS-26-' + (w._shortScheme || 'CP') + '-' + (w._schemeSno || 1)),
+    voucherNo: '',
+    clearedAmount: 0,
+    createdTime: new Date().toISOString()
+  });
 
   // 3. Save to localStorage
   saveData();
@@ -23080,6 +23128,24 @@ function renderBookNewBillForm(allWorks, initialQuery) {
           <input type="hidden" id="book-new-work-select" value="" />
         </div>
 
+        <!-- Submission Date to Treasury -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div>
+            <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[11px] font-bold">📅</span>
+              <span>Submission Date to Treasury:</span>
+            </label>
+            <input type="date" id="book-new-submit-date" value="${new Date().toISOString().split('T')[0]}" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+          </div>
+          <div>
+            <label class="block text-xs font-black text-slate-700 mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center text-[11px] font-bold">#</span>
+              <span>BEAMS / Treasury Token Ref (Optional):</span>
+            </label>
+            <input type="text" id="book-new-token-input" placeholder="e.g. BEAMS-2026-BANI-104" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+          </div>
+        </div>
+
         <!-- Step 3: XEN REW Kathua Bill Details -->
         <div class="p-3.5 bg-blue-50/50 rounded-xl border border-blue-200 space-y-2.5">
           <label class="text-xs font-black text-blue-950 flex items-center gap-1.5">
@@ -23127,7 +23193,9 @@ function renderBookNewBillForm(allWorks, initialQuery) {
             const amt = document.getElementById('book-new-amount-input').value;
             const xenAmt = document.getElementById('book-new-xen-amt-input') ? document.getElementById('book-new-xen-amt-input').value : amt;
             const xenCount = document.getElementById('book-new-xen-count-input') ? document.getElementById('book-new-xen-count-input').value : 1;
-            bookTreasuryBill(wCode, cat, amt, xenAmt, xenCount);
+            const sDate = document.getElementById('book-new-submit-date') ? document.getElementById('book-new-submit-date').value : '';
+            const tNo = document.getElementById('book-new-token-input') ? document.getElementById('book-new-token-input').value.trim() : '';
+            bookTreasuryBill(wCode, cat, amt, xenAmt, xenCount, sDate, tNo);
           " class="px-5 py-2.5 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95">
             <i class="fa-solid fa-floppy-disk"></i> Submit & Book Bill to Treasury
           </button>
@@ -23250,6 +23318,536 @@ function renderTreasuryBillsTable(list, activeTab) {
       </div>
     </div>
   `;
+}
+
+
+// ============================================================================
+// ADVANCED TREASURY BILL REGISTER & AUDIT LEDGER ENGINE
+// Tracks submission dates, clearance dates, MPR serial numbers, and XEN flows
+// ============================================================================
+
+function getTreasuryLedgerRecords() {
+  if (!state || !state.db) return [];
+  if (!state.db.treasuryLedger || !Array.isArray(state.db.treasuryLedger)) {
+    state.db.treasuryLedger = [];
+  }
+  
+  // Auto-seed baseline entries if ledger is currently empty
+  if (state.db.treasuryLedger.length === 0) {
+    const allWorks = getAllTreasuryWorks();
+    allWorks.forEach((w, idx) => {
+      const booked = Number(w.expdtBookedTreasury) || 0;
+      const cleared = Number(w.actualExpdtTotal) || 0;
+      const code = w.workCode || ('WORK-' + (idx + 1));
+      const sno = w._schemeSno || w.sno || (idx + 1);
+
+      if (booked > 0) {
+        state.db.treasuryLedger.push({
+          id: 'LEDGER-INIT-BOOKED-' + code,
+          workCode: code,
+          category: w._category,
+          scheme: w._shortScheme,
+          schemeLabel: w._schemeLabel,
+          mprSno: sno,
+          workName: w.name,
+          panchayat: w.panchayat,
+          allotmentCost: Number(w.allotmentCost || 0),
+          fundsReleased: Number(w.fundsReleased || 0),
+          xenAmount: Number(w.xenBillsAmount || booked),
+          xenCount: Number(w.xenBillsCount || 1),
+          bookedAmount: booked,
+          submitDate: '2026-11-22',
+          clearDate: null,
+          status: 'PENDING',
+          tokenNo: w.tokenNo || ('BEAMS-26-' + w._shortScheme + '-' + sno),
+          voucherNo: '',
+          clearedAmount: 0,
+          createdTime: '2026-11-22T10:00:00.000Z'
+        });
+      }
+
+      if (cleared > 0) {
+        state.db.treasuryLedger.push({
+          id: 'LEDGER-INIT-CLEARED-' + code,
+          workCode: code,
+          category: w._category,
+          scheme: w._shortScheme,
+          schemeLabel: w._schemeLabel,
+          mprSno: sno,
+          workName: w.name,
+          panchayat: w.panchayat,
+          allotmentCost: Number(w.allotmentCost || 0),
+          fundsReleased: Number(w.fundsReleased || 0),
+          xenAmount: Number(w.xenBillsAmount || cleared),
+          xenCount: 1,
+          bookedAmount: cleared,
+          submitDate: '2026-11-15',
+          clearDate: '2026-11-20',
+          status: 'CLEARED',
+          tokenNo: ('BEAMS-PAID-' + w._shortScheme + '-' + sno),
+          voucherNo: ('TV-' + sno),
+          clearedAmount: cleared,
+          createdTime: '2026-11-15T10:00:00.000Z'
+        });
+      }
+    });
+    saveData();
+  }
+  return state.db.treasuryLedger;
+}
+
+function viewTreasuryLedgerForScheme(schemeKey, schemeName) {
+  let shortScheme = 'ALL';
+  const sk = (schemeKey || '').toLowerCase();
+  if (sk.includes('pri')) shortScheme = 'PRI';
+  else if (sk.includes('ddc')) shortScheme = 'DDC';
+  else if (sk.includes('bdc')) shortScheme = 'BDC';
+  else if (sk.includes('st')) shortScheme = 'ST';
+  else if (sk.includes('apdp')) shortScheme = 'APDP';
+  else if (sk.includes('mla')) shortScheme = 'MLA';
+
+  window.treasuryHubState.activeTab = 'ledger';
+  window.treasuryHubState.selectedScheme = shortScheme;
+  window.treasuryHubState.ledgerFilterStatus = 'PENDING';
+  
+  selectScheme('treasury_hub');
+  switchTab('treasury_ledger');
+
+  if (typeof showToast === 'function') {
+    showToast('Filtered Treasury Ledger for ' + schemeName + ' (Pending Bills with MPR S#)', 'info');
+  }
+}
+
+function openBillClearanceDateModal(workCode, category, defaultAmount) {
+  const allWorks = getAllTreasuryWorks();
+  const w = allWorks.find(item => item.workCode === workCode && item._category === category)
+         || allWorks.find(item => item.workCode === workCode);
+  if (!w) return;
+
+  const existing = document.getElementById('treasury-clearance-date-modal');
+  if (existing) existing.remove();
+
+  const booked = Number(w.expdtBookedTreasury) || 0;
+  const initialClearAmt = defaultAmount !== undefined ? defaultAmount : booked;
+  const todayYMD = new Date().toISOString().split('T')[0];
+
+  const modalHtml = `
+    <div id="treasury-clearance-date-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fadeIn">
+      <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden animate-scaleIn">
+        <div class="bg-gradient-to-r from-emerald-700 via-teal-800 to-slate-900 text-white p-4.5 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-emerald-300">
+              <i class="fa-solid fa-stamp text-base"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-black tracking-tight">Clear Treasury Bill & Log Clearance Date</h3>
+              <p class="text-[10.5px] text-emerald-200 font-semibold">${w._schemeLabel} • MPR S.No: ${w._schemeSno}</p>
+            </div>
+          </div>
+          <button onclick="document.getElementById('treasury-clearance-date-modal').remove()" class="w-7 h-7 rounded-lg bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-xs cursor-pointer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="p-5 space-y-4">
+          <!-- Work Summary Pill -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded font-mono font-bold text-xs bg-blue-100 text-blue-900 border border-blue-200">${w.workCode}</span>
+              <span class="px-2 py-0.5 rounded font-bold text-xs bg-amber-100 text-amber-900 border border-amber-200">MPR S.No: ${w._schemeSno}</span>
+              <span class="text-xs font-semibold text-slate-600"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i>${w.panchayat}</span>
+            </div>
+            <div class="text-xs font-bold text-slate-800 leading-snug pt-0.5">${w.name}</div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="p-2.5 bg-blue-50/70 rounded-xl border border-blue-200">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Funds Released</span>
+              <span class="font-mono font-bold text-blue-950 text-sm">₹${Number(w.fundsReleased||0).toFixed(2)} L</span>
+            </div>
+            <div class="p-2.5 bg-amber-50/70 rounded-xl border border-amber-200">
+              <span class="text-[10px] uppercase font-bold text-amber-700 block">Currently Booked in Try</span>
+              <span class="font-mono font-bold text-amber-900 text-sm">₹${booked.toFixed(3)} L</span>
+            </div>
+          </div>
+
+          <!-- Date & Amount Inputs -->
+          <div class="space-y-3 pt-1">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-black text-slate-700 mb-1">📅 Treasury Clearance Date:</label>
+                <input type="date" id="clearance-modal-date-input" value="${todayYMD}" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-900 focus:ring-2 focus:ring-emerald-500 bg-white" />
+              </div>
+              <div>
+                <label class="block text-xs font-black text-slate-700 mb-1">₹ Cleared Amount (In Lakhs):</label>
+                <input type="number" step="0.001" id="clearance-modal-amt-input" value="${initialClearAmt.toFixed(3)}" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-900 focus:ring-2 focus:ring-emerald-500 bg-white" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-black text-slate-700 mb-1">Treasury Voucher / Ref No. (Optional):</label>
+              <input type="text" id="clearance-modal-voucher-input" placeholder="e.g. TV-BANI-2026-108" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:ring-2 focus:ring-emerald-500 bg-white" />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+            <button onclick="document.getElementById('treasury-clearance-date-modal').remove()" class="px-3.5 py-2 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-100 cursor-pointer">Cancel</button>
+            <button onclick="
+              const dateVal = document.getElementById('clearance-modal-date-input').value || '${todayYMD}';
+              const amtVal = parseFloat(document.getElementById('clearance-modal-amt-input').value);
+              const vouchVal = document.getElementById('clearance-modal-voucher-input').value.trim();
+              if (isNaN(amtVal) || amtVal <= 0) { alert('Please enter a valid cleared amount!'); return; }
+              confirmClearTreasuryBillWithDate('${w.workCode}', '${w._category}', amtVal, dateVal, vouchVal);
+              document.getElementById('treasury-clearance-date-modal').remove();
+            " class="px-4.5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer transition-all hover:scale-105 active:scale-95">
+              <i class="fa-solid fa-check-double"></i> Confirm & Shift to Expenditure
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function confirmClearTreasuryBillWithDate(workCode, category, clearAmount, clearDate, voucherNo) {
+  if (!state.db || !category) return;
+  const list = state.db[category] || [];
+  const w = list.find(item => (item.workCode === workCode) || (item.code === workCode));
+  if (!w) return;
+
+  const bookedAmt = Number(w.expdtBookedTreasury) || 0;
+  const clearAmt = clearAmount !== undefined ? Number(clearAmount) : bookedAmt;
+
+  // 1. Shift from Booked in Treasury to Actual Expenditure
+  w.expdtBookedTreasury = Math.max(0, bookedAmt - clearAmt);
+  w.actualExpdtAllotment = (Number(w.actualExpdtAllotment) || 0) + clearAmt;
+  w.actualExpdtTotal = (Number(w.actualExpdtAllotment) || 0) + (Number(w.actualExpdtContingency) || 0);
+  const cumml0326 = Number(w.cummlExpdtEnding0326) || 0;
+  w.cummlExpdt = cumml0326 + w.actualExpdtTotal;
+  const allot = Number(w.allotmentCost) || 0;
+  w.savings = Math.max(0, allot - w.actualExpdtTotal);
+
+  // 2. Update Ledger Entry
+  const ledger = getTreasuryLedgerRecords();
+  let entry = ledger.find(l => (l.workCode === workCode) && l.status === 'PENDING');
+  if (entry) {
+    entry.status = 'CLEARED';
+    entry.clearDate = clearDate;
+    entry.clearedAmount = clearAmt;
+    if (voucherNo) entry.voucherNo = voucherNo;
+  } else {
+    ledger.push({
+      id: 'LEDGER-CLR-' + Date.now(),
+      workCode: w.workCode || w.code,
+      category: category,
+      scheme: w._shortScheme || w.scheme,
+      schemeLabel: w._schemeLabel,
+      mprSno: w._schemeSno || w.sno,
+      workName: w.name,
+      panchayat: w.panchayat,
+      allotmentCost: allot,
+      fundsReleased: Number(w.fundsReleased || 0),
+      xenAmount: clearAmt,
+      xenCount: 1,
+      bookedAmount: clearAmt,
+      submitDate: w.submitDate || clearDate,
+      clearDate: clearDate,
+      status: 'CLEARED',
+      tokenNo: w.tokenNo || '',
+      voucherNo: voucherNo || '',
+      clearedAmount: clearAmt,
+      createdTime: new Date().toISOString()
+    });
+  }
+
+  // 3. Save to localStorage
+  saveData();
+
+  // 4. Push live to Google Sheet
+  pushWorkToGoogleSheet('update', w, category);
+
+  refreshCurrentView();
+  if (typeof showToast === 'function') {
+    showToast('Bill of ₹' + clearAmt.toFixed(3) + ' L cleared on ' + clearDate + ' into Expenditure! Google Sheet synced live.', 'success');
+  }
+}
+
+// Render the Advanced Treasury Bill Register & Audit Ledger View
+function renderTreasuryAuditLedgerView() {
+  const ledger = getTreasuryLedgerRecords();
+  const tState = window.treasuryHubState;
+
+  // Filter by Scheme
+  let filtered = ledger;
+  if (tState.selectedScheme !== 'ALL') {
+    filtered = filtered.filter(l => (l.scheme || '').toUpperCase() === tState.selectedScheme.toUpperCase());
+  }
+
+  // Filter by Status (ALL | PENDING | CLEARED)
+  const statFilter = tState.ledgerFilterStatus || 'ALL';
+  if (statFilter !== 'ALL') {
+    filtered = filtered.filter(l => l.status === statFilter);
+  }
+
+  // Filter by Search Query
+  if (tState.searchQuery.trim() !== '') {
+    const q = tState.searchQuery.toLowerCase().trim();
+    filtered = filtered.filter(l => 
+      (l.workName || '').toLowerCase().includes(q) ||
+      (l.workCode || '').toLowerCase().includes(q) ||
+      (l.panchayat || '').toLowerCase().includes(q) ||
+      (l.tokenNo || '').toLowerCase().includes(q) ||
+      String(l.mprSno) === q
+    );
+  }
+
+  // Ledger Metrics
+  const totalXenAmt = filtered.reduce((s, l) => s + (Number(l.xenAmount) || 0), 0);
+  const totalBookedAmt = filtered.reduce((s, l) => s + (Number(l.bookedAmount) || 0), 0);
+  const totalClearedAmt = filtered.reduce((s, l) => s + (l.status === 'CLEARED' ? (Number(l.clearedAmount || l.bookedAmount) || 0) : 0), 0);
+  const pendingItems = filtered.filter(l => l.status === 'PENDING');
+  const totalPendingAmt = pendingItems.reduce((s, l) => s + (Number(l.bookedAmount) || 0), 0);
+
+  const statusFilterBtnsHtml = [
+    { key: 'ALL', label: 'All Records (' + ledger.length + ')' },
+    { key: 'PENDING', label: '🟡 Pending in Treasury Only' },
+    { key: 'CLEARED', label: '🟢 Cleared & Paid Only' }
+  ].map(st => {
+    const isActive = statFilter === st.key;
+    return '<button onclick="setTreasuryLedgerStatusFilter(\'' + st.key + '\')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ' + (isActive ? 'bg-slate-900 text-white shadow-xs' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100') + '">' + st.label + '</button>';
+  }).join('');
+
+  return `
+    <div class="space-y-4 animate-fadeIn">
+      <!-- LEDGER SUMMARY METRIC CARDS -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="p-3.5 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl shadow-2xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase tracking-wider text-blue-900">Total Bills In Ledger</span>
+            <span class="w-6 h-6 rounded-lg bg-blue-200 text-blue-900 flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-list-check"></i></span>
+          </div>
+          <div class="text-xl font-black text-blue-950 mt-1 font-mono">${filtered.length} Bills</div>
+          <div class="text-[10.5px] text-blue-700 font-semibold mt-0.5">XEN: ₹${totalXenAmt.toFixed(3)} L</div>
+        </div>
+
+        <div class="p-3.5 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-300 rounded-2xl shadow-2xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase tracking-wider text-amber-900">Pending in Treasury</span>
+            <span class="w-6 h-6 rounded-lg bg-amber-200 text-amber-900 flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-clock-rotate-left"></i></span>
+          </div>
+          <div class="text-xl font-black text-amber-950 mt-1 font-mono">₹${totalPendingAmt.toFixed(3)} L</div>
+          <div class="text-[10.5px] text-amber-800 font-semibold mt-0.5">${pendingItems.length} Bills Waiting in Try</div>
+        </div>
+
+        <div class="p-3.5 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-300 rounded-2xl shadow-2xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-900">Cleared Expenditure</span>
+            <span class="w-6 h-6 rounded-lg bg-emerald-200 text-emerald-900 flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-circle-check"></i></span>
+          </div>
+          <div class="text-xl font-black text-emerald-950 mt-1 font-mono">₹${totalClearedAmt.toFixed(3)} L</div>
+          <div class="text-[10.5px] text-emerald-800 font-semibold mt-0.5">${filtered.filter(l => l.status === 'CLEARED').length} Bills Cleared & Paid</div>
+        </div>
+
+        <div class="p-3.5 bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-300 rounded-2xl shadow-2xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase tracking-wider text-slate-800">Clearance Pace</span>
+            <span class="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-chart-pie"></i></span>
+          </div>
+          <div class="text-xl font-black text-slate-900 mt-1 font-mono">
+            ${totalBookedAmt > 0 ? ((totalClearedAmt / totalBookedAmt) * 100).toFixed(1) + '%' : '0.0%'}
+          </div>
+          <div class="text-[10.5px] text-slate-600 font-semibold mt-0.5">Cleared vs Total Booked</div>
+        </div>
+      </div>
+
+      <!-- LEDGER FILTER & STATUS TOGGLES -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+        <!-- Status Pills -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="text-[10px] font-black uppercase text-slate-500 mr-1">Status:</span>
+          ${statusFilterBtnsHtml}
+        </div>
+
+        <!-- Action Exports -->
+        <div class="flex items-center gap-2">
+          <button onclick="exportTreasuryLedgerExcel()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs cursor-pointer">
+            <i class="fa-solid fa-file-excel"></i> Export Ledger
+          </button>
+          <button onclick="printCurrentViewPDF()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs cursor-pointer">
+            <i class="fa-solid fa-print"></i> Print Ledger
+          </button>
+        </div>
+      </div>
+
+      <!-- LEDGER TABLE -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-3.5 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-book-bookmark text-amber-400"></i>
+            <h4 class="text-xs font-black uppercase tracking-wider">Official Treasury Bill Register & Work-Wise Audit Ledger</h4>
+          </div>
+          <span class="text-[11px] text-amber-300 font-mono font-bold">${filtered.length} Entries Logged</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-black text-[11px] uppercase tracking-wider">
+                <th class="p-3 text-center w-16">MPR S#</th>
+                <th class="p-3 w-40">Scheme & GP</th>
+                <th class="p-3 min-w-[280px]">Work Name & Code</th>
+                <th class="p-3 text-right">XEN Bill (₹ L)</th>
+                <th class="p-3 text-right">Booked Try (₹ L)</th>
+                <th class="p-3 text-center">Submission Date</th>
+                <th class="p-3 text-center">Clearance Date</th>
+                <th class="p-3 text-center">Token / Ref No.</th>
+                <th class="p-3 text-center w-28">Status</th>
+                <th class="p-3 text-center w-24">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              ${filtered.length === 0 ? `
+                <tr>
+                  <td colspan="10" class="p-12 text-center text-slate-400 font-semibold">
+                    <i class="fa-solid fa-folder-open text-3xl mb-2 block text-slate-300"></i>
+                    No ledger entries found matching current filters.
+                  </td>
+                </tr>
+              ` : filtered.map((l, idx) => {
+                const isPend = l.status === 'PENDING';
+                const submitFormatted = l.submitDate ? l.submitDate.split('-').reverse().join('-') : '—';
+                const clearFormatted = l.clearDate ? l.clearDate.split('-').reverse().join('-') : (isPend ? '— Pending in Try —' : '—');
+                
+                return `
+                  <tr class="hover:bg-amber-50/40 transition-colors ${isPend ? 'bg-amber-50/15' : ''}">
+                    <!-- Official MPR S# Badge -->
+                    <td class="p-3 text-center">
+                      <span class="inline-block px-2 py-1 rounded-md font-mono font-black text-xs ${isPend ? 'bg-amber-100 text-amber-950 border border-amber-300' : 'bg-blue-100 text-blue-950 border border-blue-300'} shadow-2xs">
+                        ${l.scheme} #${l.mprSno}
+                      </span>
+                    </td>
+
+                    <!-- Scheme & Panchayat -->
+                    <td class="p-3">
+                      <div class="font-bold text-slate-900">${l.schemeLabel || l.scheme}</div>
+                      <div class="text-[11px] font-semibold text-slate-500 flex items-center gap-1 mt-0.5">
+                        <i class="fa-solid fa-location-dot text-amber-600 text-[10px]"></i>
+                        <span>${l.panchayat}</span>
+                      </div>
+                    </td>
+
+                    <!-- Work Name & Code -->
+                    <td class="p-3">
+                      <div class="font-bold text-slate-800 leading-snug line-clamp-2">${escapeHtml(l.workName)}</div>
+                      <div class="font-mono text-[10.5px] font-bold text-blue-800 mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-barcode text-slate-400"></i>
+                        <span>${l.workCode}</span>
+                      </div>
+                    </td>
+
+                    <!-- XEN Bill Amount -->
+                    <td class="p-3 text-right font-mono font-bold text-slate-700 bg-slate-50/50">
+                      ₹${Number(l.xenAmount || l.bookedAmount || 0).toFixed(3)}
+                    </td>
+
+                    <!-- Booked in Treasury -->
+                    <td class="p-3 text-right font-mono font-black ${isPend ? 'text-amber-900 bg-amber-50/50' : 'text-slate-800'}">
+                      ₹${Number(l.bookedAmount || 0).toFixed(3)}
+                    </td>
+
+                    <!-- Submission Date -->
+                    <td class="p-3 text-center font-mono font-bold text-slate-700">
+                      <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-800">${submitFormatted}</span>
+                    </td>
+
+                    <!-- Clearance Date -->
+                    <td class="p-3 text-center font-mono font-bold">
+                      ${isPend ? `
+                        <span class="px-2 py-0.5 rounded-full text-[10.5px] bg-amber-100 text-amber-900 font-bold border border-amber-200 animate-pulse">
+                          <i class="fa-solid fa-clock-rotate-left mr-1"></i>Pending
+                        </span>
+                      ` : `
+                        <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-950 font-black border border-emerald-300">
+                          <i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i>${clearFormatted}
+                        </span>
+                      `}
+                    </td>
+
+                    <!-- Token / Voucher Ref -->
+                    <td class="p-3 text-center font-mono text-[11px] font-semibold text-slate-600">
+                      ${l.voucherNo ? ('<div class="text-emerald-800 font-bold">' + l.voucherNo + '</div>') : ''}
+                      <div class="text-slate-500">${l.tokenNo || '—'}</div>
+                    </td>
+
+                    <!-- Status Badge -->
+                    <td class="p-3 text-center">
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${isPend ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-emerald-100 text-emerald-900 border border-emerald-300'}">
+                        <i class="fa-solid ${isPend ? 'fa-hourglass-half' : 'fa-check'} text-[9px]"></i>
+                        <span>${isPend ? 'Pending in Try' : 'Cleared & Paid'}</span>
+                      </span>
+                    </td>
+
+                    <!-- Actions -->
+                    <td class="p-3 text-center">
+                      ${isPend ? `
+                        <button onclick="openBillClearanceDateModal('${l.workCode}', '${l.category}', ${Number(l.bookedAmount||0)})" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 shadow-xs transition-transform active:scale-95 cursor-pointer mx-auto">
+                          <i class="fa-solid fa-check"></i> Pass
+                        </button>
+                      ` : `
+                        <button onclick="revertClearedBillToBooked('${l.workCode}', '${l.category}', ${Number(l.clearedAmount||l.bookedAmount||0)})" class="px-2 py-1 bg-slate-100 hover:bg-amber-50 text-slate-700 hover:text-amber-900 rounded-lg font-semibold text-[10px] border border-slate-200 cursor-pointer mx-auto" title="Revert to Booked">
+                          <i class="fa-solid fa-rotate-left"></i> Revert
+                        </button>
+                      `}
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function setTreasuryLedgerStatusFilter(status) {
+  window.treasuryHubState.ledgerFilterStatus = status;
+  const container = document.getElementById('main-content');
+  if (container) renderTreasuryBillHub(container);
+}
+
+function exportTreasuryLedgerExcel() {
+  if (typeof XLSX === 'undefined') {
+    alert('SheetJS (XLSX) library is still loading. Please try again.');
+    return;
+  }
+  const ledger = getTreasuryLedgerRecords();
+  const rows = [
+    ['MPR S.No', 'Scheme', 'Panchayat', 'Work Code', 'Name of Work', 'XEN Bill Amt (₹ L)', 'Booked in Try (₹ L)', 'Submission Date', 'Clearance Date', 'Token / BEAMS Ref', 'Voucher No', 'Status']
+  ];
+
+  ledger.forEach(l => {
+    rows.push([
+      l.mprSno,
+      l.schemeLabel || l.scheme,
+      l.panchayat,
+      l.workCode,
+      l.workName,
+      Number(l.xenAmount || 0).toFixed(3),
+      Number(l.bookedAmount || 0).toFixed(3),
+      l.submitDate || '',
+      l.clearDate || (l.status === 'PENDING' ? 'Pending in Treasury' : ''),
+      l.tokenNo || '',
+      l.voucherNo || '',
+      l.status
+    ]);
+  });
+
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  XLSX.utils.book_append_sheet(wb, ws, 'Treasury Audit Ledger');
+  XLSX.writeFile(wb, 'BDO_Bani_Treasury_Audit_Ledger.xlsx');
 }
 
 function renderTreasuryBillHub(container) {
@@ -23386,7 +23984,7 @@ function renderTreasuryBillHub(container) {
       </div>
 
       <!-- MAIN CONTENT AREA -->
-      ${tState.activeTab === 'book_new' ? renderBookNewBillForm(allWorks, tState.searchQuery) : renderTreasuryBillsTable(currentList, tState.activeTab)}
+      ${tState.activeTab === 'book_new' ? renderBookNewBillForm(allWorks, tState.searchQuery) : (tState.activeTab === 'ledger' ? renderTreasuryAuditLedgerView() : renderTreasuryBillsTable(currentList, tState.activeTab))}
     </div>
   `;
 
@@ -23485,4 +24083,15 @@ if (typeof window !== "undefined") {
   window.saveXenBillsData = saveXenBillsData;
   window.getDynamicMPRMeetingFinancialData = getDynamicMPRMeetingFinancialData;
   window.onTreasuryBookSchemeChange = window.onTreasuryBookSchemeChange;
+}
+
+
+if (typeof window !== "undefined") {
+  window.getTreasuryLedgerRecords = getTreasuryLedgerRecords;
+  window.viewTreasuryLedgerForScheme = viewTreasuryLedgerForScheme;
+  window.openBillClearanceDateModal = openBillClearanceDateModal;
+  window.confirmClearTreasuryBillWithDate = confirmClearTreasuryBillWithDate;
+  window.renderTreasuryAuditLedgerView = renderTreasuryAuditLedgerView;
+  window.setTreasuryLedgerStatusFilter = setTreasuryLedgerStatusFilter;
+  window.exportTreasuryLedgerExcel = exportTreasuryLedgerExcel;
 }
