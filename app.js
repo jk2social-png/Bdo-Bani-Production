@@ -3893,6 +3893,288 @@ function getMeetingAbstractFinancialData(appState) {
 }
 
 
+// ============================================================================
+// DYNAMIC FINANCIAL DATA HARVESTER FROM MPR CAPEX DATABASE (state.db)
+// Synchronized directly with live works, Treasury Hub, and Google Sheet Webhooks
+// ============================================================================
+
+function getDynamicMPRMeetingFinancialData() {
+  const defaultXenBills = {
+    'ongoing_pri': { count: 4, amount: 3.38 },
+    'new_ddc': { count: 14, amount: 12.535 },
+    'new_bdc': { count: 0, amount: 0.00 },
+    'new_pri': { count: 13, amount: 21.945 },
+    'new_apdp': { count: 0, amount: 0.00 },
+    'new_st': { count: 8, amount: 8.280 }
+  };
+
+  const xenBills = (state && state.db && state.db.xenSchemeBills) ? Object.assign({}, defaultXenBills, state.db.xenSchemeBills) : defaultXenBills;
+
+  const isPytFiltered = state.selectedPanchayat && state.selectedPanchayat !== 'ALL';
+  const filterByPyt = list => {
+    let res = list || [];
+    if (typeof isJEUser === 'function' && isJEUser()) {
+      const allowed = typeof getCurrentUserPanchayats === 'function' ? getCurrentUserPanchayats() : [];
+      res = res.filter(w => allowed.some(p => p.toLowerCase().trim() === (w.panchayat || '').toLowerCase().trim()));
+    }
+    return isPytFiltered ? res.filter(w => w.panchayat === state.selectedPanchayat) : res;
+  };
+
+  const schemeKeys = [
+    { sNo: '1', component: 'DDC', key: 'ddc' },
+    { sNo: '2', component: 'BDC', key: 'bdc' },
+    { sNo: '3', component: 'PRI', key: 'pri' },
+    { sNo: '4', component: 'ABDP', key: 'abdp' },
+    { sNo: '5', component: 'APDP', key: 'apdp' },
+    { sNo: '6', component: 'Untied Funds', key: 'untied' },
+    { sNo: '7', component: 'Elementary Education', key: 'ele_edu' },
+    { sNo: '8', component: 'Secondary Education', key: 'sec_edu' },
+    { sNo: '9', component: 'YSS(Distt Sector)', key: 'yss' },
+    { sNo: '10', component: 'UT.Capex (CD & Pyt)', key: 'ut_cd' },
+    { sNo: '11', component: 'UT Capex (ST-Plan)', key: 'st' },
+    { sNo: '12', component: 'UT Capex (YSS Sector)', key: 'ut_yss' },
+    { sNo: '13', component: 'PMAGY', key: 'pmagy' },
+    { sNo: '14', component: 'MLA-CDF( 2025-26 works only)', key: 'mla' },
+    { sNo: '15', component: 'MPLAD', key: 'mplad' }
+  ];
+
+  function aggregateWorks(works, xenKey, customApproved) {
+    let approvedOutlay = customApproved || 0;
+    let allotmentCost = 0;
+    let fundsReceived = 0;
+    let actualExpAmt = 0;
+    let bookedTryAmt = 0;
+    let actualExpCount = 0;
+    let bookedTryCount = 0;
+
+    works.forEach(w => {
+      if (!customApproved) approvedOutlay += Number(w.approvedCapex) || 0;
+      allotmentCost += Number(w.allotmentCost) || 0;
+      fundsReceived += Number(w.fundsReleased) || 0;
+      const act = Number(w.actualExpdtTotal) || 0;
+      const bkd = Number(w.expdtBookedTreasury) || 0;
+      actualExpAmt += act;
+      bookedTryAmt += bkd;
+      if (act > 0) actualExpCount++;
+      if (bkd > 0) bookedTryCount++;
+    });
+
+    const forwardedTryAmt = actualExpAmt + bookedTryAmt;
+    const processedBillsCount = actualExpCount + bookedTryCount;
+    const expPct = allotmentCost > 0 ? ((actualExpAmt / allotmentCost) * 100) : 0;
+
+    const xen = xenBills[xenKey] || { count: processedBillsCount, amount: forwardedTryAmt };
+
+    return {
+      billsRecCount: xen.count,
+      billsRecAmt: Number(xen.amount || 0).toFixed(3),
+      billsClrCount: processedBillsCount,
+      billsClrAmt: forwardedTryAmt.toFixed(3),
+      actualClrCount: actualExpCount,
+      actualClrAmt: actualExpAmt.toFixed(3),
+      tryPendingCount: bookedTryCount,
+      tryPendingAmt: bookedTryAmt.toFixed(3),
+      approvedOutlay: approvedOutlay > 0 ? approvedOutlay.toFixed(3) : '0.000',
+      fundsReceived: fundsReceived > 0 ? fundsReceived.toFixed(3) : '0.000',
+      allotmentCost: allotmentCost > 0 ? allotmentCost.toFixed(3) : '0.000',
+      expPercentage: expPct > 0 ? expPct.toFixed(2) : '0.00'
+    };
+  }
+
+  const db = (state && state.db) ? state.db : {};
+
+  // Section A: Ongoing Works
+  const secAItems = schemeKeys.map(sch => {
+    let stats = {
+      billsRecCount: 0, billsRecAmt: '0.000',
+      billsClrCount: 0, billsClrAmt: '0.000',
+      actualClrCount: 0, actualClrAmt: '0.000',
+      tryPendingCount: 0, tryPendingAmt: '0.000',
+      approvedOutlay: '0.000', fundsReceived: '0.000', allotmentCost: '0.000',
+      expPercentage: '0.00'
+    };
+
+    if (sch.key === 'pri') {
+      stats = aggregateWorks(filterByPyt(db.priOngoing || []), 'ongoing_pri', 21.560);
+    }
+
+    return {
+      block: 'Bani',
+      sNo: sch.sNo,
+      component: sch.component,
+      schemeKey: 'ongoing_' + sch.key,
+      ...stats
+    };
+  });
+
+  // Section B: New Works
+  const secBItems = schemeKeys.map(sch => {
+    let stats = {
+      billsRecCount: 0, billsRecAmt: '0.000',
+      billsClrCount: 0, billsClrAmt: '0.000',
+      actualClrCount: 0, actualClrAmt: '0.000',
+      tryPendingCount: 0, tryPendingAmt: '0.000',
+      approvedOutlay: '0.000', fundsReceived: '0.000', allotmentCost: '0.000',
+      expPercentage: '0.00'
+    };
+
+    if (sch.key === 'ddc') {
+      stats = aggregateWorks(filterByPyt(db.ddcWorks || []), 'new_ddc', 47.500);
+    } else if (sch.key === 'bdc') {
+      stats = aggregateWorks(filterByPyt(db.bdcWorks || []), 'new_bdc', 25.000);
+    } else if (sch.key === 'pri') {
+      stats = aggregateWorks(filterByPyt(db.priNew || []), 'new_pri', 214.290);
+    } else if (sch.key === 'apdp') {
+      stats = aggregateWorks(filterByPyt(db.apdpWorks || []), 'new_apdp', 10.000);
+    } else if (sch.key === 'st') {
+      stats = aggregateWorks(filterByPyt(db.stWorks || []), 'new_st', 20.500);
+    }
+
+    return {
+      block: 'Bani',
+      sNo: sch.sNo,
+      component: sch.component,
+      schemeKey: 'new_' + sch.key,
+      ...stats
+    };
+  });
+
+  function sumSection(items, title) {
+    let billsRecCount = 0, billsRecAmt = 0;
+    let billsClrCount = 0, billsClrAmt = 0;
+    let actualClrCount = 0, actualClrAmt = 0;
+    let tryPendingCount = 0, tryPendingAmt = 0;
+    let approvedOutlay = 0, fundsReceived = 0, allotmentCost = 0;
+
+    items.forEach(it => {
+      billsRecCount += Number(it.billsRecCount) || 0;
+      billsRecAmt += Number(it.billsRecAmt) || 0;
+      billsClrCount += Number(it.billsClrCount) || 0;
+      billsClrAmt += Number(it.billsClrAmt) || 0;
+      actualClrCount += Number(it.actualClrCount) || 0;
+      actualClrAmt += Number(it.actualClrAmt) || 0;
+      tryPendingCount += Number(it.tryPendingCount) || 0;
+      tryPendingAmt += Number(it.tryPendingAmt) || 0;
+      approvedOutlay += Number(it.approvedOutlay) || 0;
+      fundsReceived += Number(it.fundsReceived) || 0;
+      allotmentCost += Number(it.allotmentCost) || 0;
+    });
+
+    const expPct = allotmentCost > 0 ? ((actualClrAmt / allotmentCost) * 100) : 0;
+
+    return {
+      component: title,
+      billsRecCount,
+      billsRecAmt: billsRecAmt.toFixed(3),
+      billsClrCount,
+      billsClrAmt: billsClrAmt.toFixed(3),
+      actualClrCount,
+      actualClrAmt: actualClrAmt.toFixed(3),
+      tryPendingCount,
+      tryPendingAmt: tryPendingAmt.toFixed(3),
+      approvedOutlay: approvedOutlay.toFixed(3),
+      fundsReceived: fundsReceived.toFixed(3),
+      allotmentCost: allotmentCost.toFixed(3),
+      expPercentage: expPct > 0 ? expPct.toFixed(2) : '0.00'
+    };
+  }
+
+  const subTotalA = sumSection(secAItems, 'SUB-TOTAL (A)');
+  const subTotalB = sumSection(secBItems, 'SUB-TOTAL (B)');
+
+  const grandTotal = {
+    component: 'DISTRICT / BLOCK GRAND TOTAL (A+B)',
+    billsRecCount: subTotalA.billsRecCount + subTotalB.billsRecCount,
+    billsRecAmt: (Number(subTotalA.billsRecAmt) + Number(subTotalB.billsRecAmt)).toFixed(3),
+    billsClrCount: subTotalA.billsClrCount + subTotalB.billsClrCount,
+    billsClrAmt: (Number(subTotalA.billsClrAmt) + Number(subTotalB.billsClrAmt)).toFixed(3),
+    actualClrCount: subTotalA.actualClrCount + subTotalB.actualClrCount,
+    actualClrAmt: (Number(subTotalA.actualClrAmt) + Number(subTotalB.actualClrAmt)).toFixed(3),
+    tryPendingCount: subTotalA.tryPendingCount + subTotalB.tryPendingCount,
+    tryPendingAmt: (Number(subTotalA.tryPendingAmt) + Number(subTotalB.tryPendingAmt)).toFixed(3),
+    approvedOutlay: (Number(subTotalA.approvedOutlay) + Number(subTotalB.approvedOutlay)).toFixed(3),
+    fundsReceived: (Number(subTotalA.fundsReceived) + Number(subTotalB.fundsReceived)).toFixed(3),
+    allotmentCost: (Number(subTotalA.allotmentCost) + Number(subTotalB.allotmentCost)).toFixed(3),
+    expPercentage: (Number(subTotalA.allotmentCost) + Number(subTotalB.allotmentCost)) > 0
+      ? (((Number(subTotalA.actualClrAmt) + Number(subTotalB.actualClrAmt)) / (Number(subTotalA.allotmentCost) + Number(subTotalB.allotmentCost))) * 100).toFixed(2)
+      : '0.00'
+  };
+
+  return {
+    sectionA: { items: secAItems, subTotal: subTotalA },
+    sectionB: { items: secBItems, subTotal: subTotalB },
+    sectionC: { items: [], subTotal: grandTotal }
+  };
+}
+
+// XEN REW Kathua Bills Direct Edit Modal
+function openXenBillsModal(schemeKey, schemeName, currentCount, currentAmount) {
+  const existing = document.getElementById('xen-bills-edit-modal');
+  if (existing) existing.remove();
+
+  const countVal = currentCount !== undefined ? currentCount : 0;
+  const amtVal = currentAmount !== undefined ? Number(currentAmount).toFixed(3) : '0.000';
+
+  const modalHtml = `
+    <div id="xen-bills-edit-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fadeIn">
+      <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden animate-scaleIn">
+        <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white p-4 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-file-invoice-dollar text-cyan-300 text-base"></i>
+            <div>
+              <h3 class="text-sm font-black tracking-tight">XEN REW Kathua Bills Entry</h3>
+              <p class="text-[10px] text-blue-200 font-semibold">${schemeName}</p>
+            </div>
+          </div>
+          <button onclick="document.getElementById('xen-bills-edit-modal').remove()" class="w-7 h-7 rounded-lg bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-xs cursor-pointer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="p-5 space-y-4">
+          <div class="p-2.5 bg-blue-50/60 rounded-xl border border-blue-200 text-xs text-blue-950 font-medium">
+            <i class="fa-solid fa-info-circle text-blue-600 mr-1"></i>
+            Enter total bills certified/passed by XEN REW Kathua received at BDO Office for this scheme.
+          </div>
+
+          <div>
+            <label class="block text-xs font-black text-slate-700 mb-1">No. of Bills Received from XEN:</label>
+            <input type="number" id="xen-modal-count-input" value="${countVal}" min="0" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-black text-sm text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-black text-slate-700 mb-1">Amount of Bills Received (₹ In Lakhs):</label>
+            <input type="number" step="0.001" id="xen-modal-amount-input" value="${amtVal}" min="0" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-black text-sm text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+            <button onclick="document.getElementById('xen-bills-edit-modal').remove()" class="px-3.5 py-2 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-100 cursor-pointer">Cancel</button>
+            <button onclick="saveXenBillsData('${schemeKey}')" class="px-4 py-2 bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer transition-all hover:scale-105 active:scale-95">
+              <i class="fa-solid fa-floppy-disk"></i> Save & Update Table
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function saveXenBillsData(schemeKey) {
+  const count = parseInt(document.getElementById('xen-modal-count-input').value, 10) || 0;
+  const amount = parseFloat(document.getElementById('xen-modal-amount-input').value) || 0;
+  if (!state.db) state.db = {};
+  state.db.xenSchemeBills = state.db.xenSchemeBills || {};
+  state.db.xenSchemeBills[schemeKey] = { count, amount };
+  saveData();
+  const m = document.getElementById('xen-bills-edit-modal');
+  if (m) m.remove();
+  refreshCurrentView();
+  if (typeof showToast === 'function') {
+    showToast('XEN REW Bills updated and saved successfully!', 'success');
+  }
+}
+
 // Universal Financial Rows Renderer matching Daily Monitoring Sheet 1 Part 2
 function renderDailyBaniFinRows(sec, secLetter, secTitle, filterCapex = false) {
   if (!sec) return '';
@@ -3919,6 +4201,8 @@ function renderDailyBaniFinRows(sec, secLetter, secTitle, filterCapex = false) {
       ? `<td rowspan="${items.length}" class="px-3 py-2 text-center font-extrabold text-slate-800 bg-slate-100 align-middle whitespace-nowrap shadow-xs" style="border: 1.5px solid #94a3b8 !important; vertical-align: middle; font-size: 13px;">Bani</td>`
       : '';
 
+    const xenSchemeKey = it.schemeKey || (secLetter === 'A' ? 'ongoing_' + (it.component || '').toLowerCase() : 'new_' + (it.component || '').toLowerCase());
+
     html += `
       <tr style="background: ${rowBg} !important; border: 1px solid #cbd5e1 !important;" class="hover:bg-amber-50/40 transition-colors">
         ${blockCellHtml}
@@ -3926,14 +4210,35 @@ function renderDailyBaniFinRows(sec, secLetter, secTitle, filterCapex = false) {
         <td class="px-2.5 py-1.5 font-bold ${isPriority ? 'text-emerald-950 font-extrabold' : 'text-slate-800'} whitespace-nowrap" style="border: 1px solid #cbd5e1 !important;">
           ${it.component || ''}
         </td>
-        <td class="px-2 py-1.5 text-center font-bold text-slate-700" style="border: 1px solid #cbd5e1 !important;">${it.billsRecCount || '0'}</td>
-        <td class="px-2 py-1.5 text-center font-bold text-blue-900 bg-blue-50/40" style="border: 1px solid #cbd5e1 !important;">${it.billsRecAmt || '0'}</td>
+        <!-- XEN Bills Received (Count & Amount with 1-Click Direct Edit Modal) -->
+        <td class="px-2 py-1.5 text-center font-bold text-slate-700 cursor-pointer hover:bg-blue-100/70 transition-colors group" 
+            onclick="openXenBillsModal('${xenSchemeKey}', '${escapeHtml(it.component || '')}', ${it.billsRecCount || 0}, ${parseFloat(it.billsRecAmt) || 0})" 
+            title="Click to enter/edit XEN Bills for ${escapeHtml(it.component || '')}" 
+            style="border: 1px solid #cbd5e1 !important;">
+          <span class="inline-flex items-center gap-1">
+            ${it.billsRecCount || '0'}
+            <i class="fa-solid fa-pencil text-[9px] text-blue-500 opacity-40 group-hover:opacity-100 transition-opacity"></i>
+          </span>
+        </td>
+        <td class="px-2 py-1.5 text-center font-bold text-blue-900 bg-blue-50/40 cursor-pointer hover:bg-blue-100/70 transition-colors group" 
+            onclick="openXenBillsModal('${xenSchemeKey}', '${escapeHtml(it.component || '')}', ${it.billsRecCount || 0}, ${parseFloat(it.billsRecAmt) || 0})" 
+            title="Click to enter/edit XEN Bills for ${escapeHtml(it.component || '')}" 
+            style="border: 1px solid #cbd5e1 !important;">
+          <span class="inline-flex items-center gap-1">
+            ${it.billsRecAmt || '0'}
+            <i class="fa-solid fa-pencil text-[9px] text-blue-500 opacity-40 group-hover:opacity-100 transition-opacity"></i>
+          </span>
+        </td>
+        <!-- Exp. (Actual + Booked) -->
         <td class="px-2 py-1.5 text-center font-bold text-slate-700" style="border: 1px solid #cbd5e1 !important;">${it.billsClrCount || '0'}</td>
         <td class="px-2 py-1.5 text-center font-bold text-emerald-900 bg-emerald-50/40" style="border: 1px solid #cbd5e1 !important;">${it.billsClrAmt || '0'}</td>
+        <!-- Actual Exped. -->
         <td class="px-2 py-1.5 text-center font-bold text-slate-700" style="border: 1px solid #cbd5e1 !important;">${it.actualClrCount || '0'}</td>
         <td class="px-2 py-1.5 text-center font-bold text-emerald-900" style="border: 1px solid #cbd5e1 !important;">${it.actualClrAmt || '0'}</td>
+        <!-- Booked in Treasury (Pending) -->
         <td class="px-2 py-1.5 text-center font-bold text-slate-600" style="border: 1px solid #cbd5e1 !important;">${it.tryPendingCount || '0'}</td>
         <td class="px-2 py-1.5 text-center font-bold text-amber-900" style="border: 1px solid #cbd5e1 !important;">${it.tryPendingAmt || '0'}</td>
+        <!-- Budget / Outlay Columns -->
         <td class="px-2 py-1.5 text-center font-bold text-slate-800" style="border: 1px solid #cbd5e1 !important;">${it.approvedOutlay || '0'}</td>
         <td class="px-2 py-1.5 text-center font-bold text-slate-800" style="border: 1px solid #cbd5e1 !important;">${it.fundsReceived || '0'}</td>
         <td class="px-2 py-1.5 text-center font-extrabold text-blue-950 bg-blue-50/60" style="border: 1px solid #cbd5e1 !important;">${it.allotmentCost || '0'}</td>
@@ -3975,7 +4280,7 @@ function renderDailyBaniFinRows(sec, secLetter, secTitle, filterCapex = false) {
 function renderMeetingAbstract(container) {
   if (typeof healCapexStatuses === 'function' && state && state.db) { healCapexStatuses(state.db); }
   const fullSheet1 = typeof getSheet1DailyBaniData === 'function' ? getSheet1DailyBaniData() : ((typeof window !== 'undefined' && window.sheet1DailyBaniBaselineData) ? window.sheet1DailyBaniBaselineData : null);
-  const finData = fullSheet1 && fullSheet1.financial ? fullSheet1.financial : ((typeof window !== 'undefined' && window.sheet1DailyBaniBaselineData) ? window.sheet1DailyBaniBaselineData.financial : null);
+  const finData = typeof getDynamicMPRMeetingFinancialData === 'function' ? getDynamicMPRMeetingFinancialData() : (fullSheet1 && fullSheet1.financial ? fullSheet1.financial : null);
   const isPytFiltered = state.selectedPanchayat && state.selectedPanchayat !== 'ALL';
   const filterByPyt = list => {
     let res = list || [];
@@ -22358,10 +22663,10 @@ function rejectTreasuryBill(workCode, category) {
   }
 }
 
-function bookTreasuryBill(workCode, category, amount) {
+function bookTreasuryBill(workCode, category, amount, xenAmount, xenCount) {
   const amt = parseFloat(amount);
   if (isNaN(amt) || amt <= 0) {
-    showToast('Please enter a valid bill amount in Lakhs (e.g. 1.45)!', 'error');
+    showToast('Please enter a valid bill amount in Lakhs (e.g. 0.90)!', 'error');
     return;
   }
   if (!state.db || !category) return;
@@ -22372,18 +22677,51 @@ function bookTreasuryBill(workCode, category, amount) {
     return;
   }
 
+  // 1. Update work's booked amount in treasury
   w.expdtBookedTreasury = (Number(w.expdtBookedTreasury) || 0) + amt;
   if (category && category.startsWith('mla')) {
     w.expdtTreasury = (Number(w.expdtTreasury) || 0) + amt;
   }
+
+  // 2. Track XEN bills on work & scheme level
+  const xAmt = xenAmount !== undefined ? (parseFloat(xenAmount) || amt) : amt;
+  const xCount = xenCount !== undefined ? (parseInt(xenCount, 10) || 1) : 1;
+  w.xenBillsAmount = (Number(w.xenBillsAmount) || 0) + xAmt;
+  w.xenBillsCount = (Number(w.xenBillsCount) || 0) + xCount;
+
+  // Determine schemeKey for Part 2 table
+  let schemeKey = 'new_' + (w.scheme || '').toLowerCase().trim();
+  if (category === 'priOngoing' || (w.type && w.type.toLowerCase().includes('ongoing'))) {
+    schemeKey = 'ongoing_pri';
+  } else if (category === 'ddcWorks' || (w.scheme && w.scheme.toLowerCase().includes('ddc'))) {
+    schemeKey = 'new_ddc';
+  } else if (category === 'bdcWorks' || (w.scheme && w.scheme.toLowerCase().includes('bdc'))) {
+    schemeKey = 'new_bdc';
+  } else if (category === 'stWorks' || (w.scheme && w.scheme.toLowerCase().includes('st'))) {
+    schemeKey = 'new_st';
+  } else if (category === 'apdpWorks' || (w.scheme && w.scheme.toLowerCase().includes('apdp'))) {
+    schemeKey = 'new_apdp';
+  } else if (category === 'priNew' || (w.scheme && w.scheme.toLowerCase().includes('pri'))) {
+    schemeKey = 'new_pri';
+  }
+
+  state.db.xenSchemeBills = state.db.xenSchemeBills || {};
+  if (!state.db.xenSchemeBills[schemeKey]) {
+    state.db.xenSchemeBills[schemeKey] = { count: 0, amount: 0 };
+  }
+  state.db.xenSchemeBills[schemeKey].count = (Number(state.db.xenSchemeBills[schemeKey].count) || 0) + xCount;
+  state.db.xenSchemeBills[schemeKey].amount = (Number(state.db.xenSchemeBills[schemeKey].amount) || 0) + xAmt;
+
+  // 3. Save to localStorage
   saveData();
+
+  // 4. Sync live to Google Sheet via webhook
   pushWorkToGoogleSheet('update', w, category);
   
   window.treasuryHubState.activeTab = 'pending';
   refreshCurrentView();
   showToast(`New Bill of ₹${amt.toFixed(3)} L successfully BOOKED in Treasury for "${(w.name || '').substring(0, 30)}..."! Google Sheet updated live.`, 'success');
 }
-
 function revertClearedBillToBooked(workCode, category, amount) {
   if (!state.db || !category) return;
   const list = state.db[category] || [];
@@ -22408,7 +22746,11 @@ function revertClearedBillToBooked(workCode, category, amount) {
 }
 
 function openCustomClearanceModal(workCode, category) {
-  const allWorks = getAllTreasuryWorks();
+  let allWorks = getAllTreasuryWorks();
+  const schemeSel = document.getElementById('book-new-scheme-select');
+  if (schemeSel && schemeSel.value && schemeSel.value !== 'ALL') {
+    allWorks = allWorks.filter(w => (w._shortScheme || '').toUpperCase() === schemeSel.value.toUpperCase());
+  }
   const w = allWorks.find(item => item.workCode === workCode && item._category === category);
   if (!w) return;
 
@@ -22572,25 +22914,41 @@ window.selectWorkForBooking = function(workCode, category) {
   if (dropdown) dropdown.classList.add('hidden');
 
   const card = document.getElementById('book-work-selected-card');
+  const funds = Number(w.fundsReleased || w.allotmentCost || 0);
+  const act = Number(w.actualExpdtTotal || 0);
+  const booked = Number(w.expdtBookedTreasury || 0);
+  const avail = Math.max(0, funds - act - booked);
+
   if (card) {
     document.getElementById('selected-work-code').textContent = w.workCode || w.code || '-';
     document.getElementById('selected-work-scheme').textContent = `${w._shortScheme} Capex (S.No ${w._schemeSno})`;
     document.getElementById('selected-work-panchayat').textContent = `Pyt: ${w.panchayat}`;
     document.getElementById('selected-work-name').textContent = w.name;
     document.getElementById('selected-work-allot').textContent = `₹${Number(w.allotmentCost||0).toFixed(2)} L`;
-    document.getElementById('selected-work-funds').textContent = `₹${Number(w.fundsReleased||0).toFixed(2)} L`;
-    document.getElementById('selected-work-booked').textContent = `₹${Number(w.expdtBookedTreasury||0).toFixed(3)} L`;
+    document.getElementById('selected-work-funds').textContent = `₹${funds.toFixed(2)} L`;
+    document.getElementById('selected-work-booked').textContent = `₹${booked.toFixed(3)} L`;
+    
+    const availEl = document.getElementById('selected-work-avail');
+    if (availEl) {
+      availEl.textContent = `₹${avail.toFixed(3)} L`;
+    }
     card.classList.remove('hidden');
+  }
+
+  const xenAmtInput = document.getElementById('book-new-xen-amt-input');
+  if (xenAmtInput && (!xenAmtInput.value || parseFloat(xenAmtInput.value) <= 0)) {
+    xenAmtInput.value = avail > 0 ? avail.toFixed(3) : '1.000';
   }
 
   const amtInput = document.getElementById('book-new-amount-input');
   if (amtInput) {
     amtInput.focus();
-    const suggest = Math.max(0, (Number(w.fundsReleased || w.allotmentCost || 0) - Number(w.actualExpdtTotal || 0) - Number(w.expdtBookedTreasury || 0)));
-    if (suggest > 0) amtInput.placeholder = `Avail: ₹${suggest.toFixed(3)} L (e.g. 1.450)`;
+    if (avail > 0) {
+      amtInput.value = avail.toFixed(3);
+      amtInput.placeholder = `Avail: ₹${avail.toFixed(3)} L`;
+    }
   }
 };
-
 window.resetWorkSelection = function() {
   const hiddenInput = document.getElementById('book-new-work-select');
   if (hiddenInput) hiddenInput.value = '';
@@ -22625,16 +22983,33 @@ function renderBookNewBillForm(allWorks, initialQuery) {
           <i class="fa-solid fa-file-invoice-dollar text-blue-600"></i>
           <span>Submit / Book New Bill in Treasury</span>
         </h3>
-        <p class="text-xs text-slate-500 mt-0.5">Type work code (e.g. 4853, 106115), name or panchayat right in the box below to instantly pick the work and submit bill to Treasury.</p>
+        <p class="text-xs text-slate-500 mt-0.5">Select scheme and work, check available funds balance, enter XEN details and book bill directly to Treasury.</p>
       </div>
 
       <div class="space-y-4">
-        <!-- 1. Interactive Searchable Work Chooser -->
+        <!-- Step 1: Scheme Selector Dropdown -->
+        <div>
+          <label class="text-xs font-black text-slate-700 block mb-1.5 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[11px] font-bold">1</span>
+            <span>Select Capex Scheme:</span>
+          </label>
+          <select id="book-new-scheme-select" onchange="onTreasuryBookSchemeChange(this.value)" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-xs text-slate-800 bg-white focus:ring-2 focus:ring-blue-500 shadow-2xs cursor-pointer">
+            <option value="ALL">All Schemes (220 Works Multi-Scheme)</option>
+            <option value="PRI">PRI Capex (82 Works: 78 New + 4 Ongoing)</option>
+            <option value="DDC">DDC Capex (17 Works)</option>
+            <option value="BDC">BDC Capex (1 Work)</option>
+            <option value="ST">ST / Tribal Capex (11 Works)</option>
+            <option value="APDP">APDP Capex (1 Work)</option>
+            <option value="MLA">MLA CDF (108 Works)</option>
+          </select>
+        </div>
+
+        <!-- Step 2: Interactive Searchable Work Chooser -->
         <div class="relative">
           <div class="flex items-center justify-between mb-1.5">
             <label class="text-xs font-black text-slate-700 flex items-center gap-1.5">
-              <span>1. Choose Work (Type Code or Name in this Box):</span>
-              <span class="text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full font-bold border border-blue-200">220 Works Available</span>
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[11px] font-bold">2</span>
+              <span>Choose Work (Type Code or Name):</span>
             </label>
           </div>
           
@@ -22666,20 +23041,33 @@ function renderBookNewBillForm(allWorks, initialQuery) {
             class="absolute left-0 right-0 top-full mt-1.5 max-h-72 overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-2xl z-50 divide-y divide-slate-100 hidden custom-scrollbar"
           ></div>
 
-          <!-- Selected Work Highlight Card -->
-          <div id="book-work-selected-card" class="hidden mt-2 p-3.5 bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-300 rounded-xl shadow-xs animate-fadeIn">
+          <!-- Selected Work Highlight Card with Real-time Available Funds Balance -->
+          <div id="book-work-selected-card" class="hidden mt-2 p-3.5 bg-gradient-to-r from-blue-50 via-indigo-50 to-emerald-50 border-2 border-blue-300 rounded-xl shadow-xs animate-fadeIn">
             <div class="flex items-start justify-between gap-3">
-              <div class="space-y-1 min-w-0">
+              <div class="space-y-1.5 min-w-0 flex-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
                   <span id="selected-work-code" class="px-2 py-0.5 rounded font-mono font-black text-xs bg-blue-700 text-white shadow-2xs"></span>
                   <span id="selected-work-scheme" class="px-2 py-0.5 rounded text-[10px] font-bold bg-white text-blue-900 border border-blue-200"></span>
                   <span id="selected-work-panchayat" class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200"></span>
                 </div>
                 <div id="selected-work-name" class="text-xs font-bold text-slate-800 leading-snug break-words"></div>
-                <div class="flex items-center gap-3 text-[11px] text-slate-600 font-medium pt-1 flex-wrap">
-                  <span>Allotment: <strong id="selected-work-allot" class="font-mono text-slate-900 font-bold"></strong></span>
-                  <span>Funds Rel: <strong id="selected-work-funds" class="font-mono text-teal-800 font-bold"></strong></span>
-                  <span>Currently Booked: <strong id="selected-work-booked" class="font-mono text-amber-900 font-bold"></strong></span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
+                  <div class="bg-white/80 p-2 rounded-lg border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 block uppercase">Allotment</span>
+                    <strong id="selected-work-allot" class="font-mono text-slate-900 font-bold"></strong>
+                  </div>
+                  <div class="bg-white/80 p-2 rounded-lg border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 block uppercase">Funds Released</span>
+                    <strong id="selected-work-funds" class="font-mono text-teal-800 font-bold"></strong>
+                  </div>
+                  <div class="bg-white/80 p-2 rounded-lg border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 block uppercase">Currently Booked</span>
+                    <strong id="selected-work-booked" class="font-mono text-amber-900 font-bold"></strong>
+                  </div>
+                  <div class="bg-emerald-100/90 p-2 rounded-lg border-2 border-emerald-400 shadow-2xs">
+                    <span class="text-[10px] font-black text-emerald-800 block uppercase">Available Funds</span>
+                    <strong id="selected-work-avail" class="font-mono text-emerald-950 font-black text-sm"></strong>
+                  </div>
                 </div>
               </div>
               <button type="button" onclick="resetWorkSelection()" class="px-2.5 py-1 text-[11px] font-bold bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 rounded-lg shrink-0 shadow-2xs cursor-pointer transition-colors">
@@ -22692,26 +23080,54 @@ function renderBookNewBillForm(allWorks, initialQuery) {
           <input type="hidden" id="book-new-work-select" value="" />
         </div>
 
+        <!-- Step 3: XEN REW Kathua Bill Details -->
+        <div class="p-3.5 bg-blue-50/50 rounded-xl border border-blue-200 space-y-2.5">
+          <label class="text-xs font-black text-blue-950 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[11px] font-bold">3</span>
+            <span>From XEN REW Kathua Details:</span>
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">XEN Bill Amount (₹ In Lakhs):</label>
+              <input type="number" step="0.001" id="book-new-xen-amt-input" placeholder="e.g. 1.000" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">No. of Bills Received:</label>
+              <input type="number" id="book-new-xen-count-input" value="1" min="1" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-bold text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Amount to Book in Treasury & Token Reference -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
           <div>
-            <label class="block text-xs font-black text-slate-700 mb-1.5">2. Bill Amount (₹ In Lakhs):</label>
-            <input type="number" step="0.001" id="book-new-amount-input" placeholder="e.g. 1.450" class="w-full p-2.5 rounded-xl border border-slate-300 font-mono font-black text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
+            <label class="block text-xs font-black text-slate-700 mb-1.5 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center text-[11px] font-black">4</span>
+              <span>Amount to Book in Try (₹ In Lakhs):</span>
+            </label>
+            <input type="number" step="0.001" id="book-new-amount-input" placeholder="e.g. 0.900" class="w-full p-2.5 rounded-xl border-2 border-amber-400 font-mono font-black text-xs text-slate-900 focus:ring-2 focus:ring-amber-500 bg-amber-50/20" />
+            <span class="text-[10px] text-slate-500 mt-1 block">Books in Treasury Tracker & syncs to MPR Capex Sheet.</span>
           </div>
 
           <div>
-            <label class="block text-xs font-black text-slate-700 mb-1.5">3. Token / Bill Ref. No. (Optional):</label>
+            <label class="block text-xs font-black text-slate-700 mb-1.5 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-[11px] font-bold">5</span>
+              <span>Token / Bill Ref. No. (Optional):</span>
+            </label>
             <input type="text" id="book-new-token-input" placeholder="e.g. BEAMS-2026-BANI-104" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 bg-white" />
           </div>
         </div>
 
         <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-          <button type="button" onclick="setTreasuryHubTab('pending')" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+          <button type="button" onclick="setTreasuryHubTab('pending')" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl cursor-pointer">Cancel</button>
           <button type="button" onclick="
             const sel = document.getElementById('book-new-work-select').value;
             if (!sel) { alert('Please select a work by typing its Code or Name above!'); return; }
             const [wCode, cat] = sel.split('||');
             const amt = document.getElementById('book-new-amount-input').value;
-            bookTreasuryBill(wCode, cat, amt);
+            const xenAmt = document.getElementById('book-new-xen-amt-input') ? document.getElementById('book-new-xen-amt-input').value : amt;
+            const xenCount = document.getElementById('book-new-xen-count-input') ? document.getElementById('book-new-xen-count-input').value : 1;
+            bookTreasuryBill(wCode, cat, amt, xenAmt, xenCount);
           " class="px-5 py-2.5 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95">
             <i class="fa-solid fa-floppy-disk"></i> Submit & Book Bill to Treasury
           </button>
@@ -22720,7 +23136,6 @@ function renderBookNewBillForm(allWorks, initialQuery) {
     </div>
   `;
 }
-
 function renderTreasuryBillsTable(list, activeTab) {
   if (list.length === 0) {
     return `
@@ -23051,4 +23466,23 @@ if (typeof window !== 'undefined') {
   window.getDailyBaniDataset = getDailyBaniDataset;
   window.fetchDailyBaniGoogleSheet = fetchDailyBaniGoogleSheet;
   window.getDailyBaniLiveSheetData = getDailyBaniLiveSheetData;
+}
+
+
+window.onTreasuryBookSchemeChange = function(scheme) {
+  const searchInput = document.getElementById('book-work-search-input');
+  if (searchInput) {
+    searchInput.value = '';
+    searchInput.placeholder = scheme === 'ALL' 
+      ? '🔍 Type Work Code, Name, or Panchayat...' 
+      : `🔍 Search ${scheme} Capex Works (e.g. Code, Name)...`;
+  }
+  resetWorkSelection();
+  filterBookWorkDropdown('');
+};
+if (typeof window !== "undefined") {
+  window.openXenBillsModal = openXenBillsModal;
+  window.saveXenBillsData = saveXenBillsData;
+  window.getDynamicMPRMeetingFinancialData = getDynamicMPRMeetingFinancialData;
+  window.onTreasuryBookSchemeChange = window.onTreasuryBookSchemeChange;
 }
