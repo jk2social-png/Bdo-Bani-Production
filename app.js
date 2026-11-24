@@ -415,15 +415,90 @@ function loadData() {
         });
       }
 
-      // Auto-heal treasuryLedger for RDDDC2526107508 (Dharamshalla at Bhaduar) so it is CLEARED not PENDING
+      // Auto-heal stWorks to match official MPR Capex Google Sheet (0.00 Booked in Treasury, 4.700 Actual Expdt across 6 cleared works)
+      if (state.db && Array.isArray(state.db.stWorks)) {
+        const stClearedMap = {
+          'TADSS2627100026': 0.74,
+          'TADSS2627100028': 0.75,
+          'TADSS2627100035': 0.74,
+          'TADSS2627100038': 0.74,
+          'TADSS2627100040': 0.49,
+          'TADSS2627100044': 1.24
+        };
+        state.db.stWorks.forEach(w => {
+          if (stClearedMap[w.workCode] !== undefined) {
+            w.actualExpdtTotal = stClearedMap[w.workCode];
+            w.actualExpdtAllotment = stClearedMap[w.workCode];
+            w.cummlExpdt = stClearedMap[w.workCode];
+            w.expdtBookedTreasury = 0;
+          }
+        });
+      }
+
+      // Auto-heal ddcWorks cleared works (5 works = 6.450 L in Actual Expdt, 0.00 Booked in Treasury)
+      if (state.db && Array.isArray(state.db.ddcWorks)) {
+        const ddcClearedMap = {
+          'FINDC2627101869': 0.99,
+          'FINDC2627101892': 1.49,
+          'FINDC2627101901': 1.49,
+          'FINDC2627101907': 0.99,
+          'FINDC2627101922': 1.49
+        };
+        state.db.ddcWorks.forEach(w => {
+          if (ddcClearedMap[w.workCode] !== undefined) {
+            w.actualExpdtTotal = ddcClearedMap[w.workCode];
+            w.actualExpdtAllotment = ddcClearedMap[w.workCode];
+            w.cummlExpdt = ddcClearedMap[w.workCode];
+            w.expdtBookedTreasury = 0;
+          }
+        });
+      }
+
+      // Auto-heal priNew cleared works (13 works = 13.940 L in Actual Expdt, 0.00 Booked in Treasury)
+      if (state.db && Array.isArray(state.db.priNew)) {
+        const priClearedMap = {
+          'RDDDC2627104821': 0.49,
+          'RDDDC2627104853': 1.59,
+          'RDDDC2627105687': 1.34,
+          'RDDDC2627106090': 1.09,
+          'RDDDC2627106115': 1.00,
+          'RDDDC2627106122': 0.84,
+          'RDDDC2627106129': 0.99,
+          'RDDDC2627106138': 1.49,
+          'RDDDC2627106149': 1.34,
+          'RDDDC2627106154': 1.15,
+          'RDDDC2627106155': 0.84,
+          'RDDDC2627106156': 0.84,
+          'RDDDC2627106165': 0.94
+        };
+        state.db.priNew.forEach(w => {
+          if (priClearedMap[w.workCode] !== undefined) {
+            w.actualExpdtTotal = priClearedMap[w.workCode];
+            w.actualExpdtAllotment = priClearedMap[w.workCode];
+            w.cummlExpdt = priClearedMap[w.workCode];
+            w.expdtBookedTreasury = 0;
+          }
+        });
+      }
+
+      // Auto-heal all 28 cleared works in treasuryLedger so they are CLEARED not PENDING
       if (state.db && Array.isArray(state.db.treasuryLedger)) {
-        const l2 = state.db.treasuryLedger.find(l => l.workCode === 'RDDDC2526107508');
-        if (l2) {
-          l2.status = 'CLEARED';
-          l2.clearDate = l2.clearDate || '2026-11-20';
-          l2.bookedAmount = 1.45;
-          l2.clearedAmount = 1.45;
-        }
+        const clearedCodes = new Set([
+          'RDDDC2526107291', 'RDDDC2526107508', 'RDDDC2526107717', 'RDDDC2526107778',
+          'TADSS2627100026', 'TADSS2627100028', 'TADSS2627100035', 'TADSS2627100038', 'TADSS2627100040', 'TADSS2627100044',
+          'FINDC2627101869', 'FINDC2627101892', 'FINDC2627101901', 'FINDC2627101907', 'FINDC2627101922',
+          'RDDDC2627104821', 'RDDDC2627104853', 'RDDDC2627105687', 'RDDDC2627106090', 'RDDDC2627106115', 'RDDDC2627106122', 'RDDDC2627106129', 'RDDDC2627106138', 'RDDDC2627106149', 'RDDDC2627106154', 'RDDDC2627106155', 'RDDDC2627106156', 'RDDDC2627106165'
+        ]);
+        state.db.treasuryLedger.forEach(l => {
+          if (clearedCodes.has(l.workCode)) {
+            l.status = 'CLEARED';
+            l.clearDate = l.clearDate || '2026-11-20';
+            l.bookedAmount = 0;
+            if (!l.clearedAmount || l.clearedAmount <= 0) {
+              l.clearedAmount = Number(l.xenAmount || l.bookedAmount || 0);
+            }
+          }
+        });
       }
 
       // Auto-heal shifted/corrupted BDC or APDP records if loaded from old cache
@@ -3937,7 +4012,7 @@ function getDynamicMPRMeetingFinancialData() {
     'new_bdc': { count: 0, amount: 0.00 },
     'new_pri': { count: 13, amount: 21.945 },
     'new_apdp': { count: 0, amount: 0.00 },
-    'new_st': { count: 8, amount: 8.280 }
+    'new_st': { count: 6, amount: 4.700 }
   };
 
   const xenBills = (state && state.db && state.db.xenSchemeBills) ? Object.assign({}, defaultXenBills, state.db.xenSchemeBills) : defaultXenBills;
