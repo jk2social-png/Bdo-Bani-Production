@@ -1,4 +1,56 @@
 
+function submitBookBillForm(destination) {
+  window.submitBookBillForm = submitBookBillForm;
+  const sel = document.getElementById('book-new-work-select') ? document.getElementById('book-new-work-select').value : '';
+  if (!sel) { 
+    if (typeof showToast === 'function') showToast('Please select a work by typing its Code or Name above!', 'warning');
+    else alert('Please select a work by typing its Code or Name above!'); 
+    return; 
+  }
+  const [wCode, cat] = sel.split('||');
+  const amtInput = document.getElementById('book-new-amount-input');
+  const amt = amtInput ? amtInput.value : '';
+  const xenAmt = document.getElementById('book-new-xen-amt-input') ? document.getElementById('book-new-xen-amt-input').value : amt;
+  const sDate = document.getElementById('book-new-submit-date') ? document.getElementById('book-new-submit-date').value : '';
+  bookTreasuryBill(wCode, cat, amt, xenAmt, 1, sDate, '', destination || 'bdo');
+};
+
+function sendBillToTreasury(ledgerId) {
+  window.sendBillToTreasury = sendBillToTreasury;
+  if (!state || !state.db) return;
+  const ledger = getTreasuryLedgerRecords();
+  const entry = ledger.find(l => l.id === ledgerId || l.workCode === ledgerId);
+  if (!entry) {
+    if (typeof showToast === 'function') showToast('Ledger entry not found!', 'error');
+    return;
+  }
+
+  const amt = Number(entry.bdoAmount || entry.bookedAmount || 0);
+  entry.status = 'PENDING';
+  entry.bookedAmount = amt;
+  entry.sendToTryDate = new Date().toISOString().split('T')[0];
+
+  // Add to work's expdtBookedTreasury in state.db
+  const allWorks = getAllTreasuryWorks();
+  const w = allWorks.find(item => item.workCode === entry.workCode && item._category === entry.category);
+  if (w) {
+    w.expdtBookedTreasury = (Number(w.expdtBookedTreasury) || 0) + amt;
+    if (entry.category && entry.category.startsWith('mla')) {
+      w.expdtTreasury = (Number(w.expdtTreasury) || 0) + amt;
+    }
+    if (typeof pushWorkToGoogleSheet === 'function') {
+      pushWorkToGoogleSheet('update', w, entry.category);
+    }
+  }
+
+  saveData();
+  refreshCurrentView();
+  if (typeof showToast === 'function') {
+    showToast('Bill of ₹' + amt.toFixed(3) + ' L sent to Treasury! Status updated to Pending in Treasury.', 'success');
+  }
+};
+
+
 // Universal Safe Workbook Saver (Handles Web & Native Android Bridge)
 function bdoSaveWorkbook(wb, filename) {
   const finalFilename = filename.endsWith('.xlsx') ? filename : filename + '.xlsx';
@@ -995,7 +1047,7 @@ const SCHEME_SUB_NAV = {
     items: [
       { id: 'treasury_pending', label: 'Pending Bills in Treasury', icon: 'fa-clock-rotate-left' },
       { id: 'treasury_cleared', label: 'Cleared Bills History', icon: 'fa-circle-check' },
-      { id: 'treasury_book_new', label: 'Book New Bill to Treasury', icon: 'fa-plus-circle' },
+      { id: 'treasury_book_new', label: 'Book New Bill at BDO Level', icon: 'fa-plus-circle' },
       { id: 'treasury_ledger', label: 'Treasury Bill Register & Audit Ledger', icon: 'fa-book-bookmark', badge: 'Ledger' }
     ]
   },
@@ -4008,12 +4060,12 @@ function getMeetingAbstractFinancialData(appState) {
 
 function getDynamicMPRMeetingFinancialData() {
   const defaultXenBills = {
-    'ongoing_pri': { count: 4, amount: 3.38 },
-    'new_ddc': { count: 14, amount: 12.535 },
-    'new_bdc': { count: 0, amount: 0.00 },
-    'new_pri': { count: 13, amount: 21.945 },
-    'new_apdp': { count: 0, amount: 0.00 },
-    'new_st': { count: 6, amount: 4.700 }
+    'ongoing_pri': { count: 4, amount: 3.380 },
+    'new_ddc': { count: 14, amount: 27.122 },
+    'new_bdc': { count: 1, amount: 2.820 },
+    'new_pri': { count: 23, amount: 35.570 },
+    'new_apdp': { count: 1, amount: 1.890 },
+    'new_st': { count: 7, amount: 9.020 }
   };
 
   const xenBills = (state && state.db && state.db.xenSchemeBills) ? Object.assign({}, defaultXenBills, state.db.xenSchemeBills) : defaultXenBills;
@@ -22829,7 +22881,7 @@ function rejectTreasuryBill(workCode, category) {
   }
 }
 
-function bookTreasuryBill(workCode, category, amount, xenAmount, xenCount, submitDate, tokenNo) {
+function bookTreasuryBill(workCode, category, amount, xenAmount, xenCount, submitDate, tokenNo, destination = 'bdo') {
   const amt = parseFloat(amount);
   if (isNaN(amt) || amt <= 0) {
     showToast('Please enter a valid bill amount in Lakhs (e.g. 0.90)!', 'error');
@@ -22897,7 +22949,8 @@ function bookTreasuryBill(workCode, category, amount, xenAmount, xenCount, submi
     bookedAmount: amt,
     submitDate: subDateVal,
     clearDate: null,
-    status: 'PENDING',
+    status: (destination === 'bdo' ? 'PENDING_BDO' : 'PENDING'),
+    bdoAmount: amt,
     tokenNo: tokenNo || ('BEAMS-26-' + (w._shortScheme || 'CP') + '-' + (w._schemeSno || 1)),
     voucherNo: '',
     clearedAmount: 0,
@@ -23183,9 +23236,9 @@ function renderBookNewBillForm(allWorks, initialQuery) {
       <div class="border-b border-slate-100 pb-3">
         <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
           <i class="fa-solid fa-file-invoice-dollar text-blue-600"></i>
-          <span>Submit / Book New Bill in Treasury</span>
+          <span>Submit / Book New Bill at BDO Level</span>
         </h3>
-        <p class="text-xs text-slate-500 mt-0.5">Select scheme and work, check available funds balance, enter XEN details and book bill directly to Treasury.</p>
+        <p class="text-xs text-slate-500 mt-0.5">Select scheme and work, check available funds balance, enter XEN details and book bill at BDO Level before submitting to Treasury.</p>
       </div>
 
       <div class="space-y-4">
@@ -23308,25 +23361,20 @@ function renderBookNewBillForm(allWorks, initialQuery) {
             <div>
               <label class="block text-xs font-black text-slate-900 mb-1 flex items-center gap-1">
                 <i class="fa-solid fa-building-columns text-amber-600 text-[11px]"></i>
-                <span>Amount to Book in Try (₹ Lakhs):</span>
+                <span>Amount to Book at BDO Level (₹ Lakhs):</span>
               </label>
               <input type="number" step="0.001" id="book-new-amount-input" placeholder="e.g. 0.900" class="w-full p-2.5 rounded-xl border-2 border-amber-400 font-mono font-black text-xs text-slate-950 focus:ring-2 focus:ring-amber-500 bg-amber-50/40" />
             </div>
           </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-end gap-2">
           <button type="button" onclick="setTreasuryHubTab('pending')" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl cursor-pointer">Cancel</button>
-          <button type="button" onclick="
-            const sel = document.getElementById('book-new-work-select').value;
-            if (!sel) { alert('Please select a work by typing its Code or Name above!'); return; }
-            const [wCode, cat] = sel.split('||');
-            const amt = document.getElementById('book-new-amount-input').value;
-            const xenAmt = document.getElementById('book-new-xen-amt-input') ? document.getElementById('book-new-xen-amt-input').value : amt;
-            const sDate = document.getElementById('book-new-submit-date') ? document.getElementById('book-new-submit-date').value : '';
-            bookTreasuryBill(wCode, cat, amt, xenAmt, 1, sDate, '');
-          " class="px-5 py-2.5 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95">
-            <i class="fa-solid fa-floppy-disk"></i> Submit & Book Bill to Treasury
+          <button type="button" onclick="submitBookBillForm('bdo')" class="px-4 py-2.5 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95">
+            <i class="fa-solid fa-inbox"></i> Book Bill at BDO Level
+          </button>
+          <button type="button" onclick="submitBookBillForm('treasury')" class="px-4 py-2.5 bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-500 hover:to-orange-600 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95">
+            <i class="fa-solid fa-paper-plane"></i> Book & Send to Treasury
           </button>
         </div>
       </div>
@@ -23850,6 +23898,7 @@ function renderTreasuryAuditLedgerView() {
                 </tr>
               ` : filtered.map((l, idx) => {
                 const isPend = l.status === 'PENDING';
+                const isBdo = l.status === 'PENDING_BDO';
                 const submitFormatted = l.submitDate ? l.submitDate.split('-').reverse().join('-') : '—';
                 const clearFormatted = l.clearDate ? l.clearDate.split('-').reverse().join('-') : (isPend ? '— Pending in Try —' : '—');
                 
@@ -24093,7 +24142,7 @@ function renderTreasuryBillHub(container) {
             </button>
             <button onclick="setTreasuryHubTab('book_new')" class="px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all cursor-pointer ${tState.activeTab === 'book_new' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
               <i class="fa-solid fa-plus-circle"></i>
-              <span>Book New Bill to Treasury</span>
+              <span>Book New Bill at BDO Level</span>
             </button>
             <button onclick="setTreasuryHubTab('ledger')" class="px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all cursor-pointer ${tState.activeTab === 'ledger' ? 'bg-purple-700 text-white shadow-md shadow-purple-700/30' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
               <i class="fa-solid fa-book-bookmark"></i>
